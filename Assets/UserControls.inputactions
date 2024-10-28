@@ -1,0 +1,45 @@
+{
+    "name": "UserControls",
+    "maps": [
+        {
+            "name": "Rhythm",
+            "id": "7a9768d0-c7fb-4294-94ca-63079fc3f91b",
+            "actions": [
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "8b783abd-59d3-4aa6-a7f4-48bd4f21b8d5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "266aac03-0846-4a15-a17c-fa7629b07289",
+                    "path": "<Keyboard>/space",
+                    "interactions": "Tap",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "98c6698e-8f9a-425d-b8b6-37a06a051ad3",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
