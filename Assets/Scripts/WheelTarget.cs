@@ -9,6 +9,7 @@ public class WheelLineDetector : MonoBehaviour
     public GameObject target;
 
     Animator anim;
+    private bool contact; // whether target is touching an eventBox
     
     void Start()
     {
@@ -20,8 +21,16 @@ public class WheelLineDetector : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Clicked!");
+            // Debug.Log("Clicked!");
             anim.SetTrigger("Active");
+            if (contact)
+            {
+                Debug.Log("Success!");
+            } else
+            {
+                Debug.Log("Miss!");
+            }
+
         }
 
     }
@@ -32,6 +41,7 @@ public class WheelLineDetector : MonoBehaviour
         //GetComponent<Renderer>().material.color = Color.blue;
         target.GetComponent<Renderer>().material.color = Color.blue;
         other.GetComponent<Renderer>().material.color = Color.yellow;
+        contact = true;
         // Debug.Log("Trigger triggered!");
     }
 
@@ -41,6 +51,7 @@ public class WheelLineDetector : MonoBehaviour
         //GetComponent<Renderer>().material.color = Color.white;
         target.GetComponent<Renderer>().material.color = Color.white;
         other.GetComponent<Renderer>().material.color = Color.white;
+        contact = false;
         // Debug.Log("Trigger exited!");
 
     }
