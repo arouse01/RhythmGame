@@ -9,8 +9,8 @@ public class WheelControl : MonoBehaviour
     public float wheelTempo = 1;
     public GameObject arrow;
     public GameObject eventBox; // prefab of eventBox
-    public int[] eventList;
-    public int colliderSize;
+    public float[] eventList;
+    public float colliderSize;
     public bool pause;
 
     private EventBox[] boxes;
@@ -18,7 +18,8 @@ public class WheelControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartSpin();
+        //ResetWheel();
+        //StartSpin();
     }
 
     // Update is called once per frame
@@ -42,19 +43,43 @@ public class WheelControl : MonoBehaviour
 
     public void StartSpin()
     {
-        this.transform.Rotate(0.0f, 0.0f, 0.0f, Space.Self);  // Reset wheel position
-        PlaceEventBoxes();
-        boxes = FindObjectsOfType<EventBox>();
+        
         float rotationalSpeed = wheelTempo * 360.0f;
         this.rotSpeed = rotationalSpeed;
 
         pause = false;
     }
 
+    public void ClearWheel()
+    {
+        // remove existing eventBoxes
+        if (boxes != null)
+        {
+            foreach (EventBox box in boxes)
+            {
+                box.SelfDestruct();
+            }
+        }
+    }
+    
+    public void ResetWheel()
+    {
+        // reset wheel and create new boxes
+        this.transform.Rotate(0.0f, 0.0f, 0.0f, Space.Self);  // Reset wheel position
+        PlaceEventBoxes();
+        boxes = FindObjectsOfType<EventBox>();
+        pause = true;
+    }
+    
+    public void StopSpin()
+    {
+        pause = true;
+    }
+    
     void PlaceEventBoxes()
     {
         // Calculate total fraction of event intervals
-        int intervalSum = SumArray(eventList);
+        float intervalSum = SumArray(eventList);
         float angleStep = 360 / intervalSum;
         //// Calculate the angle between each object in radians
         //float angleStep = 2 * Mathf.PI / eventCount;
@@ -85,17 +110,17 @@ public class WheelControl : MonoBehaviour
 
     public void ResizeEventBoxes()
     {
-        //boxes = FindObjectsOfType<EventBox>();
+        boxes = FindObjectsOfType<EventBox>();
         foreach (EventBox box in boxes)
         {
             box.SetColliderSize(colliderSize);
         }
     }
 
-    public int SumArray(int[] toBeSummed)
+    public float SumArray(float[] toBeSummed)
     {
-        int sum = 0;
-        foreach (int i in toBeSummed)
+        float sum = 0;
+        foreach (float i in toBeSummed)
         {
             sum += i;
         }

@@ -42,4 +42,9 @@ public class EventBox : MonoBehaviour
             squareCollider.size = new Vector2(newWidth, 1f);
         }
     }
+
+    public void SelfDestruct()
+    {
+        Destroy(gameObject);
+    }
 }

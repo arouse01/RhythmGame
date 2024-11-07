@@ -1,4 +1,0 @@
-wheelTempo = 0.25
-eventList = 1
-maxTries = 30
-targetScore = 10
