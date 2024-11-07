@@ -9,21 +9,16 @@ public class WheelControl : MonoBehaviour
     public float wheelTempo = 1;
     public GameObject arrow;
     public GameObject eventBox; // prefab of eventBox
-    public int eventCount;
     public int[] eventList;
-    private float radius;
+    public int colliderSize;
+    public bool pause;
 
-
+    private EventBox[] boxes;
 
     // Start is called before the first frame update
     void Start()
     {
-        radius = this.transform.localScale.x / 2;
-
-        PlaceEventBoxes();
-
-        float rotationalSpeed = wheelTempo * 360.0f;
-        this.rotSpeed = rotationalSpeed;
+        StartSpin();
     }
 
     // Update is called once per frame
@@ -34,8 +29,26 @@ public class WheelControl : MonoBehaviour
             
         //}
 
-        // Rotate at rotSpeed degrees per second
-        transform.RotateAround(this.transform.position, Vector3.forward, this.rotSpeed * Time.deltaTime);
+        if(pause)
+        {
+
+        } else
+        {
+            // Rotate at rotSpeed degrees per second
+            transform.RotateAround(this.transform.position, Vector3.forward, this.rotSpeed * Time.deltaTime);
+        }
+        
+    }
+
+    public void StartSpin()
+    {
+        this.transform.Rotate(0.0f, 0.0f, 0.0f, Space.Self);  // Reset wheel position
+        PlaceEventBoxes();
+        boxes = FindObjectsOfType<EventBox>();
+        float rotationalSpeed = wheelTempo * 360.0f;
+        this.rotSpeed = rotationalSpeed;
+
+        pause = false;
     }
 
     void PlaceEventBoxes()
@@ -55,17 +68,28 @@ public class WheelControl : MonoBehaviour
             // Instantiate the prefab at the calculated position
             GameObject newObject = Instantiate(eventBox, new Vector2(0, 0), Quaternion.identity);
 
-            newObject.GetComponent<EventBoxScript>().angle = angle;
+            newObject.GetComponent<EventBox>().angle = angle;
             
-
-
-            // Optional: Set the new object as a child of the wheel GameObject
             newObject.transform.parent = transform;
 
             
             currAngle = angle;
-        }
 
+            //// set eventBox collider size too
+            //newObject.GetComponent<EventBox>().colliderSize = colliderSize;
+            // set color to black
+            newObject.GetComponent<Renderer>().material.SetColor("_Color", new Color(0, 0, 0));
+        }
+        ResizeEventBoxes();
+    }
+
+    public void ResizeEventBoxes()
+    {
+        //boxes = FindObjectsOfType<EventBox>();
+        foreach (EventBox box in boxes)
+        {
+            box.SetColliderSize(colliderSize);
+        }
     }
 
     public int SumArray(int[] toBeSummed)
