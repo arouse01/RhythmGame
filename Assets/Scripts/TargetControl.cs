@@ -95,7 +95,7 @@ public class WheelLineDetector : MonoBehaviour
     {
         OnContactStart?.Invoke();
         //GetComponent<Renderer>().material.color = Color.blue;
-        triangle.GetComponent<Renderer>().material.color = Color.blue;
+        triangle.GetComponent<Renderer>().material.color = Color.white;
         other.GetComponent<Renderer>().material.color = Color.yellow;
         //contact = true;
         //eventCount++;
@@ -109,7 +109,7 @@ public class WheelLineDetector : MonoBehaviour
     {
         //GetComponent<Renderer>().material.color = Color.white;
         OnContactEnd?.Invoke();
-        triangle.GetComponent<Renderer>().material.color = Color.white;
+        triangle.GetComponent<Renderer>().material.color = Color.blue;
         other.GetComponent<Renderer>().material.SetColor("_Color", new Color(0,0,0));
         //contact = false;
         //if(!booped)

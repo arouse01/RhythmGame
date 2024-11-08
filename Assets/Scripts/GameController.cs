@@ -29,8 +29,8 @@ public class GameController : MonoBehaviour
     private int eventMax; // max beats to present
     private int targetScore;  // target score to pass
     private bool trialIsRunning; // whether trial is running or not
-    private float LRSDuration; // how long the LRS should be visible
-    private int LRSThresh; // how long the LRS should be visible
+    private float LRSDuration = -3; // how long the LRS should be visible
+    private int LRSThresh = 1; // how long the LRS should be visible
     private float colliderSize;  // width of the eventBox collider
 
     private static string logFilePath = Application.dataPath + "/Data/EventLog.txt";
@@ -47,6 +47,7 @@ public class GameController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         // read parameter file
         parameters.LoadTrialParameters("trials.txt");
+        parameters.LoadSessionParameters("parameters.txt");
         // Get number of trials
         numTrials = parameters.trials.Length;
         //Debug.Log("Trial count: " + numTrials);
@@ -58,6 +59,8 @@ public class GameController : MonoBehaviour
         // create log file
         System.DateTime currentTime = System.DateTime.Now;
 
+        string AnimalName = parameters.AnimalName;
+        Debug.Log("Animal name: " + AnimalName);
         // Format the date and time to include milliseconds
         string timeWithMilliseconds = currentTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
 

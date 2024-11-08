@@ -102,7 +102,7 @@ public class ParameterLoader : MonoBehaviour
         }
     }
 
-    private void LoadSessionParameters(string fileName)
+    public void LoadSessionParameters(string fileName)
     {
         
 
@@ -144,6 +144,10 @@ public class ParameterLoader : MonoBehaviour
                 }
             }
 
+        }
+        else
+        {
+            Debug.Log("Session Parameter File not found");
         }
     }
 }

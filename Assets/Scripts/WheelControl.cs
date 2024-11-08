@@ -100,12 +100,12 @@ public class WheelControl : MonoBehaviour
             
             currAngle = angle;
 
-            //// set eventBox collider size too
-            //newObject.GetComponent<EventBox>().colliderSize = colliderSize;
+            // set eventBox collider size too
+            newObject.GetComponent<EventBox>().colliderSize = colliderSize;
             // set color to black
             newObject.GetComponent<Renderer>().material.SetColor("_Color", new Color(0, 0, 0));
         }
-        ResizeEventBoxes();
+        //ResizeEventBoxes();
     }
 
     public void ResizeEventBoxes()
@@ -113,7 +113,7 @@ public class WheelControl : MonoBehaviour
         boxes = FindObjectsOfType<EventBox>();
         foreach (EventBox box in boxes)
         {
-            box.SetColliderSize(colliderSize);
+            box.ResetShape();
         }
     }
 
