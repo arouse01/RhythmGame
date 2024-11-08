@@ -222,31 +222,31 @@ public class GameController : MonoBehaviour
     private void OnEnable()
     {
         //Debug.Log("Trigger triggered!");
-        WheelLineDetector.OnContactStart += ContactOn;
-        WheelLineDetector.OnContactEnd += ContactOff;
+        WheelLineDetector.OnContactStart += WindowContactOn;
+        WheelLineDetector.OnContactEnd += WindowContactOff;
+        WheelLineDetector.OnBeatContact += BeatContact;
 
     }
 
     private void OnDisable()
     {
         //Debug.Log("Trigger off");
-        WheelLineDetector.OnContactStart -= ContactOn;
-        WheelLineDetector.OnContactEnd -= ContactOff;
-        
+        WheelLineDetector.OnContactStart -= WindowContactOn;
+        WheelLineDetector.OnContactEnd -= WindowContactOff;
+        WheelLineDetector.OnBeatContact -= BeatContact;
     }
     
-    private void ContactOn()
+    private void WindowContactOn()
     {
         EventLogger.LogEvent("Beat", "Beat window start");
         eventCount++;
-        audioSource.PlayOneShot(tickSound);
+        
         contact = true;
         booped = false;
         
-        //Log beat start
     }
 
-    private void ContactOff()
+    private void WindowContactOff()
     {
         EventLogger.LogEvent("Beat", "Beat window end");
         contact = false;
@@ -258,7 +258,12 @@ public class GameController : MonoBehaviour
                 scoreText.text = score.ToString();
             }
         }
-        //Log beat end
+    }
+
+    private void BeatContact()
+    {
+        EventLogger.LogEvent("Beat", "Beat tick");
+        audioSource.PlayOneShot(tickSound);
     }
 
 }

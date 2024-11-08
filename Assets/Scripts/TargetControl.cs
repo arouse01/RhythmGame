@@ -21,6 +21,7 @@ public class WheelLineDetector : MonoBehaviour
     // Events to trigger GameController
     public static event Action OnContactStart;
     public static event Action OnContactEnd;
+    public static event Action OnBeatContact;
 
     private Transform triangle;
     //private bool contact; // whether target is touching an eventBox
@@ -93,10 +94,18 @@ public class WheelLineDetector : MonoBehaviour
     // This method is called when another collider enters the trigger zone
     private void OnTriggerEnter2D(Collider2D other)
     {
-        OnContactStart?.Invoke();
-        //GetComponent<Renderer>().material.color = Color.blue;
-        triangle.GetComponent<Renderer>().material.color = Color.white;
-        other.GetComponent<Renderer>().material.color = Color.yellow;
+        if (other.CompareTag("EventBox"))
+        {
+            OnContactStart?.Invoke();
+            //GetComponent<Renderer>().material.color = Color.blue;
+            triangle.GetComponent<Renderer>().material.color = Color.white;
+            other.GetComponent<Renderer>().material.color = Color.yellow;
+        }
+        else if (other.CompareTag("Beat"))
+        {
+            OnBeatContact?.Invoke();
+        }
+            
         //contact = true;
         //eventCount++;
         //audioSource.PlayOneShot(tickSound);
@@ -108,9 +117,17 @@ public class WheelLineDetector : MonoBehaviour
     private void OnTriggerExit2D(Collider2D other)
     {
         //GetComponent<Renderer>().material.color = Color.white;
-        OnContactEnd?.Invoke();
-        triangle.GetComponent<Renderer>().material.color = Color.blue;
-        other.GetComponent<Renderer>().material.SetColor("_Color", new Color(0,0,0));
+        if (other.CompareTag("EventBox"))
+        {
+            OnContactEnd?.Invoke();
+            triangle.GetComponent<Renderer>().material.color = Color.blue;
+            other.GetComponent<Renderer>().material.SetColor("_Color", new Color(0, 0, 0));
+        }
+        else if (other.CompareTag("Beat"))
+        {
+            
+        }
+
         //contact = false;
         //if(!booped)
         //{

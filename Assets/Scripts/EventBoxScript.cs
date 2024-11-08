@@ -72,7 +72,8 @@ public class EventBox : MonoBehaviour
         // Add the new points to the spline
         for (int i = 0; i < points.Length; i++)
         {
-            Vector2 localPoint = spriteShapeController.transform.InverseTransformPoint(points[i]);
+            //Vector2 localPoint = spriteShapeController.transform.InverseTransformPoint(points[i]);
+            Vector2 localPoint = points[i];
             spline.InsertPointAt(i, localPoint);
             if (i == 3)
             {
