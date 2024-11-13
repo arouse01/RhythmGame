@@ -42,18 +42,18 @@ public class EventBox : MonoBehaviour
         
     }
 
-    public void SetColliderSize(float newWidth)
-    {
-        BoxCollider2D squareCollider = GetComponent<BoxCollider2D>();
-        if (squareCollider != null)
-        {
-            squareCollider.size = new Vector2(newWidth, 1f);
-        }
-    }
+    //public void SetColliderSize(float newWidth)
+    //{
+    //    BoxCollider2D squareCollider = GetComponent<BoxCollider2D>();
+    //    if (squareCollider != null)
+    //    {
+    //        squareCollider.size = new Vector2(newWidth, 1f);
+    //    }
+    //}
 
     public void ResetShape()
     {
-        float h = 0.5f;
+        float h = 1.0f;
         // redefine spline points to be a wedge
         Spline spline = spriteShapeController.spline;
         spline.Clear();  // clear existing points
@@ -62,20 +62,33 @@ public class EventBox : MonoBehaviour
 
         Vector2[] points = new Vector2[]
         {
-            new Vector2(Mathf.Sin(-widthRad/2) * (circRadius-h), Mathf.Cos(-widthRad/2) * (circRadius-h)),
-            new Vector2(Mathf.Sin(widthRad/2) * (circRadius-h), Mathf.Cos(widthRad/2) * (circRadius-h)),
+            new Vector2(0, 0),
+            //new Vector2(Mathf.Sin(widthRad/2) * (circRadius-h), Mathf.Cos(widthRad/2) * (circRadius-h)),
             new Vector2(Mathf.Sin(widthRad/2) * (circRadius+h), Mathf.Cos(widthRad/2) * (circRadius+h)),
             new Vector2(0, (circRadius+h)),
             new Vector2(Mathf.Sin(-widthRad/2) * (circRadius+h), Mathf.Cos(-widthRad/2) * (circRadius+h))
         };
 
+        //Vector2[] points = new Vector2[];
+        if (colliderSize < 2)
+        {
+            // Tiny wedges don't render properly because the points are too close together, so skip the middle of the wedge top
+            points = new Vector2[]
+            {
+                new Vector2(0, 0),
+                //new Vector2(Mathf.Sin(widthRad/2) * (circRadius-h), Mathf.Cos(widthRad/2) * (circRadius-h)),
+                new Vector2(Mathf.Sin(widthRad/2) * (circRadius+h), Mathf.Cos(widthRad/2) * (circRadius+h)),
+                new Vector2(Mathf.Sin(-widthRad/2) * (circRadius+h), Mathf.Cos(-widthRad/2) * (circRadius+h))
+            };
+
+
+        }
+       
         // Add the new points to the spline
         for (int i = 0; i < points.Length; i++)
         {
-            //Vector2 localPoint = spriteShapeController.transform.InverseTransformPoint(points[i]);
-            Vector2 localPoint = points[i];
-            spline.InsertPointAt(i, localPoint);
-            if (i == 3)
+            spline.InsertPointAt(i, points[i]);
+            if (i == 2 && colliderSize > 1)
             {
                 float tangentLength = (2.0f * Mathf.Sin(widthRad / 2));
                 spline.SetTangentMode(i, ShapeTangentMode.Continuous);
@@ -89,8 +102,24 @@ public class EventBox : MonoBehaviour
             
         }
 
+        
+
         // Optional: Make the shape closed
         spriteShapeController.spline.isOpenEnded = false;
+
+        //// update the collider too
+        PolygonCollider2D polygonCollider = GetComponent<PolygonCollider2D>();
+        polygonCollider.SetPath(0, points);
+
+        //private void UpdateEdgeCollider()
+        //{
+        //    Vector2[] colliderPoints = new Vector2[spline.GetPointCount()];
+        //    for (int i = 0; i < spline.GetPointCount(); i++)
+        //    {
+        //        colliderPoints[i] = transform.TransformPoint(spline.GetPosition(i));
+        //    }
+        //    edgeCollider.points = colliderPoints;
+        //}
     }
 
     public void SelfDestruct()

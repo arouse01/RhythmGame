@@ -21,7 +21,8 @@ public class WheelLineDetector : MonoBehaviour
     // Events to trigger GameController
     public static event Action OnContactStart;
     public static event Action OnContactEnd;
-    public static event Action OnBeatContact;
+    public static event Action OnBeatZoneStart;
+    public static event Action OnBeatZoneEnd;
 
     private Transform triangle;
     //private bool contact; // whether target is touching an eventBox
@@ -101,9 +102,9 @@ public class WheelLineDetector : MonoBehaviour
             triangle.GetComponent<Renderer>().material.color = Color.white;
             other.GetComponent<Renderer>().material.color = Color.yellow;
         }
-        else if (other.CompareTag("Beat"))
+        else if (other.CompareTag("BeatZone"))
         {
-            OnBeatContact?.Invoke();
+            OnBeatZoneStart?.Invoke();
         }
             
         //contact = true;
@@ -123,9 +124,9 @@ public class WheelLineDetector : MonoBehaviour
             triangle.GetComponent<Renderer>().material.color = Color.blue;
             other.GetComponent<Renderer>().material.SetColor("_Color", new Color(0, 0, 0));
         }
-        else if (other.CompareTag("Beat"))
+        else if (other.CompareTag("BeatZone"))
         {
-            
+            OnBeatZoneEnd?.Invoke();
         }
 
         //contact = false;
