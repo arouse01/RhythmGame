@@ -1,0 +1,25 @@
+2024-11-07 15:29:08.020	Program Start	Program Start
+2024-11-07 15:29:10.274	Beat	Beat window start
+2024-11-07 15:29:10.492	Beat	Beat window end
+2024-11-07 15:29:11.994	Beat	Beat window start
+2024-11-07 15:29:12.164	Response	Hit
+2024-11-07 15:29:12.492	Beat	Beat window end
+2024-11-07 15:29:13.994	Beat	Beat window start
+2024-11-07 15:29:14.131	Response	Hit
+2024-11-07 15:29:14.493	Beat	Beat window end
+2024-11-07 15:31:13.857	Program Start	Program Start
+2024-11-07 15:31:16.669	Trial	Trial 1 started
+2024-11-07 15:31:16.731	Beat	Beat window start
+2024-11-07 15:31:16.890	Beat	Beat window end
+2024-11-07 15:31:18.388	Beat	Beat window start
+2024-11-07 15:31:18.550	Response	Hit
+2024-11-07 15:31:18.890	Beat	Beat window end
+2024-11-07 15:31:20.389	Beat	Beat window start
+2024-11-07 15:31:20.542	Response	Hit
+2024-11-07 15:31:20.889	Beat	Beat window end
+2024-11-07 15:31:22.387	Beat	Beat window start
+2024-11-07 15:31:22.547	Response	Hit
+2024-11-07 15:31:22.888	Beat	Beat window end
+2024-11-07 15:31:24.389	Beat	Beat window start
+2024-11-07 15:31:24.602	Response	Hit
+2024-11-07 15:31:24.891	Beat	Beat window end
