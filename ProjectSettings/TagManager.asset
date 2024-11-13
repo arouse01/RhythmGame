@@ -6,6 +6,7 @@ TagManager:
   tags:
   - EventBox
   - Beat
+  - BeatZone
   layers:
   - Default
   - TransparentFX
