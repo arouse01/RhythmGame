@@ -11,6 +11,7 @@ public class WheelControl : MonoBehaviour
     public GameObject eventBox; // prefab of eventBox
     public float[] eventList;
     public float colliderSize;
+    public float beatZoneSize;
     public bool pause;
 
     private EventBox[] boxes;
@@ -102,6 +103,7 @@ public class WheelControl : MonoBehaviour
 
             // set eventBox collider size too
             newObject.GetComponent<EventBox>().colliderSize = colliderSize;
+            newObject.GetComponent<EventBox>().beatZoneSize = beatZoneSize;
             // set color to black
             newObject.GetComponent<Renderer>().material.SetColor("_Color", new Color(0, 0, 0));
         }

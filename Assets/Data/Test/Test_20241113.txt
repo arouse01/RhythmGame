@@ -1,0 +1,627 @@
+2024-11-13 09:13:32.885	Program Start	Program Start
+2024-11-13 09:13:32.903	Trial	Trial 1 ended
+2024-11-13 09:13:33.515	Trial	Trial 2 ended
+2024-11-13 09:13:33.571	Trial	Trial 3 ended
+2024-11-13 09:13:33.579	Trial	Trial 3 ended
+2024-11-13 09:13:33.583	Trial	Trial 3 ended
+2024-11-13 09:13:33.587	Trial	Trial 3 ended
+2024-11-13 09:13:33.591	Trial	Trial 3 ended
+2024-11-13 09:13:33.594	Trial	Trial 3 ended
+2024-11-13 09:13:33.598	Trial	Trial 3 ended
+2024-11-13 09:13:33.602	Trial	Trial 3 ended
+2024-11-13 09:13:33.606	Trial	Trial 3 ended
+2024-11-13 09:13:33.609	Trial	Trial 3 ended
+2024-11-13 09:13:33.613	Trial	Trial 3 ended
+2024-11-13 09:13:33.617	Trial	Trial 3 ended
+2024-11-13 09:13:33.621	Trial	Trial 3 ended
+2024-11-13 09:13:33.625	Trial	Trial 3 ended
+2024-11-13 09:13:33.629	Trial	Trial 3 ended
+2024-11-13 09:13:33.633	Trial	Trial 3 ended
+2024-11-13 09:13:33.637	Trial	Trial 3 ended
+2024-11-13 09:13:33.641	Trial	Trial 3 ended
+2024-11-13 09:13:33.644	Trial	Trial 3 ended
+2024-11-13 09:13:33.647	Trial	Trial 3 ended
+2024-11-13 09:13:33.651	Trial	Trial 3 ended
+2024-11-13 09:13:33.655	Trial	Trial 3 ended
+2024-11-13 09:13:33.658	Trial	Trial 3 ended
+2024-11-13 09:13:33.662	Trial	Trial 3 ended
+2024-11-13 09:13:33.666	Trial	Trial 3 ended
+2024-11-13 09:13:33.669	Trial	Trial 3 ended
+2024-11-13 09:13:33.673	Trial	Trial 3 ended
+2024-11-13 09:13:33.676	Trial	Trial 3 ended
+2024-11-13 09:13:33.680	Trial	Trial 3 ended
+2024-11-13 09:13:33.684	Trial	Trial 3 ended
+2024-11-13 09:13:33.687	Trial	Trial 3 ended
+2024-11-13 09:13:33.691	Trial	Trial 3 ended
+2024-11-13 09:13:33.694	Trial	Trial 3 ended
+2024-11-13 09:13:33.698	Trial	Trial 3 ended
+2024-11-13 09:13:33.702	Trial	Trial 3 ended
+2024-11-13 09:13:33.706	Trial	Trial 3 ended
+2024-11-13 09:13:33.711	Trial	Trial 3 ended
+2024-11-13 09:13:33.715	Trial	Trial 3 ended
+2024-11-13 09:13:33.720	Trial	Trial 3 ended
+2024-11-13 09:13:33.724	Trial	Trial 3 ended
+2024-11-13 09:13:33.727	Trial	Trial 3 ended
+2024-11-13 09:13:33.731	Trial	Trial 3 ended
+2024-11-13 09:13:33.734	Trial	Trial 3 ended
+2024-11-13 09:13:33.738	Trial	Trial 3 ended
+2024-11-13 09:13:33.742	Trial	Trial 3 ended
+2024-11-13 09:13:33.745	Trial	Trial 3 ended
+2024-11-13 09:13:33.749	Trial	Trial 3 ended
+2024-11-13 09:13:33.752	Trial	Trial 3 ended
+2024-11-13 09:13:33.757	Trial	Trial 3 ended
+2024-11-13 09:13:33.760	Trial	Trial 3 ended
+2024-11-13 09:13:33.764	Trial	Trial 3 ended
+2024-11-13 09:13:33.768	Trial	Trial 3 ended
+2024-11-13 09:13:33.771	Trial	Trial 3 ended
+2024-11-13 09:13:33.775	Trial	Trial 3 ended
+2024-11-13 09:13:33.778	Trial	Trial 3 ended
+2024-11-13 09:13:33.782	Trial	Trial 3 ended
+2024-11-13 09:13:33.786	Trial	Trial 3 ended
+2024-11-13 09:13:33.789	Trial	Trial 3 ended
+2024-11-13 09:13:33.793	Trial	Trial 3 ended
+2024-11-13 09:13:33.797	Trial	Trial 3 ended
+2024-11-13 09:13:33.800	Trial	Trial 3 ended
+2024-11-13 09:13:33.804	Trial	Trial 3 ended
+2024-11-13 09:13:33.808	Trial	Trial 3 ended
+2024-11-13 09:13:33.811	Trial	Trial 3 ended
+2024-11-13 09:13:33.815	Trial	Trial 3 ended
+2024-11-13 09:13:33.818	Trial	Trial 3 ended
+2024-11-13 09:13:33.822	Trial	Trial 3 ended
+2024-11-13 09:13:33.827	Trial	Trial 3 ended
+2024-11-13 09:13:33.831	Trial	Trial 3 ended
+2024-11-13 09:13:33.834	Trial	Trial 3 ended
+2024-11-13 09:13:33.838	Trial	Trial 3 ended
+2024-11-13 09:13:33.841	Trial	Trial 3 ended
+2024-11-13 09:13:33.846	Trial	Trial 3 ended
+2024-11-13 09:13:33.850	Trial	Trial 3 ended
+2024-11-13 09:13:33.854	Trial	Trial 3 ended
+2024-11-13 09:13:33.858	Trial	Trial 3 ended
+2024-11-13 09:13:33.862	Trial	Trial 3 ended
+2024-11-13 09:13:33.866	Trial	Trial 3 ended
+2024-11-13 09:13:33.869	Trial	Trial 3 ended
+2024-11-13 09:13:33.874	Trial	Trial 3 ended
+2024-11-13 09:13:33.877	Trial	Trial 3 ended
+2024-11-13 09:13:33.881	Trial	Trial 3 ended
+2024-11-13 09:13:33.885	Trial	Trial 3 ended
+2024-11-13 09:13:33.889	Trial	Trial 3 ended
+2024-11-13 09:13:33.893	Trial	Trial 3 ended
+2024-11-13 09:13:33.896	Trial	Trial 3 ended
+2024-11-13 09:13:33.900	Trial	Trial 3 ended
+2024-11-13 09:13:33.903	Trial	Trial 3 ended
+2024-11-13 09:13:33.907	Trial	Trial 3 ended
+2024-11-13 09:13:33.911	Trial	Trial 3 ended
+2024-11-13 09:13:33.915	Trial	Trial 3 ended
+2024-11-13 09:13:33.920	Trial	Trial 3 ended
+2024-11-13 09:13:33.924	Trial	Trial 3 ended
+2024-11-13 09:13:33.927	Trial	Trial 3 ended
+2024-11-13 09:13:33.932	Trial	Trial 3 ended
+2024-11-13 09:13:33.935	Trial	Trial 3 ended
+2024-11-13 09:13:33.939	Trial	Trial 3 ended
+2024-11-13 09:13:33.942	Trial	Trial 3 ended
+2024-11-13 09:13:33.946	Trial	Trial 3 ended
+2024-11-13 09:13:33.950	Trial	Trial 3 ended
+2024-11-13 09:13:33.954	Trial	Trial 3 ended
+2024-11-13 09:13:33.957	Trial	Trial 3 ended
+2024-11-13 09:13:33.961	Trial	Trial 3 ended
+2024-11-13 09:13:33.965	Trial	Trial 3 ended
+2024-11-13 09:13:33.968	Trial	Trial 3 ended
+2024-11-13 09:13:33.972	Trial	Trial 3 ended
+2024-11-13 09:13:33.975	Trial	Trial 3 ended
+2024-11-13 09:13:33.979	Trial	Trial 3 ended
+2024-11-13 09:13:33.984	Trial	Trial 3 ended
+2024-11-13 09:13:33.987	Trial	Trial 3 ended
+2024-11-13 09:13:33.991	Trial	Trial 3 ended
+2024-11-13 09:13:33.995	Trial	Trial 3 ended
+2024-11-13 09:13:34.024	Trial	Trial 3 started
+2024-11-13 09:13:34.110	Beat	Beat tick
+2024-11-13 09:13:34.112	Beat	Beat safe window start
+2024-11-13 09:13:34.113	Beat	Beat zone start
+2024-11-13 09:13:34.114	Beat	Beat safe window end
+2024-11-13 09:13:34.178	Beat	Beat zone end
+2024-11-13 09:13:35.819	Beat	Beat zone start
+2024-11-13 09:13:35.878	Beat	Beat safe window start
+2024-11-13 09:13:35.979	Beat	Beat tick
+2024-11-13 09:13:36.097	Beat	Beat safe window end
+2024-11-13 09:13:36.177	Beat	Beat zone end
+2024-11-13 09:13:37.818	Beat	Beat zone start
+2024-11-13 09:13:37.878	Beat	Beat safe window start
+2024-11-13 09:13:37.978	Beat	Beat tick
+2024-11-13 09:13:38.008	Response	Hit
+2024-11-13 09:13:38.100	Beat	Beat safe window end
+2024-11-13 09:13:38.179	Beat	Beat zone end
+2024-11-13 09:34:34.492	Program Start	Program Start
+2024-11-13 09:34:34.510	Trial	Trial 1 ended
+2024-11-13 09:34:35.155	Trial	Trial 2 ended
+2024-11-13 09:34:35.216	Trial	Trial 3 ended
+2024-11-13 09:34:35.224	Trial	Trial 3 ended
+2024-11-13 09:34:35.228	Trial	Trial 3 ended
+2024-11-13 09:34:35.231	Trial	Trial 3 ended
+2024-11-13 09:34:35.235	Trial	Trial 3 ended
+2024-11-13 09:34:35.240	Trial	Trial 3 ended
+2024-11-13 09:34:35.247	Trial	Trial 3 ended
+2024-11-13 09:34:35.251	Trial	Trial 3 ended
+2024-11-13 09:34:35.255	Trial	Trial 3 ended
+2024-11-13 09:34:35.259	Trial	Trial 3 ended
+2024-11-13 09:34:35.263	Trial	Trial 3 ended
+2024-11-13 09:34:35.266	Trial	Trial 3 ended
+2024-11-13 09:34:35.270	Trial	Trial 3 ended
+2024-11-13 09:34:35.273	Trial	Trial 3 ended
+2024-11-13 09:34:35.277	Trial	Trial 3 ended
+2024-11-13 09:34:35.280	Trial	Trial 3 ended
+2024-11-13 09:34:35.283	Trial	Trial 3 ended
+2024-11-13 09:34:35.286	Trial	Trial 3 ended
+2024-11-13 09:34:35.289	Trial	Trial 3 ended
+2024-11-13 09:34:35.293	Trial	Trial 3 ended
+2024-11-13 09:34:35.297	Trial	Trial 3 ended
+2024-11-13 09:34:35.300	Trial	Trial 3 ended
+2024-11-13 09:34:35.304	Trial	Trial 3 ended
+2024-11-13 09:34:35.307	Trial	Trial 3 ended
+2024-11-13 09:34:35.311	Trial	Trial 3 ended
+2024-11-13 09:34:35.314	Trial	Trial 3 ended
+2024-11-13 09:34:35.318	Trial	Trial 3 ended
+2024-11-13 09:34:35.321	Trial	Trial 3 ended
+2024-11-13 09:34:35.325	Trial	Trial 3 ended
+2024-11-13 09:34:35.328	Trial	Trial 3 ended
+2024-11-13 09:34:35.332	Trial	Trial 3 ended
+2024-11-13 09:34:35.335	Trial	Trial 3 ended
+2024-11-13 09:34:35.338	Trial	Trial 3 ended
+2024-11-13 09:34:35.342	Trial	Trial 3 ended
+2024-11-13 09:34:35.345	Trial	Trial 3 ended
+2024-11-13 09:34:35.349	Trial	Trial 3 ended
+2024-11-13 09:34:35.352	Trial	Trial 3 ended
+2024-11-13 09:34:35.356	Trial	Trial 3 ended
+2024-11-13 09:34:35.359	Trial	Trial 3 ended
+2024-11-13 09:34:35.363	Trial	Trial 3 ended
+2024-11-13 09:34:35.366	Trial	Trial 3 ended
+2024-11-13 09:34:35.370	Trial	Trial 3 ended
+2024-11-13 09:34:35.374	Trial	Trial 3 ended
+2024-11-13 09:34:35.377	Trial	Trial 3 ended
+2024-11-13 09:34:35.381	Trial	Trial 3 ended
+2024-11-13 09:34:35.385	Trial	Trial 3 ended
+2024-11-13 09:34:35.388	Trial	Trial 3 ended
+2024-11-13 09:34:35.392	Trial	Trial 3 ended
+2024-11-13 09:34:35.395	Trial	Trial 3 ended
+2024-11-13 09:34:35.399	Trial	Trial 3 ended
+2024-11-13 09:34:35.402	Trial	Trial 3 ended
+2024-11-13 09:34:35.407	Trial	Trial 3 ended
+2024-11-13 09:34:35.410	Trial	Trial 3 ended
+2024-11-13 09:34:35.413	Trial	Trial 3 ended
+2024-11-13 09:34:35.417	Trial	Trial 3 ended
+2024-11-13 09:34:35.420	Trial	Trial 3 ended
+2024-11-13 09:34:35.423	Trial	Trial 3 ended
+2024-11-13 09:34:35.428	Trial	Trial 3 ended
+2024-11-13 09:34:35.431	Trial	Trial 3 ended
+2024-11-13 09:34:35.434	Trial	Trial 3 ended
+2024-11-13 09:34:35.438	Trial	Trial 3 ended
+2024-11-13 09:34:35.441	Trial	Trial 3 ended
+2024-11-13 09:34:35.445	Trial	Trial 3 ended
+2024-11-13 09:34:35.448	Trial	Trial 3 ended
+2024-11-13 09:34:35.451	Trial	Trial 3 ended
+2024-11-13 09:34:35.454	Trial	Trial 3 ended
+2024-11-13 09:34:35.458	Trial	Trial 3 ended
+2024-11-13 09:34:35.461	Trial	Trial 3 ended
+2024-11-13 09:34:35.466	Trial	Trial 3 ended
+2024-11-13 09:34:35.469	Trial	Trial 3 ended
+2024-11-13 09:34:35.472	Trial	Trial 3 ended
+2024-11-13 09:34:35.476	Trial	Trial 3 ended
+2024-11-13 09:34:35.479	Trial	Trial 3 ended
+2024-11-13 09:34:35.483	Trial	Trial 3 ended
+2024-11-13 09:34:35.486	Trial	Trial 3 ended
+2024-11-13 09:34:35.490	Trial	Trial 3 ended
+2024-11-13 09:34:35.493	Trial	Trial 3 ended
+2024-11-13 09:34:35.496	Trial	Trial 3 ended
+2024-11-13 09:34:35.499	Trial	Trial 3 ended
+2024-11-13 09:34:35.503	Trial	Trial 3 ended
+2024-11-13 09:34:35.506	Trial	Trial 3 ended
+2024-11-13 09:34:35.510	Trial	Trial 3 ended
+2024-11-13 09:34:35.513	Trial	Trial 3 ended
+2024-11-13 09:34:35.517	Trial	Trial 3 ended
+2024-11-13 09:34:35.521	Trial	Trial 3 ended
+2024-11-13 09:34:35.525	Trial	Trial 3 ended
+2024-11-13 09:34:35.529	Trial	Trial 3 ended
+2024-11-13 09:34:35.532	Trial	Trial 3 ended
+2024-11-13 09:34:35.536	Trial	Trial 3 ended
+2024-11-13 09:34:35.541	Trial	Trial 3 ended
+2024-11-13 09:34:35.547	Trial	Trial 3 ended
+2024-11-13 09:34:35.551	Trial	Trial 3 ended
+2024-11-13 09:34:35.559	Trial	Trial 3 ended
+2024-11-13 09:34:35.562	Trial	Trial 3 ended
+2024-11-13 09:34:35.566	Trial	Trial 3 ended
+2024-11-13 09:34:35.569	Trial	Trial 3 ended
+2024-11-13 09:34:35.573	Trial	Trial 3 ended
+2024-11-13 09:34:35.576	Trial	Trial 3 ended
+2024-11-13 09:34:35.580	Trial	Trial 3 ended
+2024-11-13 09:34:35.583	Trial	Trial 3 ended
+2024-11-13 09:34:35.587	Trial	Trial 3 ended
+2024-11-13 09:34:35.614	Trial	Trial 3 started
+2024-11-13 09:34:35.692	Beat	Beat tick
+2024-11-13 09:34:35.699	Beat	Beat safe window start
+2024-11-13 09:34:35.707	Beat	Beat safe window end
+2024-11-13 09:34:37.481	Beat	Beat safe window start
+2024-11-13 09:34:37.579	Beat	Beat tick
+2024-11-13 09:34:37.702	Beat	Beat safe window end
+2024-11-13 09:34:39.480	Beat	Beat safe window start
+2024-11-13 09:34:39.577	Beat	Beat tick
+2024-11-13 09:34:39.699	Beat	Beat safe window end
+2024-11-13 09:39:35.921	Program Start	Program Start
+2024-11-13 09:39:35.938	Trial	Trial 1 ended
+2024-11-13 09:39:36.647	Trial	Trial 2 ended
+2024-11-13 09:39:36.675	Trial	Trial 3 ended
+2024-11-13 09:39:36.685	Trial	Trial 3 ended
+2024-11-13 09:39:36.688	Trial	Trial 3 ended
+2024-11-13 09:39:36.692	Trial	Trial 3 ended
+2024-11-13 09:39:36.696	Trial	Trial 3 ended
+2024-11-13 09:39:36.700	Trial	Trial 3 ended
+2024-11-13 09:39:36.704	Trial	Trial 3 ended
+2024-11-13 09:39:36.708	Trial	Trial 3 ended
+2024-11-13 09:39:36.712	Trial	Trial 3 ended
+2024-11-13 09:39:36.716	Trial	Trial 3 ended
+2024-11-13 09:39:36.720	Trial	Trial 3 ended
+2024-11-13 09:39:36.724	Trial	Trial 3 ended
+2024-11-13 09:39:36.727	Trial	Trial 3 ended
+2024-11-13 09:39:36.731	Trial	Trial 3 ended
+2024-11-13 09:39:36.735	Trial	Trial 3 ended
+2024-11-13 09:39:36.739	Trial	Trial 3 ended
+2024-11-13 09:39:36.742	Trial	Trial 3 ended
+2024-11-13 09:39:36.746	Trial	Trial 3 ended
+2024-11-13 09:39:36.750	Trial	Trial 3 ended
+2024-11-13 09:39:36.753	Trial	Trial 3 ended
+2024-11-13 09:39:36.756	Trial	Trial 3 ended
+2024-11-13 09:39:36.760	Trial	Trial 3 ended
+2024-11-13 09:39:36.764	Trial	Trial 3 ended
+2024-11-13 09:39:36.768	Trial	Trial 3 ended
+2024-11-13 09:39:36.772	Trial	Trial 3 ended
+2024-11-13 09:39:36.776	Trial	Trial 3 ended
+2024-11-13 09:39:36.780	Trial	Trial 3 ended
+2024-11-13 09:39:36.784	Trial	Trial 3 ended
+2024-11-13 09:39:36.787	Trial	Trial 3 ended
+2024-11-13 09:39:36.791	Trial	Trial 3 ended
+2024-11-13 09:39:36.796	Trial	Trial 3 ended
+2024-11-13 09:39:36.800	Trial	Trial 3 ended
+2024-11-13 09:39:36.803	Trial	Trial 3 ended
+2024-11-13 09:39:36.807	Trial	Trial 3 ended
+2024-11-13 09:39:36.812	Trial	Trial 3 ended
+2024-11-13 09:39:36.816	Trial	Trial 3 ended
+2024-11-13 09:39:36.820	Trial	Trial 3 ended
+2024-11-13 09:39:36.824	Trial	Trial 3 ended
+2024-11-13 09:39:36.828	Trial	Trial 3 ended
+2024-11-13 09:39:36.832	Trial	Trial 3 ended
+2024-11-13 09:39:36.840	Trial	Trial 3 ended
+2024-11-13 09:39:36.846	Trial	Trial 3 ended
+2024-11-13 09:39:36.858	Trial	Trial 3 ended
+2024-11-13 09:39:36.862	Trial	Trial 3 ended
+2024-11-13 09:39:36.868	Trial	Trial 3 ended
+2024-11-13 09:39:36.872	Trial	Trial 3 ended
+2024-11-13 09:39:36.876	Trial	Trial 3 ended
+2024-11-13 09:39:36.884	Trial	Trial 3 ended
+2024-11-13 09:39:36.888	Trial	Trial 3 ended
+2024-11-13 09:39:36.892	Trial	Trial 3 ended
+2024-11-13 09:39:36.896	Trial	Trial 3 ended
+2024-11-13 09:39:36.901	Trial	Trial 3 ended
+2024-11-13 09:39:36.904	Trial	Trial 3 ended
+2024-11-13 09:39:36.908	Trial	Trial 3 ended
+2024-11-13 09:39:36.914	Trial	Trial 3 ended
+2024-11-13 09:39:36.918	Trial	Trial 3 ended
+2024-11-13 09:39:36.922	Trial	Trial 3 ended
+2024-11-13 09:39:36.925	Trial	Trial 3 ended
+2024-11-13 09:39:36.930	Trial	Trial 3 ended
+2024-11-13 09:39:36.934	Trial	Trial 3 ended
+2024-11-13 09:39:36.938	Trial	Trial 3 ended
+2024-11-13 09:39:36.941	Trial	Trial 3 ended
+2024-11-13 09:39:36.946	Trial	Trial 3 ended
+2024-11-13 09:39:36.949	Trial	Trial 3 ended
+2024-11-13 09:39:36.954	Trial	Trial 3 ended
+2024-11-13 09:39:36.958	Trial	Trial 3 ended
+2024-11-13 09:39:36.963	Trial	Trial 3 ended
+2024-11-13 09:39:36.967	Trial	Trial 3 ended
+2024-11-13 09:39:36.971	Trial	Trial 3 ended
+2024-11-13 09:39:36.974	Trial	Trial 3 ended
+2024-11-13 09:39:36.979	Trial	Trial 3 ended
+2024-11-13 09:39:36.983	Trial	Trial 3 ended
+2024-11-13 09:39:36.987	Trial	Trial 3 ended
+2024-11-13 09:39:36.991	Trial	Trial 3 ended
+2024-11-13 09:39:36.994	Trial	Trial 3 ended
+2024-11-13 09:39:37.012	Trial	Trial 3 ended
+2024-11-13 09:39:37.016	Trial	Trial 3 ended
+2024-11-13 09:39:37.020	Trial	Trial 3 ended
+2024-11-13 09:39:37.024	Trial	Trial 3 ended
+2024-11-13 09:39:37.027	Trial	Trial 3 ended
+2024-11-13 09:39:37.031	Trial	Trial 3 ended
+2024-11-13 09:39:37.034	Trial	Trial 3 ended
+2024-11-13 09:39:37.038	Trial	Trial 3 ended
+2024-11-13 09:39:37.042	Trial	Trial 3 ended
+2024-11-13 09:39:37.045	Trial	Trial 3 ended
+2024-11-13 09:39:37.049	Trial	Trial 3 ended
+2024-11-13 09:39:37.053	Trial	Trial 3 ended
+2024-11-13 09:39:37.056	Trial	Trial 3 ended
+2024-11-13 09:39:37.060	Trial	Trial 3 ended
+2024-11-13 09:39:37.063	Trial	Trial 3 ended
+2024-11-13 09:39:37.067	Trial	Trial 3 ended
+2024-11-13 09:39:37.071	Trial	Trial 3 ended
+2024-11-13 09:39:37.096	Trial	Trial 3 started
+2024-11-13 09:39:37.177	Beat	Beat tick
+2024-11-13 09:39:37.179	Beat	Beat safe window start
+2024-11-13 09:39:37.181	Beat	Beat safe window end
+2024-11-13 09:39:38.950	Beat	Beat safe window start
+2024-11-13 09:42:12.550	Program Start	Program Start
+2024-11-13 09:42:13.730	Trial	Trial 1 started
+2024-11-13 09:42:13.813	Beat	Beat tick
+2024-11-13 09:42:13.816	Beat	Beat zone start
+2024-11-13 09:42:13.816	Beat	Beat safe window start
+2024-11-13 09:42:13.833	Beat	Beat zone end
+2024-11-13 09:42:13.916	Beat	Beat safe window end
+2024-11-13 09:42:15.497	Beat	Beat safe window start
+2024-11-13 09:42:15.619	Beat	Beat zone start
+2024-11-13 09:42:15.638	Beat	Beat tick
+2024-11-13 09:42:15.796	Beat	Beat safe window end
+2024-11-13 09:42:15.836	Beat	Beat zone end
+2024-11-13 09:42:17.600	Beat	Beat zone start
+2024-11-13 09:42:17.618	Beat	Beat safe window start
+2024-11-13 09:42:17.760	Beat	Beat tick
+2024-11-13 09:42:17.817	Beat	Beat zone end
+2024-11-13 09:42:17.937	Beat	Beat safe window end
+2024-11-13 09:42:19.478	Beat	Beat safe window start
+2024-11-13 09:42:19.618	Beat	Beat zone start
+2024-11-13 09:42:19.619	Beat	Beat tick
+2024-11-13 09:42:19.777	Beat	Beat safe window end
+2024-11-13 09:42:19.838	Beat	Beat zone end
+2024-11-13 09:42:21.596	Beat	Beat zone start
+2024-11-13 09:42:21.636	Beat	Beat safe window start
+2024-11-13 09:42:21.777	Beat	Beat tick
+2024-11-13 09:42:21.796	Beat	Beat zone end
+2024-11-13 09:42:21.937	Beat	Beat safe window end
+2024-11-13 09:42:23.480	Beat	Beat safe window start
+2024-11-13 09:42:23.619	Beat	Beat zone start
+2024-11-13 09:42:23.620	Beat	Beat tick
+2024-11-13 09:42:23.777	Beat	Beat safe window end
+2024-11-13 09:42:23.841	Beat	Beat zone end
+2024-11-13 09:43:46.233	Program Start	Program Start
+2024-11-13 09:43:47.634	Trial	Trial 1 started
+2024-11-13 09:43:47.728	Beat	Beat tick
+2024-11-13 09:43:47.730	Beat	Beat zone start
+2024-11-13 09:43:47.731	Beat	Beat safe window start
+2024-11-13 09:43:47.732	Beat	Beat zone end
+2024-11-13 09:43:47.829	Beat	Beat safe window end
+2024-11-13 09:43:49.404	Beat	Beat safe window start
+2024-11-13 09:43:49.509	Response	Safe
+2024-11-13 09:43:49.524	Beat	Beat zone start
+2024-11-13 09:43:49.542	Beat	Beat tick
+2024-11-13 09:43:49.703	Beat	Beat safe window end
+2024-11-13 09:43:49.748	Beat	Beat zone end
+2024-11-13 09:43:51.505	Beat	Beat zone start
+2024-11-13 09:43:51.522	Beat	Beat safe window start
+2024-11-13 09:43:51.664	Beat	Beat tick
+2024-11-13 09:43:51.672	Response	Hit
+2024-11-13 09:43:51.723	Beat	Beat zone end
+2024-11-13 09:43:51.844	Beat	Beat safe window end
+2024-11-13 09:43:53.384	Beat	Beat safe window start
+2024-11-13 09:43:53.495	Response	Safe
+2024-11-13 09:43:53.524	Beat	Beat zone start
+2024-11-13 09:43:53.525	Beat	Beat tick
+2024-11-13 09:43:53.684	Beat	Beat safe window end
+2024-11-13 09:43:53.742	Beat	Beat zone end
+2024-11-13 09:43:55.503	Beat	Beat zone start
+2024-11-13 09:43:55.545	Beat	Beat safe window start
+2024-11-13 09:43:55.590	Response	Hit
+2024-11-13 09:43:55.682	Beat	Beat tick
+2024-11-13 09:43:55.702	Beat	Beat zone end
+2024-11-13 09:43:55.842	Beat	Beat safe window end
+2024-11-13 09:43:57.384	Beat	Beat safe window start
+2024-11-13 09:43:57.478	Response	Safe
+2024-11-13 09:43:57.522	Beat	Beat zone start
+2024-11-13 09:43:57.522	Beat	Beat tick
+2024-11-13 09:43:57.682	Beat	Beat safe window end
+2024-11-13 09:43:57.744	Beat	Beat zone end
+2024-11-13 09:43:59.504	Beat	Beat zone start
+2024-11-13 09:43:59.544	Beat	Beat safe window start
+2024-11-13 09:43:59.678	Response	Hit
+2024-11-13 09:43:59.682	Beat	Beat tick
+2024-11-13 09:43:59.703	Beat	Beat zone end
+2024-11-13 09:43:59.844	Beat	Beat safe window end
+2024-11-13 09:44:12.688	Program Start	Program Start
+2024-11-13 09:44:42.385	Program Start	Program Start
+2024-11-13 09:44:43.730	Trial	Trial 1 started
+2024-11-13 09:44:43.825	Beat	Beat tick
+2024-11-13 09:44:43.827	Beat	Beat zone start
+2024-11-13 09:44:43.828	Beat	Beat safe window start
+2024-11-13 09:44:43.829	Beat	Beat zone end
+2024-11-13 09:44:43.908	Beat	Beat safe window end
+2024-11-13 09:44:45.491	Beat	Beat safe window start
+2024-11-13 09:44:45.608	Beat	Beat zone start
+2024-11-13 09:44:45.625	Beat	Beat tick
+2024-11-13 09:44:45.786	Beat	Beat safe window end
+2024-11-13 09:44:45.829	Beat	Beat zone end
+2024-11-13 09:44:47.587	Beat	Beat zone start
+2024-11-13 09:44:47.607	Beat	Beat safe window start
+2024-11-13 09:44:47.711	Response	Hit
+2024-11-13 09:44:47.745	Beat	Beat tick
+2024-11-13 09:44:47.805	Beat	Beat zone end
+2024-11-13 09:44:47.926	Beat	Beat safe window end
+2024-11-13 09:44:49.465	Beat	Beat safe window start
+2024-11-13 09:44:49.605	Beat	Beat zone start
+2024-11-13 09:44:49.605	Beat	Beat tick
+2024-11-13 09:44:49.671	Response	Hit
+2024-11-13 09:44:49.765	Beat	Beat safe window end
+2024-11-13 09:44:49.828	Beat	Beat zone end
+2024-11-13 09:44:51.587	Beat	Beat zone start
+2024-11-13 09:44:51.624	Beat	Beat safe window start
+2024-11-13 09:44:51.758	Response	Hit
+2024-11-13 09:44:51.764	Beat	Beat tick
+2024-11-13 09:44:51.785	Beat	Beat zone end
+2024-11-13 09:44:51.927	Beat	Beat safe window end
+2024-11-13 09:44:53.467	Beat	Beat safe window start
+2024-11-13 09:44:53.607	Beat	Beat zone start
+2024-11-13 09:44:53.607	Beat	Beat tick
+2024-11-13 09:44:53.608	Response	Hit
+2024-11-13 09:44:53.767	Beat	Beat safe window end
+2024-11-13 09:44:53.825	Beat	Beat zone end
+2024-11-13 09:44:55.573	Response	Miss
+2024-11-13 09:44:55.587	Beat	Beat zone start
+2024-11-13 09:44:55.626	Beat	Beat safe window start
+2024-11-13 09:44:55.765	Beat	Beat tick
+2024-11-13 09:44:55.785	Beat	Beat zone end
+2024-11-13 09:44:55.927	Beat	Beat safe window end
+2024-11-13 09:44:57.468	Beat	Beat safe window start
+2024-11-13 09:44:57.606	Beat	Beat zone start
+2024-11-13 09:44:57.607	Beat	Beat tick
+2024-11-13 09:44:57.767	Beat	Beat safe window end
+2024-11-13 09:44:57.827	Beat	Beat zone end
+2024-11-13 09:49:33.513	Program Start	Program Start
+2024-11-13 09:49:34.935	Trial	Trial 1 started
+2024-11-13 09:49:35.022	Beat	Beat tick
+2024-11-13 09:49:35.024	Beat	Beat zone start
+2024-11-13 09:49:35.025	Beat	Beat safe window start
+2024-11-13 09:49:35.026	Beat	Beat zone end
+2024-11-13 09:49:35.123	Beat	Beat safe window end
+2024-11-13 09:51:18.936	Program Start	Program Start
+2024-11-13 09:51:20.077	Trial	Trial 1 started
+2024-11-13 09:51:20.162	Beat	Beat tick
+2024-11-13 09:51:20.165	Beat	Beat safe window start
+2024-11-13 09:51:20.166	Beat	Beat zone start
+2024-11-13 09:51:20.182	Beat	Beat zone end
+2024-11-13 09:51:20.221	Beat	Beat safe window end
+2024-11-13 09:51:21.901	Beat	Beat safe window start
+2024-11-13 09:51:21.920	Beat	Beat zone start
+2024-11-13 09:51:22.043	Beat	Beat tick
+2024-11-13 09:51:22.179	Beat	Beat zone end
+2024-11-13 09:51:22.221	Beat	Beat safe window end
+2024-11-13 09:51:48.102	Program Start	Program Start
+2024-11-13 09:51:49.284	Trial	Trial 1 started
+2024-11-13 09:51:49.377	Beat	Beat tick
+2024-11-13 09:51:49.380	Beat	Beat safe window start
+2024-11-13 09:51:49.380	Beat	Beat zone start
+2024-11-13 09:51:49.382	Beat	Beat zone end
+2024-11-13 09:51:49.417	Beat	Beat safe window end
+2024-11-13 09:55:53.634	Program Start	Program Start
+2024-11-13 09:55:54.852	Trial	Trial 1 started
+2024-11-13 09:55:54.939	Beat	Beat tick
+2024-11-13 09:55:54.941	Beat	Beat safe window start
+2024-11-13 09:55:54.942	Beat	Beat zone start
+2024-11-13 09:55:54.953	Beat	Beat zone end
+2024-11-13 09:55:54.984	Beat	Beat safe window end
+2024-11-13 09:55:56.665	Beat	Beat safe window start
+2024-11-13 09:55:56.684	Beat	Beat zone start
+2024-11-13 09:55:56.807	Beat	Beat tick
+2024-11-13 09:55:56.848	Response	Hit
+2024-11-13 09:55:56.945	Beat	Beat zone end
+2024-11-13 09:55:56.984	Beat	Beat safe window end
+2024-11-13 09:55:58.666	Beat	Beat safe window start
+2024-11-13 09:55:58.693	Beat	Beat zone start
+2024-11-13 09:55:58.775	Response	Hit
+2024-11-13 09:55:58.805	Beat	Beat tick
+2024-11-13 09:55:58.947	Beat	Beat zone end
+2024-11-13 09:55:58.986	Beat	Beat safe window end
+2024-11-13 09:56:00.665	Beat	Beat safe window start
+2024-11-13 09:56:00.684	Beat	Beat zone start
+2024-11-13 09:56:00.742	Response	Hit
+2024-11-13 09:56:00.805	Beat	Beat tick
+2024-11-13 09:56:00.946	Beat	Beat zone end
+2024-11-13 09:56:00.985	Beat	Beat safe window end
+2024-11-13 09:56:02.666	Beat	Beat safe window start
+2024-11-13 09:56:02.685	Beat	Beat zone start
+2024-11-13 09:56:02.773	Response	Hit
+2024-11-13 09:56:02.808	Beat	Beat tick
+2024-11-13 09:56:02.944	Beat	Beat zone end
+2024-11-13 09:56:02.984	Beat	Beat safe window end
+2024-11-13 09:56:04.665	Beat	Beat safe window start
+2024-11-13 09:56:04.686	Beat	Beat zone start
+2024-11-13 09:56:04.733	Response	Hit
+2024-11-13 09:56:04.741	Trial	Trial 1 ended
+2024-11-13 09:56:04.742	Beat	Beat safe window end
+2024-11-13 09:56:04.742	Beat	Beat zone end
+2024-11-13 09:56:47.208	Trial	Trial 2 started
+2024-11-13 09:56:47.265	Beat	Beat tick
+2024-11-13 09:56:47.266	Beat	Beat zone start
+2024-11-13 09:56:47.266	Beat	Beat safe window start
+2024-11-13 09:56:47.311	Beat	Beat zone end
+2024-11-13 09:56:47.351	Beat	Beat safe window end
+2024-11-13 09:56:49.062	Beat	Beat safe window start
+2024-11-13 09:56:49.063	Beat	Beat zone start
+2024-11-13 09:56:49.172	Beat	Beat tick
+2024-11-13 09:57:09.121	Response	Hit
+2024-11-13 09:57:43.190	Beat	Beat zone end
+2024-11-13 09:57:43.190	Beat	Beat safe window end
+2024-11-13 09:58:03.394	Program Start	Program Start
+2024-11-13 09:58:04.526	Trial	Trial 1 started
+2024-11-13 09:58:04.631	Beat	Beat safe window start
+2024-11-13 09:58:04.632	Beat	Beat zone start
+2024-11-13 09:58:04.633	Beat	Beat zone end
+2024-11-13 09:58:04.666	Beat	Beat safe window end
+2024-11-13 09:58:06.362	Beat	Beat safe window start
+2024-11-13 09:58:06.370	Beat	Beat zone start
+2024-11-13 09:58:11.188	Response	Hit
+2024-11-13 09:58:11.384	Beat	Beat tick
+2024-11-13 09:58:11.465	Beat	Beat zone end
+2024-11-13 09:58:11.523	Beat	Beat safe window end
+2024-11-13 09:58:27.049	Response	Miss
+2024-11-13 09:59:01.422	Program Start	Program Start
+2024-11-13 09:59:04.022	Trial	Trial 1 started
+2024-11-13 09:59:04.121	Beat	Beat safe window start
+2024-11-13 09:59:04.122	Beat	Beat zone start
+2024-11-13 09:59:04.146	Beat	Beat zone end
+2024-11-13 09:59:04.171	Beat	Beat safe window end
+2024-11-13 09:59:05.845	Beat	Beat safe window start
+2024-11-13 09:59:05.869	Beat	Beat zone start
+2024-11-13 09:59:05.977	Response	Hit
+2024-11-13 09:59:06.010	Beat	Beat tick
+2024-11-13 09:59:06.126	Beat	Beat zone end
+2024-11-13 09:59:06.164	Beat	Beat safe window end
+2024-11-13 09:59:07.855	Beat	Beat safe window start
+2024-11-13 09:59:07.867	Beat	Beat zone start
+2024-11-13 09:59:07.958	Response	Hit
+2024-11-13 09:59:08.005	Beat	Beat tick
+2024-11-13 09:59:08.127	Beat	Beat zone end
+2024-11-13 09:59:08.165	Beat	Beat safe window end
+2024-11-13 09:59:09.846	Beat	Beat safe window start
+2024-11-13 09:59:09.847	Response	Safe
+2024-11-13 09:59:09.868	Beat	Beat zone start
+2024-11-13 09:59:10.006	Beat	Beat tick
+2024-11-13 09:59:10.124	Beat	Beat zone end
+2024-11-13 09:59:10.175	Beat	Beat safe window end
+2024-11-13 09:59:11.855	Beat	Beat safe window start
+2024-11-13 09:59:11.865	Beat	Beat zone start
+2024-11-13 09:59:11.871	Response	Hit
+2024-11-13 09:59:12.003	Beat	Beat tick
+2024-11-13 09:59:12.135	Beat	Beat zone end
+2024-11-13 09:59:12.170	Beat	Beat safe window end
+2024-11-13 09:59:13.844	Beat	Beat safe window start
+2024-11-13 09:59:13.867	Beat	Beat zone start
+2024-11-13 09:59:13.877	Response	Hit
+2024-11-13 09:59:14.006	Beat	Beat tick
+2024-11-13 09:59:14.126	Beat	Beat zone end
+2024-11-13 09:59:14.176	Beat	Beat safe window end
+2024-11-13 09:59:35.212	Program Start	Program Start
+2024-11-13 09:59:36.108	Trial	Trial 1 started
+2024-11-13 09:59:36.229	Beat	Beat safe window start
+2024-11-13 09:59:36.229	Beat	Beat zone start
+2024-11-13 09:59:36.231	Beat	Beat zone end
+2024-11-13 09:59:36.419	Beat	Beat safe window end
+2024-11-13 09:59:37.771	Beat	Beat safe window start
+2024-11-13 09:59:37.950	Beat	Beat zone start
+2024-11-13 09:59:37.987	Response	Hit
+2024-11-13 09:59:38.090	Beat	Beat tick
+2024-11-13 09:59:38.221	Beat	Beat zone end
+2024-11-13 09:59:38.411	Beat	Beat safe window end
+2024-11-13 09:59:39.771	Beat	Beat safe window start
+2024-11-13 09:59:39.802	Response	Safe
+2024-11-13 09:59:39.949	Beat	Beat zone start
+2024-11-13 09:59:40.103	Beat	Beat tick
+2024-11-13 09:59:40.210	Beat	Beat zone end
+2024-11-13 09:59:40.410	Beat	Beat safe window end
+2024-11-13 09:59:41.770	Beat	Beat safe window start
+2024-11-13 09:59:41.863	Response	Safe
+2024-11-13 09:59:41.949	Beat	Beat zone start
+2024-11-13 09:59:42.090	Beat	Beat tick
+2024-11-13 09:59:42.218	Beat	Beat zone end
+2024-11-13 09:59:42.409	Beat	Beat safe window end
+2024-11-13 09:59:43.776	Beat	Beat safe window start
+2024-11-13 09:59:43.856	Response	Safe
+2024-11-13 09:59:43.951	Beat	Beat zone start
+2024-11-13 09:59:44.094	Beat	Beat tick
+2024-11-13 09:59:44.209	Beat	Beat zone end
+2024-11-13 09:59:44.412	Beat	Beat safe window end
+2024-11-13 09:59:45.777	Beat	Beat safe window start
+2024-11-13 09:59:45.953	Beat	Beat zone start
+2024-11-13 09:59:46.091	Beat	Beat tick
+2024-11-13 09:59:46.209	Beat	Beat zone end

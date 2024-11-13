@@ -35,6 +35,7 @@ public class GameController : MonoBehaviour
     private float LRSDuration = -3; // how long the LRS should be visible
     private int LRSThresh = 1; // how long the LRS should be visible
     private float colliderSize;  // width of the eventBox collider
+    private float beatZoneSize; // width of the beatZone collider
 
     private static string logFilePath = Application.dataPath + "/Data/EventLog.txt";
 
@@ -64,15 +65,15 @@ public class GameController : MonoBehaviour
         LRSDuration = parameters.LRSDuration;
         LRSThresh = parameters.LRSThresh;
 
-        // create log file
+        //// create log file
         System.DateTime currentTime = System.DateTime.Now;
-
+        string currDate = currentTime.ToString("yyyyMMdd");
+        
         string AnimalName = parameters.AnimalName;
         
-        // Format the date and time to include milliseconds
-        string timeWithMilliseconds = currentTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
-
-        string currDate = currentTime.ToString("yyyyMMdd");
+        //// Format the date and time to include milliseconds
+        //string timeWithMilliseconds = currentTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
+        
         string logFileName = parameters.AnimalName + "_" + currDate + ".txt";
         string logFileFolder = Path.Combine(Application.dataPath, "Data", parameters.AnimalName);
         logFilePath = Path.Combine(logFileFolder, logFileName);
@@ -90,7 +91,7 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (eventCount >= eventMax)
+        if (trialIsRunning && eventCount >= eventMax)
         {
             EndTrial();
         }
@@ -108,11 +109,13 @@ public class GameController : MonoBehaviour
         eventMax = parameters.trials[currTrial].beatMax;
         targetScore = parameters.trials[currTrial].targetScore;
         colliderSize = parameters.trials[currTrial].colliderSize;
+        beatZoneSize = parameters.trials[currTrial].beatZoneSize;
         eventCount = 0;
         score = 0;
         trialIsRunning = true;
         EventLogger.LogEvent("Trial", "Trial " + (currTrial+1) + " started");
         Wheel.colliderSize = colliderSize;
+        Wheel.beatZoneSize = beatZoneSize;
         Wheel.ResetWheel();
         Wheel.StartSpin();
 
@@ -131,14 +134,11 @@ public class GameController : MonoBehaviour
         {
             currTrial++;
             scoreText.text = "Click to start";
-
-            // StartTrial();
         }
         else
         {
             scoreText.text = "Game Over";
         }
-
 
     }
     

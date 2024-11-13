@@ -11,6 +11,7 @@ public class ParameterLoader : MonoBehaviour
         public int beatMax;
         public int targetScore;
         public float colliderSize;
+        public float beatZoneSize;
     }
 
     public string AnimalName;
@@ -34,6 +35,7 @@ public class ParameterLoader : MonoBehaviour
         int beatMaxOut;
         int targetScoreOut;
         float colliderSizeOut;
+        float beatZoneSizeOut;
 
         string filePath = Path.Combine(Application.streamingAssetsPath, fileName); // Application.streamingAssetsPath is fine for read-only files (at least as far as the game is concerned) like config files, but not log files
 
@@ -51,7 +53,8 @@ public class ParameterLoader : MonoBehaviour
                     if (float.TryParse(splitLine[0], out wheelSpeedOut) &&
                         int.TryParse(splitLine[2], out beatMaxOut) &&
                         int.TryParse(splitLine[3], out targetScoreOut) &&
-                        float.TryParse(splitLine[4], out colliderSizeOut))
+                        float.TryParse(splitLine[4], out colliderSizeOut) &&
+                        float.TryParse(splitLine[5], out beatZoneSizeOut))
                     // Parse eventList first, starting as string and converting to float
                     {
                         string[] eventListStrings = splitLine[1].Split(',');
@@ -72,7 +75,8 @@ public class ParameterLoader : MonoBehaviour
                             eventList = eventListValues,
                             beatMax = beatMaxOut,
                             targetScore = targetScoreOut,
-                            colliderSize = colliderSizeOut
+                            colliderSize = colliderSizeOut,
+                            beatZoneSize = beatZoneSizeOut,
                         };
                     }
 
