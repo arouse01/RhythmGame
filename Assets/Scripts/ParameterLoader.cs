@@ -37,49 +37,61 @@ public class ParameterLoader : MonoBehaviour
         float colliderSizeOut;
         float beatZoneSizeOut;
 
-        string filePath = Path.Combine(Application.streamingAssetsPath, fileName); // Application.streamingAssetsPath is fine for read-only files (at least as far as the game is concerned) like config files, but not log files
+        string filePath;
+        #if UNITY_EDITOR
+            // In the Editor, look for the file in the project root
+            filePath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+        #else
+            // In a built game, look for the file in the build directory
+            filePath = Path.Combine(Application.dataPath, "..", fileName);  // The ".." makes us go one folder above the data folder, which is where the application exe is
+        #endif
 
         if (File.Exists(filePath))
         {
             string[] lines = File.ReadAllLines(filePath);
-            trials = new TrialParameters[lines.Length];
+            trials = new TrialParameters[lines.Length-1];
 
             for (int i = 0; i < lines.Length; i++)
             {
                 string[] splitLine = lines[i].Split('\t'); // Split the line by tabs
-                if (splitLine.Length >= 4) // Ensure there are at least 4 parameters
+                if (i > 0)
                 {
-                    // Parse parameters into proper formats
-                    if (float.TryParse(splitLine[0], out wheelSpeedOut) &&
-                        int.TryParse(splitLine[2], out beatMaxOut) &&
-                        int.TryParse(splitLine[3], out targetScoreOut) &&
-                        float.TryParse(splitLine[4], out colliderSizeOut) &&
-                        float.TryParse(splitLine[5], out beatZoneSizeOut))
-                    // Parse eventList first, starting as string and converting to float
-                    {
-                        string[] eventListStrings = splitLine[1].Split(',');
-                        float[] eventListValues = new float[eventListStrings.Length];
 
-                        for (int j = 0; j < eventListStrings.Length; j++)
+
+                    if (splitLine.Length >= 4) // Ensure there are at least 4 parameters
+                    {
+                        // Parse parameters into proper formats
+                        if (float.TryParse(splitLine[0], out wheelSpeedOut) &&
+                            int.TryParse(splitLine[2], out beatMaxOut) &&
+                            int.TryParse(splitLine[3], out targetScoreOut) &&
+                            float.TryParse(splitLine[4], out colliderSizeOut) &&
+                            float.TryParse(splitLine[5], out beatZoneSizeOut))
+                        // Parse eventList first, starting as string and converting to float
                         {
-                            if (!float.TryParse(eventListStrings[j], out eventListValues[j]))
+                            string[] eventListStrings = splitLine[1].Split(',');
+                            float[] eventListValues = new float[eventListStrings.Length];
+
+                            for (int j = 0; j < eventListStrings.Length; j++)
                             {
-                                Debug.LogError("Invalid float value in param3: " + eventListStrings[j]);
+                                if (!float.TryParse(eventListStrings[j], out eventListValues[j]))
+                                {
+                                    Debug.LogError("Invalid float value in param3: " + eventListStrings[j]);
+                                }
                             }
+
+
+                            trials[i-1] = new TrialParameters
+                            {
+                                wheelSpeed = wheelSpeedOut,
+                                eventList = eventListValues,
+                                beatMax = beatMaxOut,
+                                targetScore = targetScoreOut,
+                                colliderSize = colliderSizeOut,
+                                beatZoneSize = beatZoneSizeOut,
+                            };
                         }
 
-
-                        trials[i] = new TrialParameters
-                        {
-                            wheelSpeed = wheelSpeedOut,
-                            eventList = eventListValues,
-                            beatMax = beatMaxOut,
-                            targetScore = targetScoreOut,
-                            colliderSize = colliderSizeOut,
-                            beatZoneSize = beatZoneSizeOut,
-                        };
                     }
-
                 }
             }
         }
@@ -108,9 +120,16 @@ public class ParameterLoader : MonoBehaviour
 
     public void LoadSessionParameters(string fileName)
     {
-        
+        string filePath;
 
-        string filePath = Path.Combine(Application.streamingAssetsPath, fileName); // Adjust path if needed
+        #if UNITY_EDITOR
+            // In the Editor, look for the file in the project root
+            filePath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+        #else
+            // In a built game, look for the file in the build directory
+            filePath = Path.Combine(Application.dataPath, "..", fileName);
+        #endif
+        
 
         if (File.Exists(filePath))
         {

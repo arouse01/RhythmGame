@@ -7,7 +7,7 @@ using System;
 
 public class WheelLineDetector : MonoBehaviour
 {
-    
+
     //public TextMeshProUGUI scoreText;
     //public int eventMax;
     //public int targetScore;
@@ -15,7 +15,9 @@ public class WheelLineDetector : MonoBehaviour
     //public AudioClip tickSound;
     //public AudioClip goodHitSound;
     //public AudioClip badHitSound;
-    
+
+    public Collider2D beatZone;
+
     Animation anim;
 
     // Events to trigger GameController
@@ -24,6 +26,7 @@ public class WheelLineDetector : MonoBehaviour
     public static event Action OnBeatZoneStart;
     public static event Action OnBeatZoneEnd;
 
+    public Color beatZoneColorDefault;
     private Transform triangle;
     //private bool contact; // whether target is touching an eventBox
     //private int score;
@@ -37,58 +40,12 @@ public class WheelLineDetector : MonoBehaviour
     {
         triangle = transform.Find("Triangle");
         anim = triangle.GetComponent<Animation>();
-        //score = 0;
-        //eventCount = 0;
-        //audioSource = GetComponent<AudioSource>();
-        //booped = false;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    // Debug.Log("Clicked!");
-        //    //anim.Play("Bounce");
-        //    //    if (contact)
-        //    //    {
-        //    //        //Debug.Log("Success!");
-        //    //        booped = true;
-        //    //        if (score < 0)
-        //    //        {
-        //    //            score = 1;
-        //    //        } else
-        //    //        {
-        //    //            score++;
-        //    //        }
-        //    //        scoreText.text = score.ToString();
-        //    //        audioSource.PlayOneShot(goodHitSound);
-        //    //        if (score >= targetScore)
-        //    //        {
-        //    //            audioSource.PlayOneShot(bridgeSound);
-        //    //        }
-        //    //    } else
-        //    //    {
-        //    //        //Debug.Log("Miss!");
-        //    //        if (score > 0)
-        //    //        {
-        //    //            score = -1;
-        //    //        }
-        //    //        else
-        //    //        {
-        //    //            score--;
-        //    //        }
-        //    //        scoreText.text = score.ToString();
-        //    //        audioSource.PlayOneShot(badHitSound, 0.5f);
-        //    //    }
-
-        //}
-
-
-        ////if(eventCount >= eventMax)
-        ////{
-        ////    Application.Quit();
-        ////}
 
     }
 
@@ -100,11 +57,13 @@ public class WheelLineDetector : MonoBehaviour
             OnContactStart?.Invoke();
             //GetComponent<Renderer>().material.color = Color.blue;
             triangle.GetComponent<Renderer>().material.color = Color.white;
-            other.GetComponent<Renderer>().material.color = Color.yellow;
+            //other.GetComponent<Renderer>().material.color = Color.yellow;
         }
         else if (other.CompareTag("BeatZone"))
         {
+            beatZone = other; 
             OnBeatZoneStart?.Invoke();
+            
         }
             
         //contact = true;
@@ -122,11 +81,13 @@ public class WheelLineDetector : MonoBehaviour
         {
             OnContactEnd?.Invoke();
             triangle.GetComponent<Renderer>().material.color = Color.blue;
-            other.GetComponent<Renderer>().material.SetColor("_Color", new Color(0, 0, 0));
+            //other.GetComponent<SpriteRenderer>().SetColor("_Color", Color.black);
         }
         else if (other.CompareTag("BeatZone"))
         {
             OnBeatZoneEnd?.Invoke();
+            other.GetComponent<Renderer>().material.color = beatZoneColorDefault;
+;
         }
 
         //contact = false;
@@ -146,5 +107,6 @@ public class WheelLineDetector : MonoBehaviour
     {
         anim.Play("Bounce");
     }
+
 }
 

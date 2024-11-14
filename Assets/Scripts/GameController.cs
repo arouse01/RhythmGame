@@ -21,6 +21,10 @@ public class GameController : MonoBehaviour
     public AudioClip badHitSound;
     public bool pause;
 
+    public Color safeZoneColorDefault;
+    public Color beatZoneColorDefault;
+    public Color beatZoneColorFlash;
+
     private bool safeZoneContact; // whether target is touching an eventBox
     private bool beatZoneContact; // whether target is touching center of eventBox
     private int score;  // current score
@@ -36,6 +40,7 @@ public class GameController : MonoBehaviour
     private int LRSThresh = 1; // how long the LRS should be visible
     private float colliderSize;  // width of the eventBox collider
     private float beatZoneSize; // width of the beatZone collider
+    private Collider2D beatZoneObject;
 
     private static string logFilePath = Application.dataPath + "/Data/EventLog.txt";
 
@@ -59,6 +64,10 @@ public class GameController : MonoBehaviour
         numTrials = parameters.trials.Length;
         //Debug.Log("Trial count: " + numTrials);
         currTrial = 0;
+
+        //beatZoneColorDefault = Color.black;
+        //beatZoneColorFlash = Color.yellow;
+        //safeZoneColorDefault = Color.white;
 
         //clickAction = InputSystem.actions.FindAction("Click");
         //Debug.Log(clickAction);
@@ -116,6 +125,9 @@ public class GameController : MonoBehaviour
         EventLogger.LogEvent("Trial", "Trial " + (currTrial+1) + " started");
         Wheel.colliderSize = colliderSize;
         Wheel.beatZoneSize = beatZoneSize;
+        Wheel.safeZoneColorDefault = safeZoneColorDefault;
+        Wheel.beatZoneColorDefault = beatZoneColorDefault;
+        Target.beatZoneColorDefault = beatZoneColorDefault;
         Wheel.ResetWheel();
         Wheel.StartSpin();
 
@@ -158,6 +170,10 @@ public class GameController : MonoBehaviour
                 {
                     EventLogger.LogEvent("Response", "Hit");
                     booped = true;
+                    if (beatZoneObject != null)
+                    {
+                        beatZoneObject.GetComponent<Renderer>().material.color = beatZoneColorFlash;
+                    }
                     if (score < 0)
                     {
                         score = 1;
@@ -168,6 +184,7 @@ public class GameController : MonoBehaviour
                     }
                     scoreText.text = score.ToString();
                     audioSource.PlayOneShot(goodHitSound);
+                    //other.GetComponent<Renderer>().material.color = Color.yellow;
                     if (score >= targetScore)
                     {
                         audioSource.PlayOneShot(bridgeSound);
@@ -215,7 +232,7 @@ public class GameController : MonoBehaviour
                         score--;
                     }
                     scoreText.text = score.ToString();
-                    audioSource.PlayOneShot(badHitSound, 0.5f);
+                    //audioSource.PlayOneShot(badHitSound, 0.5f);
                 }
 
                 if (score < LRSThresh)
@@ -323,6 +340,7 @@ public class GameController : MonoBehaviour
     {
         EventLogger.LogEvent("Beat", "Beat zone start");
         beatZoneContact = true;
+        beatZoneObject = Target.beatZone;
     }
     
     private void BeatZoneContactOff()

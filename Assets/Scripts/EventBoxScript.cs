@@ -11,6 +11,7 @@ public class EventBox : MonoBehaviour
     public SpriteShapeController safeZoneShapeController;
     public SpriteShapeController beatZoneShapeController;
 
+
     private GameObject wheel;  // parent wheel object, for getting radius
     private float circRadius;
     private Transform beatZone;
@@ -47,14 +48,6 @@ public class EventBox : MonoBehaviour
         
     }
 
-    //public void SetColliderSize(float newWidth)
-    //{
-    //    BoxCollider2D squareCollider = GetComponent<BoxCollider2D>();
-    //    if (squareCollider != null)
-    //    {
-    //        squareCollider.size = new Vector2(newWidth, 1f);
-    //    }
-    //}
 
     public void ResetShape()
     {
@@ -69,20 +62,17 @@ public class EventBox : MonoBehaviour
         Vector2[] points = new Vector2[]
         {
             new Vector2(0, 0),
-            //new Vector2(Mathf.Sin(widthRad/2) * (circRadius-h), Mathf.Cos(widthRad/2) * (circRadius-h)),
             new Vector2(Mathf.Sin(widthRad/2) * (circRadius+h), Mathf.Cos(widthRad/2) * (circRadius+h)),
             new Vector2(0, (circRadius+h)),
             new Vector2(Mathf.Sin(-widthRad/2) * (circRadius+h), Mathf.Cos(-widthRad/2) * (circRadius+h))
         };
 
-        //Vector2[] points = new Vector2[];
         if (colliderSize < 2)
         {
             // Tiny wedges don't render properly because the points are too close together, so skip the middle of the wedge top
             points = new Vector2[]
             {
                 new Vector2(0, 0),
-                //new Vector2(Mathf.Sin(widthRad/2) * (circRadius-h), Mathf.Cos(widthRad/2) * (circRadius-h)),
                 new Vector2(Mathf.Sin(widthRad/2) * (circRadius+h), Mathf.Cos(widthRad/2) * (circRadius+h)),
                 new Vector2(Mathf.Sin(-widthRad/2) * (circRadius+h), Mathf.Cos(-widthRad/2) * (circRadius+h))
             };
@@ -106,7 +96,7 @@ public class EventBox : MonoBehaviour
         }
         safeZoneShapeController.spline.isOpenEnded = false;
 
-        //// update the collider too
+        // update the collider too
         PolygonCollider2D polygonCollider = GetComponent<PolygonCollider2D>();
         polygonCollider.SetPath(0, points);
 
@@ -120,20 +110,17 @@ public class EventBox : MonoBehaviour
         Vector2[] bzPoints = new Vector2[]
         {
             new Vector2(0, 0),
-            //new Vector2(Mathf.Sin(widthRad/2) * (circRadius-h), Mathf.Cos(widthRad/2) * (circRadius-h)),
             new Vector2(Mathf.Sin(bzWidthRad/2) * (circRadius+h), Mathf.Cos(bzWidthRad/2) * (circRadius+h)),
             new Vector2(0, (circRadius+h)),
             new Vector2(Mathf.Sin(-bzWidthRad/2) * (circRadius+h), Mathf.Cos(-bzWidthRad/2) * (circRadius+h))
         };
 
-        //Vector2[] points = new Vector2[];
         if (beatZoneSize < 2)
         {
             // Tiny wedges don't render properly because the points are too close together, so skip the middle of the wedge top
             bzPoints = new Vector2[]
             {
                 new Vector2(0, 0),
-                //new Vector2(Mathf.Sin(widthRad/2) * (circRadius-h), Mathf.Cos(widthRad/2) * (circRadius-h)),
                 new Vector2(Mathf.Sin(bzWidthRad/2) * (circRadius+h), Mathf.Cos(bzWidthRad/2) * (circRadius+h)),
                 new Vector2(Mathf.Sin(-bzWidthRad/2) * (circRadius+h), Mathf.Cos(-bzWidthRad/2) * (circRadius+h))
             };
@@ -158,14 +145,27 @@ public class EventBox : MonoBehaviour
         }
 
         beatZoneShapeController.spline.isOpenEnded = false;
-        //beatZone.transform.position = new Vector3(0.0f, 0.0f, 0.0F);
-        //// update the collider too
+        
+        // update the collider too
         PolygonCollider2D bzPolygonCollider = beatZone.GetComponent<PolygonCollider2D>();
         bzPolygonCollider.SetPath(0, bzPoints);
     }
+    
+    //public void Flash()
+    //{
+    //    this.GetComponent<Renderer>().material.color = Color.yellow;
+    //}
 
     public void SelfDestruct()
     {
         Destroy(gameObject);
     }
+
+    public void ResetColors(Color safeSpaceColor, Color beatZoneColor)
+    {
+        beatZone = transform.Find("BeatZone");
+        transform.GetComponent<SpriteShapeRenderer>().color = safeSpaceColor;
+        beatZone.GetComponent<Renderer>().material.color = beatZoneColor;
+    }
 }
+

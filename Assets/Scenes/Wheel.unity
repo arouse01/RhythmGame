@@ -439,6 +439,9 @@ MonoBehaviour:
   goodHitSound: {fileID: 8300000, guid: f44899a8513c4b2459ec0944c7b94adb, type: 3}
   badHitSound: {fileID: 8300000, guid: 0c8297608f4577e48b71d1b0df7a747a, type: 3}
   pause: 1
+  safeZoneColorDefault: {r: 1, g: 1, b: 1, a: 1}
+  beatZoneColorDefault: {r: 0, g: 0, b: 0, a: 1}
+  beatZoneColorFlash: {r: 1, g: 1, b: 0, a: 1}
   inputActions: {fileID: -944628639613478452, guid: d3d1beecdb36b3d42a859e40a60ec625, type: 3}
 --- !u!4 &707093005
 Transform:
@@ -787,7 +790,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
+  m_Sprite: {fileID: 7482667652216324306, guid: 9a382313a4cf42649bc71e62056f60c3, type: 3}
   m_Color: {r: 0, g: 0.31026816, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -961,7 +964,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 3, z: 0}
-  m_LocalScale: {x: 0.375, y: 3, z: 1}
+  m_LocalScale: {x: 0.25, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 805726993}
@@ -980,6 +983,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82f7f3210a3a32d42bf2b2693bf18fb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  beatZone: {fileID: 0}
+  beatZoneColorDefault: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &832127352
 GameObject:
   m_ObjectHideFlags: 0
@@ -1084,7 +1089,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1303,6 +1308,8 @@ MonoBehaviour:
   colliderSize: 2
   beatZoneSize: 0
   pause: 0
+  safeZoneColorDefault: {r: 0, g: 0, b: 0, a: 0}
+  beatZoneColorDefault: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1777108539
 GameObject:
   m_ObjectHideFlags: 0
@@ -1377,7 +1384,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.2264151, g: 0.2264151, b: 0.2264151, a: 1}
+  m_Color: {r: 0.4528302, g: 0.4528302, b: 0.4528302, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

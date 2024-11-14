@@ -14,6 +14,9 @@ public class WheelControl : MonoBehaviour
     public float beatZoneSize;
     public bool pause;
 
+    public Color safeZoneColorDefault;
+    public Color beatZoneColorDefault;
+
     private EventBox[] boxes;
 
     // Start is called before the first frame update
@@ -93,19 +96,19 @@ public class WheelControl : MonoBehaviour
 
             // Instantiate the prefab at the calculated position
             GameObject newObject = Instantiate(eventBox, new Vector2(0, 0), Quaternion.identity);
-
+            newObject.name = "EventBox_" + i.ToString();
             newObject.GetComponent<EventBox>().angle = angle;
             
             newObject.transform.parent = transform;
 
-            
             currAngle = angle;
 
             // set eventBox collider size too
             newObject.GetComponent<EventBox>().colliderSize = colliderSize;
             newObject.GetComponent<EventBox>().beatZoneSize = beatZoneSize;
-            // set color to black
-            newObject.GetComponent<Renderer>().material.SetColor("_Color", new Color(0, 0, 0));
+
+            // set colors
+            newObject.GetComponent<EventBox>().ResetColors(safeZoneColorDefault, beatZoneColorDefault);
         }
         //ResizeEventBoxes();
     }
