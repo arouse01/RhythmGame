@@ -1,0 +1,13 @@
+2024-11-14 12:48:06.924	Program Start	Program Start
+2024-11-14 12:48:07.697	Trial	Trial 1 started
+2024-11-14 12:48:07.740	Beat	Beat safe window start
+2024-11-14 12:48:07.741	Beat	Beat zone start
+2024-11-14 12:48:07.841	Beat	Beat zone end
+2024-11-14 12:48:07.924	Beat	Beat safe window end
+2024-11-14 12:48:11.441	Beat	Beat safe window start
+2024-11-14 12:48:11.523	Beat	Beat zone start
+2024-11-14 12:48:11.674	Beat	Beat tick
+2024-11-14 12:48:11.683	Response	Hit
+2024-11-14 12:48:11.684	Trial	Trial 1 ended
+2024-11-14 12:48:11.685	Beat	Beat safe window end
+2024-11-14 12:48:11.686	Beat	Beat zone end
