@@ -21,9 +21,14 @@ public class GameController : MonoBehaviour
     public AudioClip badHitSound;
     public bool pause;
 
+    public Color safeZoneColorDefault;
+    public Color beatZoneColorDefault;
+    public Color beatZoneColorFlash;
+
     private bool safeZoneContact; // whether target is touching an eventBox
     private bool beatZoneContact; // whether target is touching center of eventBox
     private int score;  // current score
+    private int level;  // current level
     private bool booped;  // whether the current eventBox has been hit
     private int eventCount;  // total number of contact events (beats)
     private AudioSource audioSource;
@@ -35,6 +40,8 @@ public class GameController : MonoBehaviour
     private float LRSDuration = -3; // how long the LRS should be visible
     private int LRSThresh = 1; // how long the LRS should be visible
     private float colliderSize;  // width of the eventBox collider
+    private float beatZoneSize; // width of the beatZone collider
+    private Collider2D beatZoneObject;
 
     private static string logFilePath = Application.dataPath + "/Data/EventLog.txt";
 
@@ -44,6 +51,7 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
+        Application.targetFrameRate = 60;
         DisableLRS();  // turn off the LRS image to start
         trialIsRunning = false;
         score = 0;
@@ -59,20 +67,24 @@ public class GameController : MonoBehaviour
         //Debug.Log("Trial count: " + numTrials);
         currTrial = 0;
 
+        //beatZoneColorDefault = Color.black;
+        //beatZoneColorFlash = Color.yellow;
+        //safeZoneColorDefault = Color.white;
+
         //clickAction = InputSystem.actions.FindAction("Click");
         //Debug.Log(clickAction);
         LRSDuration = parameters.LRSDuration;
         LRSThresh = parameters.LRSThresh;
 
-        // create log file
+        //// create log file
         System.DateTime currentTime = System.DateTime.Now;
-
+        string currDate = currentTime.ToString("yyyyMMdd");
+        
         string AnimalName = parameters.AnimalName;
         
-        // Format the date and time to include milliseconds
-        string timeWithMilliseconds = currentTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
-
-        string currDate = currentTime.ToString("yyyyMMdd");
+        //// Format the date and time to include milliseconds
+        //string timeWithMilliseconds = currentTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
+        
         string logFileName = parameters.AnimalName + "_" + currDate + ".txt";
         string logFileFolder = Path.Combine(Application.dataPath, "Data", parameters.AnimalName);
         logFilePath = Path.Combine(logFileFolder, logFileName);
@@ -90,7 +102,7 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (eventCount >= eventMax)
+        if (trialIsRunning && eventCount >= eventMax)
         {
             EndTrial();
         }
@@ -108,12 +120,20 @@ public class GameController : MonoBehaviour
         eventMax = parameters.trials[currTrial].beatMax;
         targetScore = parameters.trials[currTrial].targetScore;
         colliderSize = parameters.trials[currTrial].colliderSize;
+        beatZoneSize = parameters.trials[currTrial].beatZoneSize;
+        level = parameters.trials[currTrial].level;
         eventCount = 0;
         score = 0;
         trialIsRunning = true;
         EventLogger.LogEvent("Trial", "Trial " + (currTrial+1) + " started");
         Wheel.colliderSize = colliderSize;
-        Wheel.ResetWheel();
+        Wheel.beatZoneSize = beatZoneSize;
+        Wheel.safeZoneColorDefault = safeZoneColorDefault;
+        Wheel.beatZoneColorDefault = beatZoneColorDefault;
+        Target.beatZoneColorDefault = beatZoneColorDefault;
+        Wheel.gameLevel = level;
+        Wheel.Reset();
+        //Debug.Break();
         Wheel.StartSpin();
 
 
@@ -124,21 +144,19 @@ public class GameController : MonoBehaviour
         Wheel.StopSpin();
         trialIsRunning = false;
         EventLogger.LogEvent("Trial", "Trial " + (currTrial + 1) + " ended");
-        Wheel.ClearWheel();
+        Wheel.Clear();
+        Wheel.Resize();
 
         // if not max trial, start next trial
         if (currTrial < (numTrials - 1))
         {
             currTrial++;
             scoreText.text = "Click to start";
-
-            // StartTrial();
         }
         else
         {
             scoreText.text = "Game Over";
         }
-
 
     }
     
@@ -158,6 +176,10 @@ public class GameController : MonoBehaviour
                 {
                     EventLogger.LogEvent("Response", "Hit");
                     booped = true;
+                    if (beatZoneObject != null)
+                    {
+                        beatZoneObject.GetComponent<Renderer>().material.color = beatZoneColorFlash;
+                    }
                     if (score < 0)
                     {
                         score = 1;
@@ -168,6 +190,7 @@ public class GameController : MonoBehaviour
                     }
                     scoreText.text = score.ToString();
                     audioSource.PlayOneShot(goodHitSound);
+                    //other.GetComponent<Renderer>().material.color = Color.yellow;
                     if (score >= targetScore)
                     {
                         audioSource.PlayOneShot(bridgeSound);
@@ -215,7 +238,7 @@ public class GameController : MonoBehaviour
                         score--;
                     }
                     scoreText.text = score.ToString();
-                    audioSource.PlayOneShot(badHitSound, 0.5f);
+                    //audioSource.PlayOneShot(badHitSound, 0.5f);
                 }
 
                 if (score < LRSThresh)
@@ -323,6 +346,7 @@ public class GameController : MonoBehaviour
     {
         EventLogger.LogEvent("Beat", "Beat zone start");
         beatZoneContact = true;
+        beatZoneObject = Target.beatZone;
     }
     
     private void BeatZoneContactOff()
