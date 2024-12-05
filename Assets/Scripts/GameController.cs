@@ -28,6 +28,7 @@ public class GameController : MonoBehaviour
     private bool safeZoneContact; // whether target is touching an eventBox
     private bool beatZoneContact; // whether target is touching center of eventBox
     private int score;  // current score
+    private int level;  // current level
     private bool booped;  // whether the current eventBox has been hit
     private int eventCount;  // total number of contact events (beats)
     private AudioSource audioSource;
@@ -50,6 +51,7 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
+        Application.targetFrameRate = 60;
         DisableLRS();  // turn off the LRS image to start
         trialIsRunning = false;
         score = 0;
@@ -119,6 +121,7 @@ public class GameController : MonoBehaviour
         targetScore = parameters.trials[currTrial].targetScore;
         colliderSize = parameters.trials[currTrial].colliderSize;
         beatZoneSize = parameters.trials[currTrial].beatZoneSize;
+        level = parameters.trials[currTrial].level;
         eventCount = 0;
         score = 0;
         trialIsRunning = true;
@@ -128,7 +131,9 @@ public class GameController : MonoBehaviour
         Wheel.safeZoneColorDefault = safeZoneColorDefault;
         Wheel.beatZoneColorDefault = beatZoneColorDefault;
         Target.beatZoneColorDefault = beatZoneColorDefault;
-        Wheel.ResetWheel();
+        Wheel.gameLevel = level;
+        Wheel.Reset();
+        //Debug.Break();
         Wheel.StartSpin();
 
 
@@ -139,7 +144,8 @@ public class GameController : MonoBehaviour
         Wheel.StopSpin();
         trialIsRunning = false;
         EventLogger.LogEvent("Trial", "Trial " + (currTrial + 1) + " ended");
-        Wheel.ClearWheel();
+        Wheel.Clear();
+        Wheel.Resize();
 
         // if not max trial, start next trial
         if (currTrial < (numTrials - 1))

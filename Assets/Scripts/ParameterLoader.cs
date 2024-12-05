@@ -1,4 +1,6 @@
+using System;
 using System.IO;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ParameterLoader : MonoBehaviour
@@ -6,6 +8,7 @@ public class ParameterLoader : MonoBehaviour
     [System.Serializable]
     public class TrialParameters
     {
+        public int level;
         public float wheelSpeed;
         public float[] eventList;
         public int beatMax;
@@ -22,6 +25,8 @@ public class ParameterLoader : MonoBehaviour
 
     public TrialParameters[] trials; // Array to hold the parameters for each trial
 
+    private Dictionary<string, int> columnMapping;
+
     void Start()
     {
         // Call the function to load parameters from the file
@@ -31,11 +36,21 @@ public class ParameterLoader : MonoBehaviour
 
     public void LoadTrialParameters(string fileName)
     {
-        float wheelSpeedOut;
-        int beatMaxOut;
-        int targetScoreOut;
-        float colliderSizeOut;
-        float beatZoneSizeOut;
+        //int levelOut;
+        //float wheelSpeedOut;
+        //int beatMaxOut;
+        //int targetScoreOut;
+        //float colliderSizeOut;
+        //float beatZoneSizeOut;
+
+        
+        //int levelCol;
+        //int patternCol;
+        //int wheelSpeedCol;
+        //int beatMaxCol;
+        //int targetScoreCol;
+        //int colliderSizeCol;
+        //int beatZoneSizeCol;
 
         string filePath;
         #if UNITY_EDITOR
@@ -49,56 +64,177 @@ public class ParameterLoader : MonoBehaviour
         if (File.Exists(filePath))
         {
             string[] lines = File.ReadAllLines(filePath);
-            trials = new TrialParameters[lines.Length-1];
-
-            for (int i = 0; i < lines.Length; i++)
+            if (lines.Length > 0)
             {
-                string[] splitLine = lines[i].Split('\t'); // Split the line by tabs
-                if (i > 0)
+                ParseHeaders(lines[0]);
+
+                trials = new TrialParameters[lines.Length - 1];
+
+                // start at i=1 because the ParseHeaders function already read the first line
+                for (int i = 1; i < lines.Length; i++)
                 {
-
-
-                    if (splitLine.Length >= 4) // Ensure there are at least 4 parameters
-                    {
-                        // Parse parameters into proper formats
-                        if (float.TryParse(splitLine[0], out wheelSpeedOut) &&
-                            int.TryParse(splitLine[2], out beatMaxOut) &&
-                            int.TryParse(splitLine[3], out targetScoreOut) &&
-                            float.TryParse(splitLine[4], out colliderSizeOut) &&
-                            float.TryParse(splitLine[5], out beatZoneSizeOut))
-                        // Parse eventList first, starting as string and converting to float
-                        {
-                            string[] eventListStrings = splitLine[1].Split(',');
-                            float[] eventListValues = new float[eventListStrings.Length];
-
-                            for (int j = 0; j < eventListStrings.Length; j++)
-                            {
-                                if (!float.TryParse(eventListStrings[j], out eventListValues[j]))
-                                {
-                                    Debug.LogError("Invalid float value in param3: " + eventListStrings[j]);
-                                }
-                            }
-
-
-                            trials[i-1] = new TrialParameters
-                            {
-                                wheelSpeed = wheelSpeedOut,
-                                eventList = eventListValues,
-                                beatMax = beatMaxOut,
-                                targetScore = targetScoreOut,
-                                colliderSize = colliderSizeOut,
-                                beatZoneSize = beatZoneSizeOut,
-                            };
-                        }
-
-                    }
+                    ProcessLine(i, lines[i]);
                 }
+
             }
+            //trials = new TrialParameters[lines.Length-1];
+
+            //for (int i = 0; i < lines.Length; i++)
+            //{
+            //    string[] splitLine = lines[i].Split('\t'); // Split the line by tabs
+            //    if (i == 0)
+            //    {
+            //        levelCol = splitLine.IndexOf("Level");
+            //        patternCol = splitLine.IndexOf("Pattern");
+            //        wheelSpeedCol = splitLine.IndexOf("Rate");
+            //        beatMaxCol = splitLine.IndexOf("MaxBeats");
+            //        targetScoreCol = splitLine.IndexOf("TargetBeats");
+            //        colliderSizeCol = splitLine.IndexOf("SafeWidth");
+            //        beatZoneSizeCol = splitLine.IndexOf("BeatWidth");
+            //    }
+            //    if (i > 0)
+            //    {
+
+
+            //        if (splitLine.Length >= 4) // Ensure there are at least 4 parameters
+            //        {
+            //            // Parse parameters into proper formats
+            //            if (float.TryParse(splitLine[wheelSpeedCol], out wheelSpeedOut) &&
+            //                int.TryParse(splitLine[beatMaxCol], out beatMaxOut) &&
+            //                int.TryParse(splitLine[targetScoreCol], out targetScoreOut) &&
+            //                float.TryParse(splitLine[colliderSizeCol], out colliderSizeOut) &&
+            //                float.TryParse(splitLine[beatZoneSizeCol], out beatZoneSizeOut))
+            //            // Parse eventList first, starting as string and converting to float
+            //            {
+            //                string[] eventListStrings = splitLine[patternCol].Split(',');
+            //                float[] eventListValues = new float[eventListStrings.Length];
+
+            //                for (int j = 0; j < eventListStrings.Length; j++)
+            //                {
+            //                    if (!float.TryParse(eventListStrings[j], out eventListValues[j]))
+            //                    {
+            //                        Debug.LogError("Invalid float value in param3: " + eventListStrings[j]);
+            //                    }
+            //                }
+
+
+            //                trials[i-1] = new TrialParameters
+            //                {
+            //                    level = levelOut,
+            //                    wheelSpeed = wheelSpeedOut,
+            //                    eventList = eventListValues,
+            //                    beatMax = beatMaxOut,
+            //                    targetScore = targetScoreOut,
+            //                    colliderSize = colliderSizeOut,
+            //                    beatZoneSize = beatZoneSizeOut,
+            //                };
+            //            }
+
+            //        }
+            //    }
+            //}
         }
         else
         {
             Debug.LogError("File not found at: " + filePath);
         }
+    }
+
+    private void ParseHeaders(string headerLine)
+    {
+        columnMapping = new Dictionary<string, int>();
+        string[] headers = headerLine.Split('\t'); // Assuming tab-delimited file
+
+        for (int i = 0; i < headers.Length; i++)
+        {
+            string header = headers[i].Trim();
+            if (!columnMapping.ContainsKey(header))
+            {
+                columnMapping[header] = i;
+            }
+        }
+    }
+
+    private void ProcessLine(int i, string line)
+    {
+        
+        string[] splitLine = line.Split('\t'); // Split the line by tabs
+
+        if (columnMapping.TryGetValue("Level", out int levelCol) &&
+            columnMapping.TryGetValue("Rate", out int wheelSpeedCol) &&
+            columnMapping.TryGetValue("Pattern", out int patternCol) &&
+            columnMapping.TryGetValue("MaxBeats", out int beatMaxCol) &&
+            columnMapping.TryGetValue("TargetBeats", out int targetScoreCol) &&
+            columnMapping.TryGetValue("SafeWidth", out int colliderSizeCol) &&
+            columnMapping.TryGetValue("BeatWidth", out int beatZoneSizeCol))
+        {
+            if (levelCol < splitLine.Length &&
+                wheelSpeedCol < splitLine.Length &&
+                patternCol < splitLine.Length)
+            {
+                // Parse and use the values
+                int levelOut = int.Parse(splitLine[levelCol]);
+                float wheelSpeedOut = float.Parse(splitLine[wheelSpeedCol]);
+                float[] eventListValues = Array.ConvertAll(splitLine[patternCol].Split(','), float.Parse);
+                int beatMaxOut = int.Parse(splitLine[beatMaxCol]);
+                int targetScoreOut = int.Parse(splitLine[targetScoreCol]);
+                float colliderSizeOut = float.Parse(splitLine[colliderSizeCol]);
+                float beatZoneSizeOut = float.Parse(splitLine[beatZoneSizeCol]);
+
+
+                trials[i - 1] = new TrialParameters
+                {
+                    level = levelOut,
+                    wheelSpeed = wheelSpeedOut,
+                    eventList = eventListValues,
+                    beatMax = beatMaxOut,
+                    targetScore = targetScoreOut,
+                    colliderSize = colliderSizeOut,
+                    beatZoneSize = beatZoneSizeOut,
+                };
+                //Debug.Log(trials[i - 1]);
+            }
+            else
+            {
+                Debug.LogError("Invalid data format: Missing required columns in a line.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Missing required headers in the parameter file.");
+        }
+        //if (i > 0)
+        //{
+
+
+        //    if (splitLine.Length >= 4) // Ensure there are at least 4 parameters
+        //    {
+        //        // Parse parameters into proper formats
+        //        if (float.TryParse(splitLine[wheelSpeedCol], out wheelSpeedOut) &&
+        //            int.TryParse(splitLine[beatMaxCol], out beatMaxOut) &&
+        //            int.TryParse(splitLine[targetScoreCol], out targetScoreOut) &&
+        //            float.TryParse(splitLine[colliderSizeCol], out colliderSizeOut) &&
+        //            float.TryParse(splitLine[beatZoneSizeCol], out beatZoneSizeOut))
+        //        // Parse eventList first, starting as string and converting to float
+        //        {
+        //            string[] eventListStrings = splitLine[patternCol].Split(',');
+        //            float[] eventListValues = new float[eventListStrings.Length];
+
+        //            for (int j = 0; j < eventListStrings.Length; j++)
+        //            {
+        //                if (!float.TryParse(eventListStrings[j], out eventListValues[j]))
+        //                {
+        //                    Debug.LogError("Invalid float value in param3: " + eventListStrings[j]);
+        //                }
+        //            }
+
+
+                    
+        //        }
+
+        //    }
+            
+        //}
     }
 
     public void GetTrialParameters(int trialIndex)
