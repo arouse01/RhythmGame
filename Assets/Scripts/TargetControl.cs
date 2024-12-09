@@ -8,15 +8,7 @@ using System;
 public class WheelLineDetector : MonoBehaviour
 {
 
-    //public TextMeshProUGUI scoreText;
-    //public int eventMax;
-    //public int targetScore;
-    //public AudioClip bridgeSound;
-    //public AudioClip tickSound;
-    //public AudioClip goodHitSound;
-    //public AudioClip badHitSound;
-
-    public Collider2D beatZone;
+    public Collider beatZone;
 
     Animation anim;
 
@@ -28,19 +20,19 @@ public class WheelLineDetector : MonoBehaviour
 
     public Color beatZoneColorDefault;
     private Transform triangle;
-    //private bool contact; // whether target is touching an eventBox
-    //private int score;
-    //public bool booped;  // whether the current eventBox has been hit
-    //private int eventCount;
-    //private AudioSource audioSource;
+    
     private GameObject[] boxes;  // to change box color as needed
 
+    public float width = .25f;
+    public float height = 3f;
+    public float targetY = 3f;
 
     void Start()
     {
         triangle = transform.Find("Triangle");
+        
         anim = triangle.GetComponent<Animation>();
-
+        BuildTarget();
     }
 
     // Update is called once per frame
@@ -49,8 +41,47 @@ public class WheelLineDetector : MonoBehaviour
 
     }
 
+    void BuildTarget()
+    {
+        MeshFilter meshFilter = gameObject.GetComponent<MeshFilter>();
+        
+
+        // Create the mesh
+        Mesh mesh = new Mesh();
+
+        // Define the vertices (corners of the rectangle)
+        Vector3[] vertices = new Vector3[]
+        {
+            new Vector3(-width / 2, targetY-height / 2, 0), // Bottom-left
+            new Vector3(width / 2, targetY-height / 2, 0),  // Bottom-right
+            new Vector3(-width / 2, targetY+height / 2, 0),  // Top-left
+            new Vector3(width / 2, targetY+height / 2, 0)    // Top-right
+        };
+
+        // Define the triangles (two triangles make the rectangle)
+        int[] triangles = new int[]
+        {
+            0, 2, 1, // First triangle (Bottom-left, Top-left, Bottom-right)
+            1, 2, 3  // Second triangle (Bottom-right, Top-left, Top-right)
+        };
+
+        // Assign to the mesh
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
+
+        // Recalculate bounds and normals for rendering
+        mesh.RecalculateBounds();
+        mesh.RecalculateNormals();
+
+        // Assign the mesh to the MeshFilter
+        meshFilter.mesh = mesh;
+
+        MeshCollider meshCollider = gameObject.GetComponent<MeshCollider>();
+        meshCollider.sharedMesh = meshFilter.mesh; // Assign the same mesh
+    }
+
     // This method is called when another collider enters the trigger zone
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("EventBox"))
         {
@@ -66,15 +97,11 @@ public class WheelLineDetector : MonoBehaviour
             
         }
             
-        //contact = true;
-        //eventCount++;
-        //audioSource.PlayOneShot(tickSound);
-        // Debug.Log("Trigger triggered!");
-        //booped = false;
+       
     }
 
     // This method is called when another collider exits the trigger zone
-    private void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit(Collider other)
     {
         //GetComponent<Renderer>().material.color = Color.white;
         if (other.CompareTag("EventBox"))
@@ -90,17 +117,6 @@ public class WheelLineDetector : MonoBehaviour
 ;
         }
 
-        //contact = false;
-        //if(!booped)
-        //{
-        //    if (score > 0)
-        //    {
-        //        score = 0;
-        //        scoreText.text = score.ToString();
-        //    }
-        //}
-        // Debug.Log("Trigger exited!");
-
     }
 
     public void Bounce()
@@ -110,3 +126,15 @@ public class WheelLineDetector : MonoBehaviour
 
 }
 
+//public class DrawMeshColliderBounds : MonoBehaviour
+//{
+//    void OnDrawGizmos()
+//    {
+//        MeshCollider meshCollider = GetComponent<MeshCollider>();
+//        if (meshCollider != null)
+//        {
+//            Gizmos.color = Color.green;
+//            Gizmos.DrawWireCube(meshCollider.bounds.center, meshCollider.bounds.size);
+//        }
+//    }
+//}

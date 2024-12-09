@@ -867,3 +867,534 @@
 2024-12-05 10:35:08.023	Beat	Beat tick
 2024-12-05 10:35:08.234	Beat	Beat zone end
 2024-12-05 10:35:08.373	Beat	Beat safe window end
+2024-12-05 11:32:14.124	Program Start	Program Start
+2024-12-05 11:32:17.035	Trial	Trial 1 started
+2024-12-05 11:32:17.179	Beat	Beat safe window start
+2024-12-05 11:32:17.179	Beat	Beat zone start
+2024-12-05 11:32:17.344	Beat	Beat zone end
+2024-12-05 11:32:17.406	Beat	Beat safe window end
+2024-12-05 11:32:19.222	Beat	Beat safe window start
+2024-12-05 11:32:19.317	Beat	Beat zone start
+2024-12-05 11:32:19.440	Beat	Beat tick
+2024-12-05 11:32:19.558	Beat	Beat zone end
+2024-12-05 11:32:19.643	Beat	Beat safe window end
+2024-12-05 11:34:56.280	Program Start	Program Start
+2024-12-05 11:34:58.451	Trial	Trial 1 started
+2024-12-05 11:34:58.558	Beat	Beat safe window start
+2024-12-05 11:34:58.558	Beat	Beat zone start
+2024-12-05 11:34:58.673	Beat	Beat zone end
+2024-12-05 11:34:58.746	Beat	Beat safe window end
+2024-12-05 11:35:00.565	Beat	Beat safe window start
+2024-12-05 11:35:00.629	Beat	Beat zone start
+2024-12-05 11:35:00.754	Beat	Beat tick
+2024-12-05 11:35:00.894	Beat	Beat zone end
+2024-12-05 11:35:00.973	Beat	Beat safe window end
+2024-12-05 11:35:02.790	Beat	Beat safe window start
+2024-12-05 11:35:02.870	Beat	Beat zone start
+2024-12-05 11:35:02.974	Beat	Beat tick
+2024-12-05 11:35:03.114	Beat	Beat zone end
+2024-12-05 11:35:03.191	Beat	Beat safe window end
+2024-12-05 11:35:04.992	Beat	Beat safe window start
+2024-12-05 11:35:05.093	Beat	Beat zone start
+2024-12-05 11:35:05.221	Beat	Beat tick
+2024-12-05 11:35:05.338	Beat	Beat zone end
+2024-12-05 11:35:05.426	Beat	Beat safe window end
+2024-12-05 11:38:25.980	Program Start	Program Start
+2024-12-05 11:38:28.409	Trial	Trial 1 started
+2024-12-05 11:38:28.540	Beat	Beat safe window start
+2024-12-05 11:38:28.541	Beat	Beat zone start
+2024-12-05 11:38:28.667	Beat	Beat zone end
+2024-12-05 11:38:28.740	Beat	Beat safe window end
+2024-12-05 11:38:30.589	Beat	Beat safe window start
+2024-12-05 11:38:31.432	Beat	Beat zone start
+2024-12-05 11:38:31.564	Beat	Beat tick
+2024-12-05 11:38:31.701	Beat	Beat zone end
+2024-12-05 11:38:31.774	Beat	Beat safe window end
+2024-12-05 11:38:33.592	Beat	Beat safe window start
+2024-12-05 11:38:33.672	Beat	Beat zone start
+2024-12-05 11:38:33.797	Beat	Beat tick
+2024-12-05 11:38:33.947	Beat	Beat zone end
+2024-12-05 11:38:34.015	Beat	Beat safe window end
+2024-12-05 11:42:47.902	Program Start	Program Start
+2024-12-05 11:42:47.949	Trial	Trial 1 started
+2024-12-05 11:42:48.716	Beat	Beat safe window start
+2024-12-05 11:42:48.716	Beat	Beat zone start
+2024-12-05 11:42:49.259	Beat	Beat zone end
+2024-12-05 11:42:49.320	Beat	Beat safe window end
+2024-12-05 11:42:50.145	Response	Miss
+2024-12-05 11:42:51.137	Beat	Beat safe window start
+2024-12-05 11:42:51.216	Beat	Beat zone start
+2024-12-05 11:42:51.319	Response	Hit
+2024-12-05 11:42:51.323	Trial	Trial 1 ended
+2024-12-05 11:42:51.324	Beat	Beat safe window end
+2024-12-05 11:42:51.325	Beat	Beat zone end
+2024-12-05 11:43:44.872	Program Start	Program Start
+2024-12-05 11:43:47.225	Trial	Trial 1 started
+2024-12-05 11:43:47.346	Beat	Beat safe window start
+2024-12-05 11:43:47.347	Beat	Beat zone start
+2024-12-05 11:43:47.474	Beat	Beat zone end
+2024-12-05 11:43:47.546	Beat	Beat safe window end
+2024-12-05 11:43:49.360	Beat	Beat safe window start
+2024-12-05 11:43:49.443	Beat	Beat zone start
+2024-12-05 11:43:49.561	Beat	Beat tick
+2024-12-05 11:43:49.718	Beat	Beat zone end
+2024-12-05 11:43:49.782	Beat	Beat safe window end
+2024-12-05 11:46:01.334	Program Start	Program Start
+2024-12-05 11:50:46.611	Trial	Trial 1 started
+2024-12-05 11:50:46.715	Beat	Beat safe window start
+2024-12-05 11:50:46.716	Beat	Beat zone start
+2024-12-05 11:50:46.819	Beat	Beat zone end
+2024-12-05 11:50:46.903	Beat	Beat safe window end
+2024-12-05 11:50:48.700	Beat	Beat safe window start
+2024-12-05 11:50:48.786	Beat	Beat zone start
+2024-12-05 11:50:48.903	Beat	Beat tick
+2024-12-05 11:50:49.034	Beat	Beat zone end
+2024-12-05 11:50:49.118	Beat	Beat safe window end
+2024-12-05 11:50:50.366	Response	Miss
+2024-12-05 11:50:50.916	Beat	Beat safe window start
+2024-12-05 11:50:51.001	Beat	Beat zone start
+2024-12-05 11:50:51.118	Beat	Beat tick
+2024-12-05 11:50:51.252	Beat	Beat zone end
+2024-12-05 11:50:51.336	Beat	Beat safe window end
+2024-12-05 11:50:53.134	Beat	Beat safe window start
+2024-12-05 11:50:53.219	Beat	Beat zone start
+2024-12-05 11:50:53.351	Beat	Beat tick
+2024-12-05 11:50:53.485	Beat	Beat zone end
+2024-12-05 11:50:53.553	Beat	Beat safe window end
+2024-12-05 11:50:55.382	Beat	Beat safe window start
+2024-12-05 11:50:55.484	Beat	Beat zone start
+2024-12-05 11:50:55.599	Beat	Beat tick
+2024-12-05 11:50:55.716	Beat	Beat zone end
+2024-12-05 11:50:55.800	Beat	Beat safe window end
+2024-12-05 11:50:57.631	Beat	Beat safe window start
+2024-12-05 11:50:57.698	Beat	Beat zone start
+2024-12-05 11:50:57.814	Beat	Beat tick
+2024-12-05 11:50:57.947	Beat	Beat zone end
+2024-12-05 11:50:58.048	Beat	Beat safe window end
+2024-12-05 11:52:10.999	Program Start	Program Start
+2024-12-05 11:52:13.200	Trial	Trial 1 started
+2024-12-05 11:52:13.326	Beat	Beat safe window start
+2024-12-05 11:52:13.326	Beat	Beat zone start
+2024-12-05 11:52:13.437	Beat	Beat zone end
+2024-12-05 11:52:13.523	Beat	Beat safe window end
+2024-12-05 11:52:15.332	Beat	Beat safe window start
+2024-12-05 11:52:15.395	Beat	Beat zone start
+2024-12-05 11:52:15.522	Beat	Beat tick
+2024-12-05 11:52:15.670	Beat	Beat zone end
+2024-12-05 11:52:15.736	Beat	Beat safe window end
+2024-12-05 11:53:09.640	Program Start	Program Start
+2024-12-05 11:53:14.470	Trial	Trial 1 started
+2024-12-05 11:53:14.593	Beat	Beat safe window start
+2024-12-05 11:53:14.593	Beat	Beat zone start
+2024-12-05 11:53:14.699	Beat	Beat zone end
+2024-12-05 11:53:14.785	Beat	Beat safe window end
+2024-12-05 11:53:16.588	Beat	Beat safe window start
+2024-12-05 11:53:16.679	Beat	Beat zone start
+2024-12-05 11:53:16.784	Beat	Beat tick
+2024-12-05 11:53:16.851	Response	Hit
+2024-12-05 11:53:16.854	Trial	Trial 1 ended
+2024-12-05 11:53:16.856	Beat	Beat safe window end
+2024-12-05 11:53:16.856	Beat	Beat zone end
+2024-12-05 11:53:17.579	Trial	Trial 2 started
+2024-12-05 11:53:17.615	Beat	Beat zone start
+2024-12-05 11:53:17.616	Beat	Beat safe window start
+2024-12-05 11:53:17.721	Beat	Beat zone end
+2024-12-05 11:53:17.747	Beat	Beat safe window end
+2024-12-05 11:53:19.664	Beat	Beat safe window start
+2024-12-05 11:53:19.685	Beat	Beat zone start
+2024-12-05 11:53:19.810	Beat	Beat tick
+2024-12-05 11:53:19.942	Beat	Beat zone end
+2024-12-05 11:53:19.967	Beat	Beat safe window end
+2024-12-05 11:53:21.896	Beat	Beat safe window start
+2024-12-05 11:53:21.928	Beat	Beat zone start
+2024-12-05 11:53:21.979	Response	Hit
+2024-12-05 11:53:21.979	Trial	Trial 2 ended
+2024-12-05 11:53:21.980	Beat	Beat safe window end
+2024-12-05 11:53:21.981	Beat	Beat zone end
+2024-12-05 11:53:22.595	Trial	Trial 3 started
+2024-12-05 11:53:22.626	Beat	Beat safe window start
+2024-12-05 11:53:22.627	Beat	Beat zone start
+2024-12-05 11:53:22.777	Beat	Beat zone end
+2024-12-05 11:53:22.915	Beat	Beat safe window end
+2024-12-05 11:53:23.429	Beat	Beat safe window start
+2024-12-05 11:53:23.570	Beat	Beat zone start
+2024-12-05 11:53:23.883	Beat	Beat zone end
+2024-12-05 11:53:24.023	Beat	Beat safe window end
+2024-12-05 11:53:24.513	Beat	Beat safe window start
+2024-12-05 11:53:24.670	Beat	Beat zone start
+2024-12-05 11:53:24.827	Beat	Beat tick
+2024-12-05 11:53:25.000	Beat	Beat zone end
+2024-12-05 11:53:25.138	Beat	Beat safe window end
+2024-12-05 11:53:25.644	Beat	Beat safe window start
+2024-12-05 11:53:25.781	Beat	Beat zone start
+2024-12-05 11:53:25.948	Beat	Beat tick
+2024-12-05 11:53:26.110	Beat	Beat zone end
+2024-12-05 11:53:26.246	Beat	Beat safe window end
+2024-12-05 11:53:26.737	Beat	Beat safe window start
+2024-12-05 11:53:26.894	Beat	Beat zone start
+2024-12-05 11:53:27.051	Beat	Beat tick
+2024-12-05 11:53:27.228	Beat	Beat zone end
+2024-12-05 11:53:27.364	Beat	Beat safe window end
+2024-12-05 11:53:27.860	Beat	Beat safe window start
+2024-12-05 11:53:28.007	Beat	Beat zone start
+2024-12-05 11:53:28.124	Response	Hit
+2024-12-05 11:53:28.125	Trial	Trial 3 ended
+2024-12-05 11:53:28.125	Beat	Beat safe window end
+2024-12-05 11:53:28.126	Beat	Beat zone end
+2024-12-05 11:53:28.715	Trial	Trial 4 started
+2024-12-05 11:53:28.737	Beat	Beat zone start
+2024-12-05 11:53:28.738	Beat	Beat safe window start
+2024-12-05 11:53:28.784	Beat	Beat zone end
+2024-12-05 11:53:28.828	Beat	Beat safe window end
+2024-12-05 11:53:29.645	Beat	Beat safe window start
+2024-12-05 11:53:29.666	Beat	Beat zone start
+2024-12-05 11:53:29.723	Beat	Beat tick
+2024-12-05 11:53:29.783	Beat	Beat zone end
+2024-12-05 11:53:29.823	Beat	Beat safe window end
+2024-12-05 11:53:30.647	Beat	Beat safe window start
+2024-12-05 11:53:30.668	Beat	Beat zone start
+2024-12-05 11:53:30.724	Beat	Beat tick
+2024-12-05 11:53:30.783	Beat	Beat zone end
+2024-12-05 11:53:30.823	Beat	Beat safe window end
+2024-12-05 11:53:31.658	Beat	Beat safe window start
+2024-12-05 11:53:31.681	Beat	Beat zone start
+2024-12-05 11:53:31.723	Beat	Beat tick
+2024-12-05 11:53:31.784	Beat	Beat zone end
+2024-12-05 11:53:31.826	Beat	Beat safe window end
+2024-12-05 11:56:51.424	Program Start	Program Start
+2024-12-05 11:56:55.320	Trial	Trial 1 started
+2024-12-05 11:56:55.422	Beat	Beat safe window start
+2024-12-05 11:56:55.423	Beat	Beat zone start
+2024-12-05 11:56:55.522	Beat	Beat zone end
+2024-12-05 11:56:55.616	Beat	Beat safe window end
+2024-12-05 11:56:57.432	Beat	Beat safe window start
+2024-12-05 11:56:57.519	Beat	Beat zone start
+2024-12-05 11:56:57.637	Beat	Beat tick
+2024-12-05 11:56:57.775	Beat	Beat zone end
+2024-12-05 11:56:57.855	Beat	Beat safe window end
+2024-12-05 11:58:50.273	Program Start	Program Start
+2024-12-05 12:03:20.305	Program Start	Program Start
+2024-12-05 12:04:59.502	Program Start	Program Start
+2024-12-05 12:08:45.957	Program Start	Program Start
+2024-12-05 12:08:47.471	Trial	Trial 1 started
+2024-12-05 12:08:47.601	Beat	Beat safe window start
+2024-12-05 12:08:47.602	Beat	Beat zone start
+2024-12-05 12:08:47.711	Beat	Beat zone end
+2024-12-05 12:08:47.798	Beat	Beat safe window end
+2024-12-05 12:08:49.600	Beat	Beat safe window start
+2024-12-05 12:08:49.668	Beat	Beat zone start
+2024-12-05 12:08:49.800	Beat	Beat tick
+2024-12-05 12:08:49.941	Beat	Beat zone end
+2024-12-05 12:08:50.079	Beat	Beat safe window end
+2024-12-05 12:13:09.552	Program Start	Program Start
+2024-12-05 12:13:11.329	Trial	Trial 1 started
+2024-12-05 12:13:11.462	Beat	Beat safe window start
+2024-12-05 12:13:11.463	Beat	Beat zone start
+2024-12-05 12:13:11.580	Beat	Beat zone end
+2024-12-05 12:13:11.675	Beat	Beat safe window end
+2024-12-05 12:13:13.463	Beat	Beat safe window start
+2024-12-05 12:13:13.559	Beat	Beat zone start
+2024-12-05 12:13:13.682	Beat	Beat tick
+2024-12-05 12:13:13.802	Beat	Beat zone end
+2024-12-05 12:13:13.892	Beat	Beat safe window end
+2024-12-05 12:13:15.686	Beat	Beat safe window start
+2024-12-05 12:13:15.777	Beat	Beat zone start
+2024-12-05 12:13:15.894	Beat	Beat tick
+2024-12-05 12:13:16.052	Beat	Beat zone end
+2024-12-05 12:14:19.499	Beat	Beat safe window end
+2024-12-05 12:15:38.676	Program Start	Program Start
+2024-12-05 12:15:40.044	Trial	Trial 1 started
+2024-12-05 12:15:40.164	Beat	Beat safe window start
+2024-12-05 12:15:40.164	Beat	Beat zone start
+2024-12-05 12:15:40.264	Beat	Beat zone end
+2024-12-05 12:15:40.345	Beat	Beat safe window end
+2024-12-05 12:15:42.145	Beat	Beat safe window start
+2024-12-05 12:15:42.229	Beat	Beat zone start
+2024-12-05 12:15:42.346	Beat	Beat tick
+2024-12-05 12:15:42.496	Beat	Beat zone end
+2024-12-05 12:15:42.563	Beat	Beat safe window end
+2024-12-05 12:15:44.362	Beat	Beat safe window start
+2024-12-05 12:15:44.446	Beat	Beat zone start
+2024-12-05 12:15:44.564	Beat	Beat tick
+2024-12-05 12:15:44.711	Beat	Beat zone end
+2024-12-05 12:15:44.795	Beat	Beat safe window end
+2024-12-05 12:15:46.596	Beat	Beat safe window start
+2024-12-05 12:15:46.679	Beat	Beat zone start
+2024-12-05 12:15:46.811	Beat	Beat tick
+2024-12-05 12:15:46.932	Beat	Beat zone end
+2024-12-05 12:15:47.011	Beat	Beat safe window end
+2024-12-05 12:15:48.805	Beat	Beat safe window start
+2024-12-05 12:15:48.903	Beat	Beat zone start
+2024-12-05 12:15:49.037	Beat	Beat tick
+2024-12-05 12:15:49.153	Beat	Beat zone end
+2024-12-05 12:15:49.238	Beat	Beat safe window end
+2024-12-05 12:15:51.052	Beat	Beat safe window start
+2024-12-05 12:15:51.138	Beat	Beat zone start
+2024-12-05 12:15:51.253	Beat	Beat tick
+2024-12-05 12:15:51.369	Beat	Beat zone end
+2024-12-05 12:15:51.472	Beat	Beat safe window end
+2024-12-05 12:15:53.269	Beat	Beat safe window start
+2024-12-05 12:15:53.355	Beat	Beat zone start
+2024-12-05 12:15:53.471	Beat	Beat tick
+2024-12-05 12:15:53.604	Beat	Beat zone end
+2024-12-05 12:15:53.685	Beat	Beat safe window end
+2024-12-05 12:15:55.504	Beat	Beat safe window start
+2024-12-05 12:15:55.588	Beat	Beat zone start
+2024-12-05 12:15:55.706	Beat	Beat tick
+2024-12-05 12:15:55.855	Beat	Beat zone end
+2024-12-05 12:15:55.939	Beat	Beat safe window end
+2024-12-05 12:15:57.722	Beat	Beat safe window start
+2024-12-05 12:15:57.805	Beat	Beat zone start
+2024-12-05 12:15:57.936	Beat	Beat tick
+2024-12-05 12:15:58.074	Beat	Beat zone end
+2024-12-05 12:15:58.154	Beat	Beat safe window end
+2024-12-05 12:15:59.944	Beat	Beat safe window start
+2024-12-05 12:16:00.039	Beat	Beat zone start
+2024-12-05 12:16:00.155	Beat	Beat tick
+2024-12-05 12:16:00.288	Beat	Beat zone end
+2024-12-05 12:16:00.373	Beat	Beat safe window end
+2024-12-05 12:16:02.171	Beat	Beat safe window start
+2024-12-05 12:16:02.255	Beat	Beat zone start
+2024-12-05 12:16:02.372	Beat	Beat tick
+2024-12-05 12:16:02.389	Response	Hit
+2024-12-05 12:16:02.392	Trial	Trial 1 ended
+2024-12-05 12:16:02.393	Beat	Beat safe window end
+2024-12-05 12:16:02.394	Beat	Beat zone end
+2024-12-05 12:16:03.136	Trial	Trial 2 started
+2024-12-05 12:16:03.156	Beat	Beat zone start
+2024-12-05 12:16:03.157	Beat	Beat safe window start
+2024-12-05 12:16:03.272	Beat	Beat zone end
+2024-12-05 12:16:03.283	Beat	Beat safe window end
+2024-12-05 12:16:05.208	Beat	Beat safe window start
+2024-12-05 12:16:05.223	Beat	Beat zone start
+2024-12-05 12:16:05.358	Beat	Beat tick
+2024-12-05 12:16:05.490	Beat	Beat zone end
+2024-12-05 12:16:05.507	Beat	Beat safe window end
+2024-12-05 12:18:38.326	Program Start	Program Start
+2024-12-05 12:18:39.776	Trial	Trial 1 started
+2024-12-05 12:18:39.893	Beat	Beat safe window start
+2024-12-05 12:18:39.894	Beat	Beat zone start
+2024-12-05 12:18:39.995	Beat	Beat zone end
+2024-12-05 12:18:40.076	Beat	Beat safe window end
+2024-12-05 12:21:07.170	Program Start	Program Start
+2024-12-05 12:21:08.385	Trial	Trial 1 started
+2024-12-05 12:21:08.508	Beat	Beat safe window start
+2024-12-05 12:21:08.508	Beat	Beat zone start
+2024-12-05 12:21:08.610	Beat	Beat zone end
+2024-12-05 12:21:08.692	Beat	Beat safe window end
+2024-12-05 12:21:10.493	Beat	Beat safe window start
+2024-12-05 12:21:10.577	Beat	Beat zone start
+2024-12-05 12:21:10.692	Beat	Beat tick
+2024-12-05 12:21:10.826	Beat	Beat zone end
+2024-12-05 12:21:10.909	Beat	Beat safe window end
+2024-12-05 12:22:14.148	Program Start	Program Start
+2024-12-05 12:22:16.469	Trial	Trial 1 started
+2024-12-05 12:22:16.615	Beat	Beat safe window start
+2024-12-05 12:22:16.616	Beat	Beat zone start
+2024-12-05 12:22:16.780	Beat	Beat zone end
+2024-12-05 12:22:16.849	Beat	Beat safe window end
+2024-12-05 12:22:18.641	Beat	Beat safe window start
+2024-12-05 12:22:18.728	Beat	Beat zone start
+2024-12-05 12:22:18.861	Beat	Beat tick
+2024-12-05 12:22:18.993	Beat	Beat zone end
+2024-12-05 12:22:19.078	Beat	Beat safe window end
+2024-12-05 12:22:20.874	Beat	Beat safe window start
+2024-12-05 12:22:20.961	Beat	Beat zone start
+2024-12-05 12:22:21.081	Beat	Beat tick
+2024-12-05 12:22:21.210	Beat	Beat zone end
+2024-12-05 12:22:21.297	Beat	Beat safe window end
+2024-12-05 12:22:23.100	Beat	Beat safe window start
+2024-12-05 12:22:23.166	Beat	Beat zone start
+2024-12-05 12:22:23.327	Beat	Beat tick
+2024-12-05 12:22:23.434	Beat	Beat zone end
+2024-12-05 12:22:23.520	Beat	Beat safe window end
+2024-12-05 12:22:25.321	Beat	Beat safe window start
+2024-12-05 12:22:25.426	Beat	Beat zone start
+2024-12-05 12:22:25.533	Beat	Beat tick
+2024-12-05 12:22:25.659	Beat	Beat zone end
+2024-12-05 12:22:25.741	Beat	Beat safe window end
+2024-12-05 12:22:27.557	Beat	Beat safe window start
+2024-12-05 12:22:27.628	Beat	Beat zone start
+2024-12-05 12:22:27.756	Beat	Beat tick
+2024-12-05 12:22:27.882	Beat	Beat zone end
+2024-12-05 12:22:27.972	Beat	Beat safe window end
+2024-12-05 12:22:29.772	Beat	Beat safe window start
+2024-12-05 12:22:29.856	Beat	Beat zone start
+2024-12-05 12:22:29.978	Beat	Beat tick
+2024-12-05 12:22:30.108	Beat	Beat zone end
+2024-12-05 12:22:30.194	Beat	Beat safe window end
+2024-12-05 12:22:31.988	Beat	Beat safe window start
+2024-12-05 12:22:32.085	Beat	Beat zone start
+2024-12-05 12:22:32.213	Beat	Beat tick
+2024-12-05 12:22:32.342	Beat	Beat zone end
+2024-12-05 12:22:32.424	Beat	Beat safe window end
+2024-12-05 12:22:34.328	Beat	Beat safe window start
+2024-12-05 12:22:34.394	Beat	Beat zone start
+2024-12-05 12:22:34.517	Beat	Beat tick
+2024-12-05 12:22:34.669	Beat	Beat zone end
+2024-12-05 12:22:34.738	Beat	Beat safe window end
+2024-12-05 12:22:36.534	Beat	Beat safe window start
+2024-12-05 12:22:36.626	Beat	Beat zone start
+2024-12-05 12:22:36.753	Beat	Beat tick
+2024-12-05 12:22:36.879	Beat	Beat zone end
+2024-12-05 12:22:36.963	Beat	Beat safe window end
+2024-12-05 12:22:47.732	Program Start	Program Start
+2024-12-05 12:22:53.749	Trial	Trial 1 started
+2024-12-05 12:22:53.920	Beat	Beat safe window start
+2024-12-05 12:22:53.920	Beat	Beat zone start
+2024-12-05 12:22:54.122	Beat	Beat zone end
+2024-12-05 12:22:54.192	Beat	Beat safe window end
+2024-12-05 12:22:55.986	Beat	Beat safe window start
+2024-12-05 12:22:56.073	Beat	Beat zone start
+2024-12-05 12:22:56.203	Beat	Beat tick
+2024-12-05 12:22:56.334	Beat	Beat zone end
+2024-12-05 12:22:56.422	Beat	Beat safe window end
+2024-12-05 12:55:53.846	Program Start	Program Start
+2024-12-05 12:55:58.964	Trial	Trial 1 started
+2024-12-05 12:55:59.125	Beat	Beat safe window start
+2024-12-05 12:55:59.126	Beat	Beat zone start
+2024-12-05 12:55:59.284	Beat	Beat zone end
+2024-12-05 12:55:59.405	Beat	Beat safe window end
+2024-12-05 12:56:01.650	Beat	Beat safe window start
+2024-12-05 12:56:01.721	Beat	Beat zone start
+2024-12-05 12:56:01.862	Beat	Beat tick
+2024-12-05 12:56:02.056	Beat	Beat zone end
+2024-12-05 12:56:02.165	Beat	Beat safe window end
+2024-12-05 12:56:04.451	Beat	Beat safe window start
+2024-12-05 12:56:04.527	Beat	Beat zone start
+2024-12-05 12:56:04.713	Beat	Beat tick
+2024-12-05 12:56:04.863	Beat	Beat zone end
+2024-12-05 12:56:04.980	Beat	Beat safe window end
+2024-12-05 12:57:58.246	Program Start	Program Start
+2024-12-05 12:58:01.280	Trial	Trial 1 started
+2024-12-05 12:58:01.432	Beat	Beat safe window start
+2024-12-05 12:58:01.433	Beat	Beat zone start
+2024-12-05 12:58:01.584	Beat	Beat zone end
+2024-12-05 12:58:01.680	Beat	Beat safe window end
+2024-12-05 12:58:03.550	Beat	Beat safe window start
+2024-12-05 12:58:03.618	Beat	Beat zone start
+2024-12-05 12:58:03.744	Beat	Beat tick
+2024-12-05 12:58:03.905	Beat	Beat zone end
+2024-12-05 12:58:04.012	Beat	Beat safe window end
+2024-12-05 12:58:05.895	Beat	Beat safe window start
+2024-12-05 12:58:06.004	Beat	Beat zone start
+2024-12-05 12:58:40.858	Beat	Beat safe window end
+2024-12-05 12:58:40.858	Beat	Beat zone end
+2024-12-05 16:53:04.997	Program Start	Program Start
+2024-12-05 16:53:07.603	Trial	Trial 1 started
+2024-12-05 16:55:11.010	Beat	Beat tick
+2024-12-05 16:55:11.012	Beat	Beat tick
+2024-12-05 16:55:11.012	Beat	Beat tick
+2024-12-05 16:55:11.013	Beat	Beat tick
+2024-12-05 16:55:11.013	Beat	Beat tick
+2024-12-05 16:55:11.014	Beat	Beat tick
+2024-12-05 16:55:11.015	Beat	Beat tick
+2024-12-05 16:55:11.016	Beat	Beat tick
+2024-12-05 16:55:11.016	Beat	Beat tick
+2024-12-05 16:55:11.016	Beat	Beat tick
+2024-12-05 16:55:11.017	Beat	Beat tick
+2024-12-05 16:55:11.017	Beat	Beat tick
+2024-12-05 16:55:11.018	Beat	Beat tick
+2024-12-05 16:55:11.018	Beat	Beat tick
+2024-12-05 16:55:11.019	Beat	Beat tick
+2024-12-05 16:55:11.020	Beat	Beat tick
+2024-12-05 16:55:11.020	Beat	Beat tick
+2024-12-05 16:55:11.021	Beat	Beat tick
+2024-12-05 16:55:11.021	Beat	Beat safe window start
+2024-12-05 16:55:11.022	Beat	Beat safe window start
+2024-12-05 16:55:11.023	Beat	Beat safe window start
+2024-12-05 16:55:11.023	Beat	Beat safe window start
+2024-12-05 16:55:11.025	Beat	Beat safe window start
+2024-12-05 16:55:11.025	Beat	Beat safe window start
+2024-12-05 16:55:11.026	Beat	Beat safe window start
+2024-12-05 16:55:11.026	Beat	Beat safe window start
+2024-12-05 16:55:11.027	Beat	Beat safe window start
+2024-12-05 16:55:11.027	Beat	Beat safe window start
+2024-12-05 16:55:11.028	Beat	Beat safe window start
+2024-12-05 16:55:11.028	Beat	Beat safe window start
+2024-12-05 16:55:11.028	Beat	Beat safe window start
+2024-12-05 16:55:11.029	Beat	Beat safe window start
+2024-12-05 16:55:11.029	Beat	Beat safe window start
+2024-12-05 16:55:11.030	Beat	Beat safe window start
+2024-12-05 16:55:11.030	Beat	Beat safe window start
+2024-12-05 16:55:11.030	Beat	Beat safe window start
+2024-12-05 16:55:11.112	Beat	Beat safe window end
+2024-12-05 16:55:11.112	Beat	Beat safe window end
+2024-12-05 16:55:11.113	Beat	Beat safe window end
+2024-12-05 16:55:11.113	Beat	Beat safe window end
+2024-12-05 16:55:11.113	Beat	Beat safe window end
+2024-12-05 16:55:11.114	Beat	Beat safe window end
+2024-12-05 16:55:11.114	Beat	Beat safe window end
+2024-12-05 16:55:11.115	Beat	Beat safe window end
+2024-12-05 16:55:11.128	Beat	Beat tick
+2024-12-05 16:55:11.227	Beat	Beat safe window end
+2024-12-05 16:55:11.227	Beat	Beat safe window end
+2024-12-05 16:55:11.227	Beat	Beat safe window end
+2024-12-05 16:55:11.230	Beat	Beat safe window end
+2024-12-05 16:55:11.426	Beat	Beat tick
+2024-12-05 16:55:11.429	Beat	Beat safe window end
+2024-12-05 16:55:11.825	Beat	Beat safe window end
+2024-12-05 16:55:12.494	Beat	Beat safe window end
+2024-12-05 16:55:12.760	Beat	Beat safe window end
+2024-12-05 16:55:12.960	Beat	Beat safe window end
+2024-12-05 16:55:13.676	Beat	Beat safe window end
+2024-12-05 16:58:37.171	Program Start	Program Start
+2024-12-05 16:58:38.649	Trial	Trial 1 started
+2024-12-05 17:02:15.731	Program Start	Program Start
+2024-12-05 17:02:17.280	Trial	Trial 1 started
+2024-12-05 17:02:41.504	Program Start	Program Start
+2024-12-05 17:02:42.775	Trial	Trial 1 started
+2024-12-05 17:09:07.053	Program Start	Program Start
+2024-12-05 17:09:07.076	Trial	Trial 1 started
+2024-12-05 17:09:07.093	Response	Miss
+2024-12-05 17:09:42.835	Beat	Beat tick
+2024-12-05 17:09:45.057	Beat	Beat tick
+2024-12-05 17:09:47.274	Beat	Beat tick
+2024-12-05 17:36:07.917	Program Start	Program Start
+2024-12-05 17:36:10.851	Trial	Trial 1 started
+2024-12-05 17:36:29.348	Beat	Beat tick
+2024-12-05 17:36:31.562	Beat	Beat tick
+2024-12-05 17:36:33.781	Response	Miss
+2024-12-05 17:36:33.797	Beat	Beat tick
+2024-12-05 17:36:36.028	Beat	Beat tick
+2024-12-05 17:36:36.045	Response	Miss
+2024-12-05 17:40:35.942	Program Start	Program Start
+2024-12-05 17:40:37.465	Trial	Trial 1 started
+2024-12-05 17:40:39.707	Beat	Beat tick
+2024-12-05 17:42:55.910	Program Start	Program Start
+2024-12-05 17:42:57.117	Trial	Trial 1 started
+2024-12-05 17:42:59.350	Beat	Beat tick
+2024-12-05 17:43:01.568	Beat	Beat tick
+2024-12-05 17:43:50.430	Program Start	Program Start
+2024-12-05 17:43:52.458	Trial	Trial 1 started
+2024-12-05 17:45:50.027	Program Start	Program Start
+2024-12-05 17:45:51.298	Trial	Trial 1 started
+2024-12-05 17:46:29.913	Program Start	Program Start
+2024-12-05 17:46:31.400	Trial	Trial 1 started
+2024-12-05 17:46:57.818	Beat	Beat tick
+2024-12-05 17:46:59.572	Response	Miss
+2024-12-05 17:47:00.056	Beat	Beat tick
+2024-12-05 17:47:00.244	Response	Miss
+2024-12-05 17:47:01.610	Response	Miss
+2024-12-05 17:47:02.269	Beat	Beat tick
+2024-12-05 17:47:03.952	Response	Miss
+2024-12-05 17:47:03.953	Feedback	LRS initiated
+2024-12-05 17:48:22.011	Program Start	Program Start
+2024-12-05 17:48:23.353	Trial	Trial 1 started
+2024-12-05 17:48:25.164	Response	Miss
+2024-12-05 17:48:25.614	Beat	Beat tick
+2024-12-05 17:48:27.478	Response	Miss
+2024-12-05 17:48:27.830	Beat	Beat tick
+2024-12-05 17:48:43.981	Program Start	Program Start
+2024-12-05 17:48:45.297	Trial	Trial 1 started
+2024-12-05 17:50:55.598	Program Start	Program Start
+2024-12-05 17:50:56.889	Trial	Trial 1 started
+2024-12-05 17:50:59.144	Beat	Beat tick
+2024-12-05 17:51:01.361	Beat	Beat tick
+2024-12-05 17:59:26.777	Program Start	Program Start
+2024-12-05 17:59:28.060	Trial	Trial 1 started
+2024-12-05 17:59:30.328	Response	Miss
+2024-12-05 17:59:30.370	Beat	Beat tick
+2024-12-05 17:59:31.252	Response	Miss
+2024-12-05 17:59:31.807	Response	Miss
+2024-12-05 17:59:32.599	Beat	Beat tick

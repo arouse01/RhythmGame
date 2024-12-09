@@ -41,7 +41,7 @@ public class GameController : MonoBehaviour
     private int LRSThresh = 1; // how long the LRS should be visible
     private float colliderSize;  // width of the eventBox collider
     private float beatZoneSize; // width of the beatZone collider
-    private Collider2D beatZoneObject;
+    private Collider beatZoneObject;
 
     private static string logFilePath = Application.dataPath + "/Data/EventLog.txt";
 
