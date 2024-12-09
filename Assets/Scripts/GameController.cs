@@ -25,6 +25,11 @@ public class GameController : MonoBehaviour
     public Color beatZoneColorDefault;
     public Color beatZoneColorFlash;
 
+    public GameObject playerInfoField;
+    public GameObject attentionField;
+    public GameObject generalNotesField;
+    public GameObject gameOverPanel;
+
     private bool safeZoneContact; // whether target is touching an eventBox
     private bool beatZoneContact; // whether target is touching center of eventBox
     private int score;  // current score
@@ -42,6 +47,8 @@ public class GameController : MonoBehaviour
     private float colliderSize;  // width of the eventBox collider
     private float beatZoneSize; // width of the beatZone collider
     private Collider beatZoneObject;
+    private bool gameOver;  // game is over, move to user input
+    private bool gameOverStarted;  // gameover process started
 
     private static string logFilePath = Application.dataPath + "/Data/EventLog.txt";
 
@@ -52,7 +59,10 @@ public class GameController : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = 60;
-        DisableLRS();  // turn off the LRS image to start
+        LRSImage.enabled = false; // Disable the LRS image to start
+        gameOver = false;
+        gameOverStarted = false;
+        gameOverPanel.SetActive(false);
         trialIsRunning = false;
         score = 0;
         eventCount = 0;
@@ -107,7 +117,6 @@ public class GameController : MonoBehaviour
             EndTrial();
         }
         
-        
     }
 
     void StartTrial()
@@ -156,14 +165,42 @@ public class GameController : MonoBehaviour
         else
         {
             scoreText.text = "Game Over";
+            gameOver = true;
         }
 
     }
     
+    void GameOver()
+    {
+        scoreText.enabled = false;
+        gameOverStarted = true;
+        gameOverPanel.SetActive(true);
+    }
+
+    public void GameOverFinish()
+    {
+        string playerInfoText = playerInfoField.GetComponent<TMP_InputField>().text;
+        string attentionText = attentionField.GetComponent<TMP_InputField>().text;
+        string generalNotesText = generalNotesField.GetComponent<TMP_InputField>().text;
+        EventLogger.LogEvent("UserInput", "Player Information: " + playerInfoText);
+        EventLogger.LogEvent("UserInput", "Attention: " + attentionText);
+        EventLogger.LogEvent("UserInput", "General Notes: " + generalNotesText);
+
+        gameOverPanel.SetActive(false);
+    }
+
     private void OnClick(InputAction.CallbackContext context)
     {
         //Debug.Log("Clicked!");
-        if (!trialIsRunning)
+        if (gameOver & !gameOverStarted)
+        {
+            GameOver();
+        }
+        else if (gameOver)
+        {
+            
+        }
+        else if (!trialIsRunning & !gameOver)
         {
             StartTrial();
         }
