@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+using SimpleFileBrowser; // implementation seems unnecessarily confusing
 
 public class ParameterLoader : MonoBehaviour
 {
@@ -52,11 +52,11 @@ public class ParameterLoader : MonoBehaviour
             Debug.LogError("Trial parameter file not found at: " + filePath);
 
             // Let user select new parameter file
-            string path = EditorUtility.OpenFilePanel("Select trial parameter file", "", "txt");
-            if (path.Length != 0)
-            {
-                filePath = path;
-            }
+            //string path = EditorUtility.OpenFilePanel("Select trial parameter file", "", "txt");
+            //if (path.Length != 0)
+            //{
+            //    filePath = path;
+            //}
         }
 
         if (File.Exists(filePath))
@@ -179,12 +179,12 @@ public class ParameterLoader : MonoBehaviour
         {
             Debug.LogError("Session parameter file not found at: " + filePath);
 
-            // Let user select new parameter file
-            string path = EditorUtility.OpenFilePanel("Select session parameter file", "", "txt");
-            if (path.Length != 0)
-            {
-                filePath = path;
-            }
+            //// Let user select new parameter file
+            //string path = EditorUtility.OpenFilePanel("Select session parameter file", "", "txt");
+            //if (path.Length != 0)
+            //{
+            //    filePath = path;
+            //}
         }
 
         if (File.Exists(filePath))
