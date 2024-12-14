@@ -52,7 +52,7 @@ public class EventBox : MonoBehaviour
 
         // set angle
         float angleRad = angle * Mathf.Deg2Rad;
-        transform.Rotate(0.0f, 0.0f, -angle, Space.Self);
+        transform.Rotate(0.0f, 0.0f, angle, Space.Self);
         
         // the localScale gets set to 0.02 after the first round (maybe because of the wheel resizing between rounds?)
         transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);

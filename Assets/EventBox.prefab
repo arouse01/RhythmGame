@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2845822326152810424}
   - component: {fileID: 2074302090295449383}
   - component: {fileID: 4146498784415030605}
+  - component: {fileID: 8927328075302574446}
   m_Layer: 0
   m_Name: EventBox
   m_TagString: EventBox
@@ -129,6 +130,18 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!210 &8927328075302574446
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 515801556220324173}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 2
+  m_SortAtRoot: 0
 --- !u!1 &2050809319285511518
 GameObject:
   m_ObjectHideFlags: 0

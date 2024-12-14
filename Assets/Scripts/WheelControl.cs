@@ -5,8 +5,8 @@ using UnityEngine;
 public class WheelControl : MonoBehaviour
 {
 
-    float rotSpeed;
-    public float wheelTempo = 1;
+    float rotSpeed; // rotation per second in degrees
+    public float wheelTempo = 1;  // wheel rotations per second
     public GameObject arrow;
     public GameObject eventBox; // prefab of eventBox
     public float[] eventList;
@@ -46,7 +46,7 @@ public class WheelControl : MonoBehaviour
         else
         {
             // Rotate at rotSpeed degrees per second
-            transform.RotateAround(this.transform.position, Vector3.forward, this.rotSpeed * Time.deltaTime);
+            transform.RotateAround(this.transform.position, Vector3.forward, rotSpeed * Time.deltaTime);
         }
         
     }
@@ -55,7 +55,7 @@ public class WheelControl : MonoBehaviour
     {
         
         float rotationalSpeed = wheelTempo * 360.0f;
-        this.rotSpeed = rotationalSpeed;
+        rotSpeed = rotationalSpeed;
 
         pause = false;
     }
@@ -79,7 +79,27 @@ public class WheelControl : MonoBehaviour
         PlaceEventBoxes();
         boxes = FindObjectsOfType<EventBox>();
         Resize();
-        this.transform.Rotate(0.0f, 0.0f, 0.0f, Space.Self);  // Reset wheel position  
+        transform.rotation = Quaternion.identity;  // Reset wheel position to zero  
+        float startAngle;
+        if (wheelTempo == 0)
+        {
+            startAngle = 0;
+        }
+        else if (wheelTempo < 0.01f)
+        {
+            startAngle = 2.5f;
+        }
+        else if (wheelTempo < 0.1f)
+        {
+            startAngle = 5;
+        }
+        else
+        {
+            startAngle = 10;
+        }
+            
+            
+        transform.Rotate(0.0f, 0.0f, -startAngle, Space.Self);  // Set starting point to just before the first beat
     }
 
     void CreateCircleMesh()
@@ -142,7 +162,6 @@ public class WheelControl : MonoBehaviour
         float yPos = -(scale - 4) / 2;
         transform.localScale = new Vector3(scale, scale, scale);
         transform.position = new Vector3(0.0f, yPos, 0.0f);
-        this.transform.Rotate(0.0f, 0.0f, 0.0f, Space.Self);  // Reset wheel position
     }
     
     public void StopSpin()
@@ -155,25 +174,22 @@ public class WheelControl : MonoBehaviour
         // Calculate total fraction of event intervals
         float intervalSum = SumArray(eventList);
         float angleStep = 360 / intervalSum;
-        //// Calculate the angle between each object in radians
-        //float angleStep = 2 * Mathf.PI / eventCount;
-        float currAngle = 0;
+
+        float currAngle = 90;  
         int j = 0;
         foreach (int i in eventList)
         {
             j++;
-            // Calculate the position on the circle
-            float angle = currAngle + i * angleStep;
 
             // Instantiate the prefab at the calculated position
             float wheelY = transform.position[1];
             GameObject newObject = Instantiate(eventBox, new Vector2(0, wheelY), Quaternion.identity);
             newObject.name = "EventBox_" + j.ToString();
-            newObject.GetComponent<EventBox>().angle = angle;
+            newObject.GetComponent<EventBox>().angle = currAngle;
             
             newObject.transform.parent = transform;
 
-            currAngle = angle;
+            currAngle -= i * angleStep; // negative because the wheel spins counterclockwise
 
             // set eventBox collider size too
             newObject.GetComponent<EventBox>().colliderSize = colliderSize;

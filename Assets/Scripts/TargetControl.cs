@@ -5,7 +5,7 @@ using TMPro;
 using System;
 
 
-public class WheelLineDetector : MonoBehaviour
+public class TargetControl : MonoBehaviour
 {
 
     public Collider beatZone;

@@ -9,8 +9,7 @@ using UnityEngine.InputSystem;
 public class GameController : MonoBehaviour
 {
     public WheelControl Wheel;
-    //public BeatTicker beatTicker;
-    public WheelLineDetector Target;
+    public TargetControl Target;
     public Image LRSImage;
     public TextMeshProUGUI scoreText;
     public ParameterLoader parameters;
@@ -54,7 +53,6 @@ public class GameController : MonoBehaviour
 
     public InputActionAsset inputActions;
     private InputAction triggerAction;
-    //InputAction clickAction;
 
     void Start()
     {
@@ -69,41 +67,8 @@ public class GameController : MonoBehaviour
         booped = false;
         pause = false;
         audioSource = GetComponent<AudioSource>();
-        // read parameter file
-        parameters.LoadTrialParameters("trials.txt");
-        parameters.LoadSessionParameters("parameters.txt");
-        // Get number of trials
-        numTrials = parameters.trials.Length;
-        //Debug.Log("Trial count: " + numTrials);
-        currTrial = 0;
 
-        //beatZoneColorDefault = Color.black;
-        //beatZoneColorFlash = Color.yellow;
-        //safeZoneColorDefault = Color.white;
-
-        //clickAction = InputSystem.actions.FindAction("Click");
-        //Debug.Log(clickAction);
-        LRSDuration = parameters.LRSDuration;
-        LRSThresh = parameters.LRSThresh;
-
-        //// create log file
-        System.DateTime currentTime = System.DateTime.Now;
-        string currDate = currentTime.ToString("yyyyMMdd");
-        
-        string AnimalName = parameters.AnimalName;
-        
-        //// Format the date and time to include milliseconds
-        //string timeWithMilliseconds = currentTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
-        
-        string logFileName = parameters.AnimalName + "_" + currDate + ".txt";
-        string logFileFolder = Path.Combine(Application.dataPath, "Data", parameters.AnimalName);
-        logFilePath = Path.Combine(logFileFolder, logFileName);
-        if (!Directory.Exists(logFileFolder))
-        {
-            Directory.CreateDirectory(logFileFolder);
-        }
-        EventLogger.SetLogFilePath(logFilePath);
-        EventLogger.LogEvent("Program Start", "Program Start");
+        StartSession();
 
         scoreText.text = "Click to start";
         Wheel.StopSpin();
@@ -117,6 +82,39 @@ public class GameController : MonoBehaviour
             EndTrial();
         }
         
+    }
+
+    void StartSession()
+    {
+        // read parameter file
+        parameters.LoadTrialParameters("trials.txt");
+        parameters.LoadSessionParameters("parameters.txt");
+        // Get number of trials
+        numTrials = parameters.trials.Length;
+
+        currTrial = 0;
+
+        LRSDuration = parameters.LRSDuration;
+        LRSThresh = parameters.LRSThresh;
+
+        //// create log file
+        System.DateTime currentTime = System.DateTime.Now;
+        string currDate = currentTime.ToString("yyyyMMdd");
+
+        string AnimalName = parameters.AnimalName;
+
+        //// Format the date and time to include milliseconds
+        //string timeWithMilliseconds = currentTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
+
+        string logFileName = parameters.AnimalName + "_" + currDate + ".txt";
+        string logFileFolder = Path.Combine(Application.dataPath, "Data", parameters.AnimalName);
+        logFilePath = Path.Combine(logFileFolder, logFileName);
+        if (!Directory.Exists(logFileFolder))
+        {
+            Directory.CreateDirectory(logFileFolder);
+        }
+        EventLogger.SetLogFilePath(logFilePath);
+        EventLogger.LogEvent("Program Start", "Program Start");
     }
 
     void StartTrial()
@@ -155,6 +153,9 @@ public class GameController : MonoBehaviour
         EventLogger.LogEvent("Trial", "Trial " + (currTrial + 1) + " ended");
         Wheel.Clear();
         Wheel.Resize();
+        beatZoneContact = false;
+        safeZoneContact = false;
+        booped = false;
 
         // if not max trial, start next trial
         if (currTrial < (numTrials - 1))
@@ -322,10 +323,10 @@ public class GameController : MonoBehaviour
     private void OnEnable()
     {
         //Debug.Log("Trigger triggered!");
-        WheelLineDetector.OnContactStart += WindowContactOn;
-        WheelLineDetector.OnContactEnd += WindowContactOff;
-        WheelLineDetector.OnBeatZoneStart += BeatZoneContactOn;
-        WheelLineDetector.OnBeatZoneEnd += BeatZoneContactOff;
+        TargetControl.OnContactStart += WindowContactOn;
+        TargetControl.OnContactEnd += WindowContactOff;
+        TargetControl.OnBeatZoneStart += BeatZoneContactOn;
+        TargetControl.OnBeatZoneEnd += BeatZoneContactOff;
         BeatTicker.OnBeatContact += BeatContact;
 
         var gameplayActions = inputActions.FindActionMap("Rhythm");
@@ -339,10 +340,10 @@ public class GameController : MonoBehaviour
     private void OnDisable()
     {
         //Debug.Log("Trigger off");
-        WheelLineDetector.OnContactStart -= WindowContactOn;
-        WheelLineDetector.OnContactEnd -= WindowContactOff;
-        WheelLineDetector.OnBeatZoneStart -= BeatZoneContactOn;
-        WheelLineDetector.OnBeatZoneEnd -= BeatZoneContactOff;
+        TargetControl.OnContactStart -= WindowContactOn;
+        TargetControl.OnContactEnd -= WindowContactOff;
+        TargetControl.OnBeatZoneStart -= BeatZoneContactOn;
+        TargetControl.OnBeatZoneEnd -= BeatZoneContactOff;
         BeatTicker.OnBeatContact -= BeatContact;
 
         triggerAction.performed -= OnClick;
