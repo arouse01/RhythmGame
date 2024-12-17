@@ -13,8 +13,7 @@ public class EventBox : MonoBehaviour
     public int segments = 40;
     public GameObject parentObject; // The GameObject to which the segment will be attached
     public Material material; // The material to apply to the segment
-    //public SpriteShapeController safeZoneShapeController;
-    //public SpriteShapeController beatZoneShapeController;
+
 
 
     private GameObject wheel;  // parent wheel object, for getting radius
@@ -25,29 +24,27 @@ public class EventBox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //safeZoneShapeController = GetComponent<SpriteShapeController>();
         wheel = transform.parent.gameObject;
         circRadius = wheel.transform.localScale.x / 2f;
 
         beatZone = transform.Find("BeatZone");
-        //beatZoneShapeController = beatZone.GetComponent<SpriteShapeController>();
         beatMarker = transform.Find("BeatMarker");
 
         float h = 2f + 1.0f * 2 / circRadius; // height of the wedge
 
         // create safe zone
-        CreateWedge(colliderSize, h+ 1f / circRadius, innerRadius, gameObject);
+        CreateWedge(colliderSize, h + 0.1f / circRadius, innerRadius, gameObject);
 
         // create beat zone
         CreateWedge(beatZoneSize, h, innerRadius, beatZone.gameObject);
 
         //// update BeatMarker
         float parentScaleX = transform.parent != null ? transform.parent.localScale.x : 1;
-        float bmWidth = 0.1f / parentScaleX;
-        float markerHeight = h - innerRadius;
-        float markerY = (h + innerRadius) / 2f;
-        beatMarker.transform.localScale = new Vector3(bmWidth, markerHeight, 0.0f);
-        beatMarker.transform.localPosition = new Vector3(markerY, 0f, 0.0f);
+        float beatMarkerWidth = 0.1f / parentScaleX;  // Make the beat marker independent of wheel size
+        float beatMarkerHeight = h - innerRadius;
+        float beatMarkerY = (h + innerRadius) / 2f;
+        beatMarker.transform.localScale = new Vector3(beatMarkerWidth, beatMarkerHeight, 0.0f);
+        beatMarker.transform.localPosition = new Vector3(beatMarkerY, 0f, 0.0f);
         //beatMarker.transform.localPosition = new Vector3(0.0f, h / 2, 0.0f);
 
         // set angle
