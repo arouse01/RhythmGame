@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
+using SimpleFileBrowser; // implementation seems unnecessarily confusing
 
 public class ParameterLoader : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class ParameterLoader : MonoBehaviour
     public string SavePath;
     public float LRSDuration;
     public int LRSThresh;
+    public float targetZoneWidth;
 
     public TrialParameters[] trials; // Array to hold the parameters for each trial
 
@@ -36,21 +38,6 @@ public class ParameterLoader : MonoBehaviour
 
     public void LoadTrialParameters(string fileName)
     {
-        //int levelOut;
-        //float wheelSpeedOut;
-        //int beatMaxOut;
-        //int targetScoreOut;
-        //float colliderSizeOut;
-        //float beatZoneSizeOut;
-
-        
-        //int levelCol;
-        //int patternCol;
-        //int wheelSpeedCol;
-        //int beatMaxCol;
-        //int targetScoreCol;
-        //int colliderSizeCol;
-        //int beatZoneSizeCol;
 
         string filePath;
         #if UNITY_EDITOR
@@ -60,6 +47,18 @@ public class ParameterLoader : MonoBehaviour
             // In a built game, look for the file in the build directory
             filePath = Path.Combine(Application.dataPath, "..", fileName);  // The ".." makes us go one folder above the data folder, which is where the application exe is
         #endif
+
+        if (!File.Exists(filePath))
+        {
+            Debug.LogError("Trial parameter file not found at: " + filePath);
+
+            // Let user select new parameter file
+            //string path = EditorUtility.OpenFilePanel("Select trial parameter file", "", "txt");
+            //if (path.Length != 0)
+            //{
+            //    filePath = path;
+            //}
+        }
 
         if (File.Exists(filePath))
         {
@@ -77,67 +76,8 @@ public class ParameterLoader : MonoBehaviour
                 }
 
             }
-            //trials = new TrialParameters[lines.Length-1];
-
-            //for (int i = 0; i < lines.Length; i++)
-            //{
-            //    string[] splitLine = lines[i].Split('\t'); // Split the line by tabs
-            //    if (i == 0)
-            //    {
-            //        levelCol = splitLine.IndexOf("Level");
-            //        patternCol = splitLine.IndexOf("Pattern");
-            //        wheelSpeedCol = splitLine.IndexOf("Rate");
-            //        beatMaxCol = splitLine.IndexOf("MaxBeats");
-            //        targetScoreCol = splitLine.IndexOf("TargetBeats");
-            //        colliderSizeCol = splitLine.IndexOf("SafeWidth");
-            //        beatZoneSizeCol = splitLine.IndexOf("BeatWidth");
-            //    }
-            //    if (i > 0)
-            //    {
-
-
-            //        if (splitLine.Length >= 4) // Ensure there are at least 4 parameters
-            //        {
-            //            // Parse parameters into proper formats
-            //            if (float.TryParse(splitLine[wheelSpeedCol], out wheelSpeedOut) &&
-            //                int.TryParse(splitLine[beatMaxCol], out beatMaxOut) &&
-            //                int.TryParse(splitLine[targetScoreCol], out targetScoreOut) &&
-            //                float.TryParse(splitLine[colliderSizeCol], out colliderSizeOut) &&
-            //                float.TryParse(splitLine[beatZoneSizeCol], out beatZoneSizeOut))
-            //            // Parse eventList first, starting as string and converting to float
-            //            {
-            //                string[] eventListStrings = splitLine[patternCol].Split(',');
-            //                float[] eventListValues = new float[eventListStrings.Length];
-
-            //                for (int j = 0; j < eventListStrings.Length; j++)
-            //                {
-            //                    if (!float.TryParse(eventListStrings[j], out eventListValues[j]))
-            //                    {
-            //                        Debug.LogError("Invalid float value in param3: " + eventListStrings[j]);
-            //                    }
-            //                }
-
-
-            //                trials[i-1] = new TrialParameters
-            //                {
-            //                    level = levelOut,
-            //                    wheelSpeed = wheelSpeedOut,
-            //                    eventList = eventListValues,
-            //                    beatMax = beatMaxOut,
-            //                    targetScore = targetScoreOut,
-            //                    colliderSize = colliderSizeOut,
-            //                    beatZoneSize = beatZoneSizeOut,
-            //                };
-            //            }
-
-            //        }
-            //    }
-            //}
         }
-        else
-        {
-            Debug.LogError("File not found at: " + filePath);
-        }
+        
     }
 
     private void ParseHeaders(string headerLine)
@@ -203,38 +143,7 @@ public class ParameterLoader : MonoBehaviour
         {
             Debug.LogError("Missing required headers in the parameter file.");
         }
-        //if (i > 0)
-        //{
-
-
-        //    if (splitLine.Length >= 4) // Ensure there are at least 4 parameters
-        //    {
-        //        // Parse parameters into proper formats
-        //        if (float.TryParse(splitLine[wheelSpeedCol], out wheelSpeedOut) &&
-        //            int.TryParse(splitLine[beatMaxCol], out beatMaxOut) &&
-        //            int.TryParse(splitLine[targetScoreCol], out targetScoreOut) &&
-        //            float.TryParse(splitLine[colliderSizeCol], out colliderSizeOut) &&
-        //            float.TryParse(splitLine[beatZoneSizeCol], out beatZoneSizeOut))
-        //        // Parse eventList first, starting as string and converting to float
-        //        {
-        //            string[] eventListStrings = splitLine[patternCol].Split(',');
-        //            float[] eventListValues = new float[eventListStrings.Length];
-
-        //            for (int j = 0; j < eventListStrings.Length; j++)
-        //            {
-        //                if (!float.TryParse(eventListStrings[j], out eventListValues[j]))
-        //                {
-        //                    Debug.LogError("Invalid float value in param3: " + eventListStrings[j]);
-        //                }
-        //            }
-
-
-                    
-        //        }
-
-        //    }
-            
-        //}
+        
     }
 
     public void GetTrialParameters(int trialIndex)
@@ -261,11 +170,23 @@ public class ParameterLoader : MonoBehaviour
         #if UNITY_EDITOR
             // In the Editor, look for the file in the project root
             filePath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-        #else
+#else
             // In a built game, look for the file in the build directory
             filePath = Path.Combine(Application.dataPath, "..", fileName);
-        #endif
-        
+#endif
+
+
+        if (!File.Exists(filePath))
+        {
+            Debug.LogError("Session parameter file not found at: " + filePath);
+
+            //// Let user select new parameter file
+            //string path = EditorUtility.OpenFilePanel("Select session parameter file", "", "txt");
+            //if (path.Length != 0)
+            //{
+            //    filePath = path;
+            //}
+        }
 
         if (File.Exists(filePath))
         {
@@ -299,6 +220,10 @@ public class ParameterLoader : MonoBehaviour
                     else if (variableName == "LRS Thresh")
                     {
                         int.TryParse(value, out LRSThresh);
+                    }
+                    else if (variableName == "Target Zone Width")
+                    {
+                        float.TryParse(value, out targetZoneWidth);
                     }
                 }
             }

@@ -5,18 +5,10 @@ using TMPro;
 using System;
 
 
-public class WheelLineDetector : MonoBehaviour
+public class TargetControl : MonoBehaviour
 {
 
-    //public TextMeshProUGUI scoreText;
-    //public int eventMax;
-    //public int targetScore;
-    //public AudioClip bridgeSound;
-    //public AudioClip tickSound;
-    //public AudioClip goodHitSound;
-    //public AudioClip badHitSound;
-
-    public Collider2D beatZone;
+    public Collider beatZone;
 
     Animation anim;
 
@@ -27,20 +19,25 @@ public class WheelLineDetector : MonoBehaviour
     public static event Action OnBeatZoneEnd;
 
     public Color beatZoneColorDefault;
+
+    public float triangleWidth;
+    public float triangleHeight;
+    public float triangleY;
     private Transform triangle;
-    //private bool contact; // whether target is touching an eventBox
-    //private int score;
-    //public bool booped;  // whether the current eventBox has been hit
-    //private int eventCount;
-    //private AudioSource audioSource;
+    
     private GameObject[] boxes;  // to change box color as needed
 
+    public float targetZoneWidth = .25f;
+    public float targetZoneHeight = 3f;
+    public float targetZoneY = 3f;
 
     void Start()
     {
         triangle = transform.Find("Triangle");
+        
         anim = triangle.GetComponent<Animation>();
 
+        InitializeTarget();
     }
 
     // Update is called once per frame
@@ -49,14 +46,99 @@ public class WheelLineDetector : MonoBehaviour
 
     }
 
+    public void InitializeTarget()
+    {
+        BuildTargetZone();
+        BuildAvatar();
+    }
+
+    void BuildTargetZone()
+    {
+        MeshFilter meshFilter = gameObject.GetComponent<MeshFilter>();
+        
+
+        // Create the mesh
+        Mesh mesh = new Mesh();
+
+        // Define the vertices (corners of the rectangle)
+        Vector3[] vertices = new Vector3[]
+        {
+            new Vector3(-targetZoneWidth / 2, targetZoneY-targetZoneHeight / 2, 0), // Bottom-left
+            new Vector3(targetZoneWidth / 2, targetZoneY-targetZoneHeight / 2, 0),  // Bottom-right
+            new Vector3(-targetZoneWidth / 2, targetZoneY+targetZoneHeight / 2, 0),  // Top-left
+            new Vector3(targetZoneWidth / 2, targetZoneY+targetZoneHeight / 2, 0)    // Top-right
+        };
+
+        // Define the triangles (two triangles make the rectangle)
+        int[] triangles = new int[]
+        {
+            0, 2, 1, // First triangle (Bottom-left, Top-left, Bottom-right)
+            1, 2, 3  // Second triangle (Bottom-right, Top-left, Top-right)
+        };
+
+        // Assign to the mesh
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
+
+        // Recalculate bounds and normals for rendering
+        mesh.RecalculateBounds();
+        mesh.RecalculateNormals();
+
+        // Assign the mesh to the MeshFilter
+        meshFilter.mesh = mesh;
+
+        MeshCollider meshCollider = gameObject.GetComponent<MeshCollider>();
+        meshCollider.sharedMesh = meshFilter.mesh; // Assign the same mesh
+    }
+
+    // Build triangle avatar
+    void BuildAvatar()
+    {
+        MeshFilter meshFilter = triangle.GetComponent<MeshFilter>();
+
+
+        // Create the mesh
+        Mesh mesh = new Mesh();
+
+        // Define the vertices (corners of the rectangle)
+        Vector3[] vertices = new Vector3[]
+        {
+            new Vector3(-triangleWidth / 2, triangleY-triangleHeight / 6, 0), // Bottom-left
+            new Vector3(0, triangleY-triangleHeight / 2, 0), // Bottom-center
+            new Vector3(triangleWidth / 2, triangleY-triangleHeight / 6, 0),  // Bottom-right
+            new Vector3(-triangleWidth / 2, triangleY+triangleHeight / 2, 0),  // Top-left
+            new Vector3(triangleWidth / 2, triangleY+triangleHeight / 2, 0)    // Top-right
+        };
+
+        // Define the triangles (two triangles make the rectangle)
+        int[] triangles = new int[]
+        {
+            0, 2, 3, // First triangle (Bottom-left, Bottom-right, Top-left)
+            2, 3, 4,  // Second triangle (Bottom-right, Top-left, Top-right)
+            0, 1, 2  // Second triangle (Bottom-right, Bottom, Bottom-left)
+        };
+
+        // Assign to the mesh
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
+
+        // Recalculate bounds and normals for rendering
+        mesh.RecalculateBounds();
+        mesh.RecalculateNormals();
+
+        // Assign the mesh to the MeshFilter
+        meshFilter.mesh = mesh;
+
+    }
+
     // This method is called when another collider enters the trigger zone
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("EventBox"))
         {
             OnContactStart?.Invoke();
             //GetComponent<Renderer>().material.color = Color.blue;
-            triangle.GetComponent<Renderer>().material.color = Color.white;
+            //triangle.GetComponent<Renderer>().material.color = Color.white;
             //other.GetComponent<Renderer>().material.color = Color.yellow;
         }
         else if (other.CompareTag("BeatZone"))
@@ -66,40 +148,24 @@ public class WheelLineDetector : MonoBehaviour
             
         }
             
-        //contact = true;
-        //eventCount++;
-        //audioSource.PlayOneShot(tickSound);
-        // Debug.Log("Trigger triggered!");
-        //booped = false;
+       
     }
 
     // This method is called when another collider exits the trigger zone
-    private void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit(Collider other)
     {
         //GetComponent<Renderer>().material.color = Color.white;
         if (other.CompareTag("EventBox"))
         {
             OnContactEnd?.Invoke();
-            triangle.GetComponent<Renderer>().material.color = Color.blue;
+            //triangle.GetComponent<Renderer>().material.color = Color.blue;
             //other.GetComponent<SpriteRenderer>().SetColor("_Color", Color.black);
         }
         else if (other.CompareTag("BeatZone"))
         {
             OnBeatZoneEnd?.Invoke();
             other.GetComponent<Renderer>().material.color = beatZoneColorDefault;
-;
         }
-
-        //contact = false;
-        //if(!booped)
-        //{
-        //    if (score > 0)
-        //    {
-        //        score = 0;
-        //        scoreText.text = score.ToString();
-        //    }
-        //}
-        // Debug.Log("Trigger exited!");
 
     }
 
@@ -110,3 +176,15 @@ public class WheelLineDetector : MonoBehaviour
 
 }
 
+//public class DrawMeshColliderBounds : MonoBehaviour
+//{
+//    void OnDrawGizmos()
+//    {
+//        MeshCollider meshCollider = GetComponent<MeshCollider>();
+//        if (meshCollider != null)
+//        {
+//            Gizmos.color = Color.green;
+//            Gizmos.DrawWireCube(meshCollider.bounds.center, meshCollider.bounds.size);
+//        }
+//    }
+//}

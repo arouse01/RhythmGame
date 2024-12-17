@@ -9,8 +9,7 @@ using UnityEngine.InputSystem;
 public class GameController : MonoBehaviour
 {
     public WheelControl Wheel;
-    //public BeatTicker beatTicker;
-    public WheelLineDetector Target;
+    public TargetControl Target;
     public Image LRSImage;
     public TextMeshProUGUI scoreText;
     public ParameterLoader parameters;
@@ -24,6 +23,11 @@ public class GameController : MonoBehaviour
     public Color safeZoneColorDefault;
     public Color beatZoneColorDefault;
     public Color beatZoneColorFlash;
+
+    public GameObject playerInfoField;
+    public GameObject attentionField;
+    public GameObject generalNotesField;
+    public GameObject gameOverPanel;
 
     private bool safeZoneContact; // whether target is touching an eventBox
     private bool beatZoneContact; // whether target is touching center of eventBox
@@ -39,61 +43,33 @@ public class GameController : MonoBehaviour
     private bool trialIsRunning; // whether trial is running or not
     private float LRSDuration = -3; // how long the LRS should be visible
     private int LRSThresh = 1; // how long the LRS should be visible
+    private float targetZoneWidth = 0.25f; // width of the target zone around the avatar
     private float colliderSize;  // width of the eventBox collider
     private float beatZoneSize; // width of the beatZone collider
-    private Collider2D beatZoneObject;
+    private Collider beatZoneObject;
+    private bool gameOver;  // game is over, move to user input
+    private bool gameOverStarted;  // gameover process started
 
     private static string logFilePath = Application.dataPath + "/Data/EventLog.txt";
 
     public InputActionAsset inputActions;
     private InputAction triggerAction;
-    //InputAction clickAction;
 
     void Start()
     {
         Application.targetFrameRate = 60;
-        DisableLRS();  // turn off the LRS image to start
+        LRSImage.enabled = false; // Disable the LRS image to start
+        gameOver = false;
+        gameOverStarted = false;
+        gameOverPanel.SetActive(false);
         trialIsRunning = false;
         score = 0;
         eventCount = 0;
         booped = false;
         pause = false;
         audioSource = GetComponent<AudioSource>();
-        // read parameter file
-        parameters.LoadTrialParameters("trials.txt");
-        parameters.LoadSessionParameters("parameters.txt");
-        // Get number of trials
-        numTrials = parameters.trials.Length;
-        //Debug.Log("Trial count: " + numTrials);
-        currTrial = 0;
 
-        //beatZoneColorDefault = Color.black;
-        //beatZoneColorFlash = Color.yellow;
-        //safeZoneColorDefault = Color.white;
-
-        //clickAction = InputSystem.actions.FindAction("Click");
-        //Debug.Log(clickAction);
-        LRSDuration = parameters.LRSDuration;
-        LRSThresh = parameters.LRSThresh;
-
-        //// create log file
-        System.DateTime currentTime = System.DateTime.Now;
-        string currDate = currentTime.ToString("yyyyMMdd");
-        
-        string AnimalName = parameters.AnimalName;
-        
-        //// Format the date and time to include milliseconds
-        //string timeWithMilliseconds = currentTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
-        
-        string logFileName = parameters.AnimalName + "_" + currDate + ".txt";
-        string logFileFolder = Path.Combine(Application.dataPath, "Data", parameters.AnimalName);
-        logFilePath = Path.Combine(logFileFolder, logFileName);
-        if (!Directory.Exists(logFileFolder))
-        {
-            Directory.CreateDirectory(logFileFolder);
-        }
-        EventLogger.SetLogFilePath(logFilePath);
-        EventLogger.LogEvent("Program Start", "Program Start");
+        StartSession();
 
         scoreText.text = "Click to start";
         Wheel.StopSpin();
@@ -107,7 +83,42 @@ public class GameController : MonoBehaviour
             EndTrial();
         }
         
-        
+    }
+
+    void StartSession()
+    {
+        // read parameter file
+        parameters.LoadTrialParameters("trials.txt");
+        parameters.LoadSessionParameters("parameters.txt");
+        // Get number of trials
+        numTrials = parameters.trials.Length;
+
+        currTrial = 0;
+
+        LRSDuration = parameters.LRSDuration;
+        LRSThresh = parameters.LRSThresh;
+        targetZoneWidth = parameters.targetZoneWidth;
+
+        Target.targetZoneWidth = targetZoneWidth;
+
+        //// create log file
+        System.DateTime currentTime = System.DateTime.Now;
+        string currDate = currentTime.ToString("yyyyMMdd");
+
+        string AnimalName = parameters.AnimalName;
+
+        //// Format the date and time to include milliseconds
+        //string timeWithMilliseconds = currentTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
+
+        string logFileName = parameters.AnimalName + "_" + currDate + ".txt";
+        string logFileFolder = Path.Combine(Application.dataPath, "Data", parameters.AnimalName);
+        logFilePath = Path.Combine(logFileFolder, logFileName);
+        if (!Directory.Exists(logFileFolder))
+        {
+            Directory.CreateDirectory(logFileFolder);
+        }
+        EventLogger.SetLogFilePath(logFilePath);
+        EventLogger.LogEvent("Program Start", "Program Start");
     }
 
     void StartTrial()
@@ -146,6 +157,9 @@ public class GameController : MonoBehaviour
         EventLogger.LogEvent("Trial", "Trial " + (currTrial + 1) + " ended");
         Wheel.Clear();
         Wheel.Resize();
+        beatZoneContact = false;
+        safeZoneContact = false;
+        booped = false;
 
         // if not max trial, start next trial
         if (currTrial < (numTrials - 1))
@@ -156,14 +170,42 @@ public class GameController : MonoBehaviour
         else
         {
             scoreText.text = "Game Over";
+            gameOver = true;
         }
 
     }
     
+    void GameOver()
+    {
+        scoreText.enabled = false;
+        gameOverStarted = true;
+        gameOverPanel.SetActive(true);
+    }
+
+    public void GameOverFinish()
+    {
+        string playerInfoText = playerInfoField.GetComponent<TMP_InputField>().text;
+        string attentionText = attentionField.GetComponent<TMP_InputField>().text;
+        string generalNotesText = generalNotesField.GetComponent<TMP_InputField>().text;
+        EventLogger.LogEvent("UserInput", "Player Information: " + playerInfoText);
+        EventLogger.LogEvent("UserInput", "Attention: " + attentionText);
+        EventLogger.LogEvent("UserInput", "General Notes: " + generalNotesText);
+
+        gameOverPanel.SetActive(false);
+    }
+
     private void OnClick(InputAction.CallbackContext context)
     {
         //Debug.Log("Clicked!");
-        if (!trialIsRunning)
+        if (gameOver & !gameOverStarted)
+        {
+            GameOver();
+        }
+        else if (gameOver)
+        {
+            
+        }
+        else if (!trialIsRunning & !gameOver)
         {
             StartTrial();
         }
@@ -285,10 +327,10 @@ public class GameController : MonoBehaviour
     private void OnEnable()
     {
         //Debug.Log("Trigger triggered!");
-        WheelLineDetector.OnContactStart += WindowContactOn;
-        WheelLineDetector.OnContactEnd += WindowContactOff;
-        WheelLineDetector.OnBeatZoneStart += BeatZoneContactOn;
-        WheelLineDetector.OnBeatZoneEnd += BeatZoneContactOff;
+        TargetControl.OnContactStart += WindowContactOn;
+        TargetControl.OnContactEnd += WindowContactOff;
+        TargetControl.OnBeatZoneStart += BeatZoneContactOn;
+        TargetControl.OnBeatZoneEnd += BeatZoneContactOff;
         BeatTicker.OnBeatContact += BeatContact;
 
         var gameplayActions = inputActions.FindActionMap("Rhythm");
@@ -302,10 +344,10 @@ public class GameController : MonoBehaviour
     private void OnDisable()
     {
         //Debug.Log("Trigger off");
-        WheelLineDetector.OnContactStart -= WindowContactOn;
-        WheelLineDetector.OnContactEnd -= WindowContactOff;
-        WheelLineDetector.OnBeatZoneStart -= BeatZoneContactOn;
-        WheelLineDetector.OnBeatZoneEnd -= BeatZoneContactOff;
+        TargetControl.OnContactStart -= WindowContactOn;
+        TargetControl.OnContactEnd -= WindowContactOff;
+        TargetControl.OnBeatZoneStart -= BeatZoneContactOn;
+        TargetControl.OnBeatZoneEnd -= BeatZoneContactOff;
         BeatTicker.OnBeatContact -= BeatContact;
 
         triggerAction.performed -= OnClick;
