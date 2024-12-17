@@ -43,6 +43,7 @@ public class GameController : MonoBehaviour
     private bool trialIsRunning; // whether trial is running or not
     private float LRSDuration = -3; // how long the LRS should be visible
     private int LRSThresh = 1; // how long the LRS should be visible
+    private float targetZoneWidth = 0.25f; // width of the target zone around the avatar
     private float colliderSize;  // width of the eventBox collider
     private float beatZoneSize; // width of the beatZone collider
     private Collider beatZoneObject;
@@ -96,6 +97,9 @@ public class GameController : MonoBehaviour
 
         LRSDuration = parameters.LRSDuration;
         LRSThresh = parameters.LRSThresh;
+        targetZoneWidth = parameters.targetZoneWidth;
+
+        Target.targetZoneWidth = targetZoneWidth;
 
         //// create log file
         System.DateTime currentTime = System.DateTime.Now;

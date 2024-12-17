@@ -23,6 +23,7 @@ public class ParameterLoader : MonoBehaviour
     public string SavePath;
     public float LRSDuration;
     public int LRSThresh;
+    public float targetZoneWidth;
 
     public TrialParameters[] trials; // Array to hold the parameters for each trial
 
@@ -219,6 +220,10 @@ public class ParameterLoader : MonoBehaviour
                     else if (variableName == "LRS Thresh")
                     {
                         int.TryParse(value, out LRSThresh);
+                    }
+                    else if (variableName == "Target Zone Width")
+                    {
+                        float.TryParse(value, out targetZoneWidth);
                     }
                 }
             }

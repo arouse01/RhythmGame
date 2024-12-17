@@ -19,20 +19,25 @@ public class TargetControl : MonoBehaviour
     public static event Action OnBeatZoneEnd;
 
     public Color beatZoneColorDefault;
+
+    public float triangleWidth;
+    public float triangleHeight;
+    public float triangleY;
     private Transform triangle;
     
     private GameObject[] boxes;  // to change box color as needed
 
-    public float width = .25f;
-    public float height = 3f;
-    public float targetY = 3f;
+    public float targetZoneWidth = .25f;
+    public float targetZoneHeight = 3f;
+    public float targetZoneY = 3f;
 
     void Start()
     {
         triangle = transform.Find("Triangle");
         
         anim = triangle.GetComponent<Animation>();
-        BuildTarget();
+
+        InitializeTarget();
     }
 
     // Update is called once per frame
@@ -41,7 +46,13 @@ public class TargetControl : MonoBehaviour
 
     }
 
-    void BuildTarget()
+    public void InitializeTarget()
+    {
+        BuildTargetZone();
+        BuildAvatar();
+    }
+
+    void BuildTargetZone()
     {
         MeshFilter meshFilter = gameObject.GetComponent<MeshFilter>();
         
@@ -52,10 +63,10 @@ public class TargetControl : MonoBehaviour
         // Define the vertices (corners of the rectangle)
         Vector3[] vertices = new Vector3[]
         {
-            new Vector3(-width / 2, targetY-height / 2, 0), // Bottom-left
-            new Vector3(width / 2, targetY-height / 2, 0),  // Bottom-right
-            new Vector3(-width / 2, targetY+height / 2, 0),  // Top-left
-            new Vector3(width / 2, targetY+height / 2, 0)    // Top-right
+            new Vector3(-targetZoneWidth / 2, targetZoneY-targetZoneHeight / 2, 0), // Bottom-left
+            new Vector3(targetZoneWidth / 2, targetZoneY-targetZoneHeight / 2, 0),  // Bottom-right
+            new Vector3(-targetZoneWidth / 2, targetZoneY+targetZoneHeight / 2, 0),  // Top-left
+            new Vector3(targetZoneWidth / 2, targetZoneY+targetZoneHeight / 2, 0)    // Top-right
         };
 
         // Define the triangles (two triangles make the rectangle)
@@ -80,6 +91,46 @@ public class TargetControl : MonoBehaviour
         meshCollider.sharedMesh = meshFilter.mesh; // Assign the same mesh
     }
 
+    // Build triangle avatar
+    void BuildAvatar()
+    {
+        MeshFilter meshFilter = triangle.GetComponent<MeshFilter>();
+
+
+        // Create the mesh
+        Mesh mesh = new Mesh();
+
+        // Define the vertices (corners of the rectangle)
+        Vector3[] vertices = new Vector3[]
+        {
+            new Vector3(-triangleWidth / 2, triangleY-triangleHeight / 6, 0), // Bottom-left
+            new Vector3(0, triangleY-triangleHeight / 2, 0), // Bottom-center
+            new Vector3(triangleWidth / 2, triangleY-triangleHeight / 6, 0),  // Bottom-right
+            new Vector3(-triangleWidth / 2, triangleY+triangleHeight / 2, 0),  // Top-left
+            new Vector3(triangleWidth / 2, triangleY+triangleHeight / 2, 0)    // Top-right
+        };
+
+        // Define the triangles (two triangles make the rectangle)
+        int[] triangles = new int[]
+        {
+            0, 2, 3, // First triangle (Bottom-left, Bottom-right, Top-left)
+            2, 3, 4,  // Second triangle (Bottom-right, Top-left, Top-right)
+            0, 1, 2  // Second triangle (Bottom-right, Bottom, Bottom-left)
+        };
+
+        // Assign to the mesh
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
+
+        // Recalculate bounds and normals for rendering
+        mesh.RecalculateBounds();
+        mesh.RecalculateNormals();
+
+        // Assign the mesh to the MeshFilter
+        meshFilter.mesh = mesh;
+
+    }
+
     // This method is called when another collider enters the trigger zone
     private void OnTriggerEnter(Collider other)
     {
@@ -87,7 +138,7 @@ public class TargetControl : MonoBehaviour
         {
             OnContactStart?.Invoke();
             //GetComponent<Renderer>().material.color = Color.blue;
-            triangle.GetComponent<Renderer>().material.color = Color.white;
+            //triangle.GetComponent<Renderer>().material.color = Color.white;
             //other.GetComponent<Renderer>().material.color = Color.yellow;
         }
         else if (other.CompareTag("BeatZone"))
@@ -107,14 +158,13 @@ public class TargetControl : MonoBehaviour
         if (other.CompareTag("EventBox"))
         {
             OnContactEnd?.Invoke();
-            triangle.GetComponent<Renderer>().material.color = Color.blue;
+            //triangle.GetComponent<Renderer>().material.color = Color.blue;
             //other.GetComponent<SpriteRenderer>().SetColor("_Color", Color.black);
         }
         else if (other.CompareTag("BeatZone"))
         {
             OnBeatZoneEnd?.Invoke();
             other.GetComponent<Renderer>().material.color = beatZoneColorDefault;
-;
         }
 
     }
