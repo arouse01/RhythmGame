@@ -1,0 +1,67 @@
+2024-12-20 13:02:16.478	Session Start	Session Start
+2024-12-20 13:02:17.659	Trial	Trial 1 started
+2024-12-20 13:02:17.683	Beat	Beat safe window start
+2024-12-20 13:02:17.684	Beat	Beat zone start
+2024-12-20 13:02:17.684	Beat	Beat tick
+2024-12-20 13:02:18.392	Response	Hit
+2024-12-20 13:02:18.479	Trial	Trial 1 ended
+2024-12-20 13:02:19.119	Trial	Trial 2 started
+2024-12-20 13:02:19.137	Beat	Beat safe window start
+2024-12-20 13:02:19.138	Beat	Beat zone start
+2024-12-20 13:02:19.138	Beat	Beat tick
+2024-12-20 13:02:19.571	Response	Hit
+2024-12-20 13:02:19.571	Trial	Trial 2 ended
+2024-12-20 13:02:19.911	Trial	Trial 3 started
+2024-12-20 13:02:19.928	Beat	Beat safe window start
+2024-12-20 13:02:19.929	Beat	Beat zone start
+2024-12-20 13:02:19.929	Beat	Beat tick
+2024-12-20 13:02:20.230	Response	Hit
+2024-12-20 13:02:20.231	Trial	Trial 3 ended
+2024-12-20 13:02:20.518	Trial	Trial 4 started
+2024-12-20 13:02:20.552	Beat	Beat safe window start
+2024-12-20 13:02:20.552	Beat	Beat zone start
+2024-12-20 13:02:20.553	Beat	Beat tick
+2024-12-20 13:02:20.871	Response	Hit
+2024-12-20 13:02:20.871	Trial	Trial 4 ended
+2024-12-20 13:02:21.128	Trial	Trial 5 started
+2024-12-20 13:02:21.139	Beat	Beat safe window start
+2024-12-20 13:02:21.140	Beat	Beat zone start
+2024-12-20 13:02:21.141	Beat	Beat tick
+2024-12-20 13:02:21.412	Response	Hit
+2024-12-20 13:02:21.413	Trial	Trial 5 ended
+2024-12-20 13:02:21.712	Trial	Trial 6 started
+2024-12-20 13:02:21.730	Beat	Beat safe window start
+2024-12-20 13:02:21.732	Beat	Beat zone start
+2024-12-20 13:02:21.732	Beat	Beat tick
+2024-12-20 13:02:21.980	Response	Hit
+2024-12-20 13:02:21.981	Trial	Trial 6 ended
+2024-12-20 13:02:22.267	Trial	Trial 7 started
+2024-12-20 13:02:22.278	Beat	Beat safe window start
+2024-12-20 13:02:22.279	Beat	Beat zone start
+2024-12-20 13:02:22.279	Beat	Beat tick
+2024-12-20 13:02:22.533	Response	Hit
+2024-12-20 13:02:22.533	Trial	Trial 7 ended
+2024-12-20 13:02:22.820	Trial	Trial 8 started
+2024-12-20 13:02:22.854	Beat	Beat safe window start
+2024-12-20 13:02:22.854	Beat	Beat zone start
+2024-12-20 13:02:22.855	Beat	Beat tick
+2024-12-20 13:02:23.187	Response	Hit
+2024-12-20 13:02:23.188	Trial	Trial 8 ended
+2024-12-20 13:02:23.393	Trial	Trial 9 started
+2024-12-20 13:02:23.410	Beat	Beat safe window start
+2024-12-20 13:02:23.410	Beat	Beat zone start
+2024-12-20 13:02:23.411	Beat	Beat tick
+2024-12-20 13:02:23.543	Response	Hit
+2024-12-20 13:02:23.544	Trial	Trial 9 ended
+2024-12-20 13:02:23.713	Trial	Trial 10 started
+2024-12-20 13:02:23.728	Beat	Beat safe window start
+2024-12-20 13:02:23.728	Beat	Beat zone start
+2024-12-20 13:02:23.729	Beat	Beat tick
+2024-12-20 13:02:23.846	Response	Hit
+2024-12-20 13:02:23.847	Trial	Trial 10 ended
+2024-12-20 13:02:24.000	Trial	Trial 11 started
+2024-12-20 13:02:24.032	Beat	Beat safe window start
+2024-12-20 13:02:24.032	Beat	Beat zone start
+2024-12-20 13:02:24.032	Beat	Beat tick
+2024-12-20 13:02:24.149	Response	Hit
+2024-12-20 13:02:24.149	Trial	Trial 11 ended
