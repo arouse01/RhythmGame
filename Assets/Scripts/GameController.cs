@@ -11,6 +11,17 @@ public class GameController : MonoBehaviour
     public WheelControl Wheel;
     public TargetControl Target;
     public Image LRSImage;
+
+    public GameObject UserInput;
+    public GameObject gameOverPanel;
+    public GameObject playerInfoField;
+    public GameObject attentionField;
+    public GameObject generalNotesField;
+
+    public GameObject preGamePanel;
+    public GameObject AnimalField;
+    public GameObject preNotesField;
+
     public TextMeshProUGUI scoreText;
     public ParameterLoader parameters;
 
@@ -24,10 +35,6 @@ public class GameController : MonoBehaviour
     public Color beatZoneColorDefault;
     public Color beatZoneColorFlash;
 
-    public GameObject playerInfoField;
-    public GameObject attentionField;
-    public GameObject generalNotesField;
-    public GameObject gameOverPanel;
 
     private bool safeZoneContact; // whether target is touching an eventBox
     private bool beatZoneContact; // whether target is touching center of eventBox
@@ -59,20 +66,24 @@ public class GameController : MonoBehaviour
     {
         Application.targetFrameRate = 60;
         LRSImage.enabled = false; // Disable the LRS image to start
-        gameOver = false;
-        gameOverStarted = false;
-        gameOverPanel.SetActive(false);
-        trialIsRunning = false;
-        score = 0;
-        eventCount = 0;
-        booped = false;
-        pause = false;
+        //gameOver = false;
+        //gameOverStarted = false;
+        //gameOverPanel.SetActive(false);
+        //trialIsRunning = false;
+        //score = 0;
+        //eventCount = 0;
+        //booped = false;
+        //pause = false;
         audioSource = GetComponent<AudioSource>();
+        parameters.LoadSessionParameters("parameters.txt");
 
-        StartSession();
+        Wheel.gameObject.SetActive(false);
+        Target.gameObject.SetActive(false);
 
-        scoreText.text = "Click to start";
-        Wheel.StopSpin();
+        
+        GameStart();
+
+        
     }
 
     // Update is called once per frame
@@ -85,11 +96,34 @@ public class GameController : MonoBehaviour
         
     }
 
-    void StartSession()
+    void GameStart()
     {
+        gameOver = false;
+        gameOverStarted = false;
+        gameOverPanel.SetActive(false);
+        UserInput.SetActive(true);
+        preGamePanel.SetActive(true);
+        scoreText.enabled = false;
+        
+    }
+
+    public void StartSession(string sessionFile)
+    {
+        string AnimalName = AnimalField.GetComponent<TMP_InputField>().text;
+        //string attentionText = attentionField.GetComponent<TMP_InputField>().text;
+        string preNotesText = preNotesField.GetComponent<TMP_InputField>().text;
+
+        //string AnimalName = parameters.AnimalName;
+
+        preGamePanel.SetActive(false);
+        UserInput.SetActive(false);
+
+        Wheel.gameObject.SetActive(true);
+        Target.gameObject.SetActive(true);
+
         // read parameter file
-        parameters.LoadTrialParameters("trials.txt");
-        parameters.LoadSessionParameters("parameters.txt");
+        parameters.LoadTrialParameters(sessionFile);
+        
         // Get number of trials
         numTrials = parameters.trials.Length;
 
@@ -100,32 +134,46 @@ public class GameController : MonoBehaviour
         targetZoneWidth = parameters.targetZoneWidth;
 
         Target.targetZoneWidth = targetZoneWidth;
+        //Target.InitializeTarget();
 
         //// create log file
         System.DateTime currentTime = System.DateTime.Now;
-        string currDate = currentTime.ToString("yyyyMMdd");
-
-        string AnimalName = parameters.AnimalName;
+        string currDate = currentTime.ToString("yyyyMMddHHmmss");
 
         //// Format the date and time to include milliseconds
         //string timeWithMilliseconds = currentTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
 
         string logFileName = parameters.AnimalName + "_" + currDate + ".txt";
-        string logFileFolder = Path.Combine(Application.dataPath, "Data", parameters.AnimalName);
+        string logFileFolder = Path.Combine(Application.dataPath, "SessionData", parameters.AnimalName);
         logFilePath = Path.Combine(logFileFolder, logFileName);
         if (!Directory.Exists(logFileFolder))
         {
             Directory.CreateDirectory(logFileFolder);
         }
         EventLogger.SetLogFilePath(logFilePath);
-        EventLogger.LogEvent("Program Start", "Program Start");
+        EventLogger.LogEvent("UserInput", "Animal: " + AnimalName);
+        //EventLogger.LogEvent("UserInput", "Attention: " + attentionText);
+        EventLogger.LogEvent("UserInput", "General Notes: " + preNotesText);
+
+        EventLogger.LogEvent("Session Start", "Session Start");
+
+        score = 0;
+        trialIsRunning = false;
+        eventCount = 0;
+        booped = false;
+        pause = false;
+
+        scoreText.enabled = true;
+        scoreText.text = "Click to start";
+        Wheel.StopSpin();
+
+        ActivateInputs();
     }
 
     void StartTrial()
     {
         // read next line in parameter file
         // initiate wheel and eventBoxes
-        //TrialParameters currParams = parameters[currTrial].GetTrialParameters(currTrial);
         Wheel.wheelTempo = parameters.trials[currTrial].wheelSpeed;
         Wheel.eventList = parameters.trials[currTrial].eventList;
         eventMax = parameters.trials[currTrial].beatMax;
@@ -177,6 +225,7 @@ public class GameController : MonoBehaviour
     
     void GameOver()
     {
+        DeactivateInputs();
         scoreText.enabled = false;
         gameOverStarted = true;
         gameOverPanel.SetActive(true);
@@ -184,6 +233,10 @@ public class GameController : MonoBehaviour
 
     public void GameOverFinish()
     {
+        //GameObject playerInfoField = gameOverPanel.transform.Find("PlayerInfoField").gameObject;
+        //GameObject attentionField = gameOverPanel.transform.Find("AttentionField").gameObject;
+        //GameObject generalNotesField = gameOverPanel.transform.Find("PostNotesField").gameObject;
+
         string playerInfoText = playerInfoField.GetComponent<TMP_InputField>().text;
         string attentionText = attentionField.GetComponent<TMP_InputField>().text;
         string generalNotesText = generalNotesField.GetComponent<TMP_InputField>().text;
@@ -192,6 +245,7 @@ public class GameController : MonoBehaviour
         EventLogger.LogEvent("UserInput", "General Notes: " + generalNotesText);
 
         gameOverPanel.SetActive(false);
+        GameStart();
     }
 
     private void OnClick(InputAction.CallbackContext context)
@@ -326,6 +380,23 @@ public class GameController : MonoBehaviour
 
     private void OnEnable()
     {
+        ////Debug.Log("Trigger triggered!");
+        //TargetControl.OnContactStart += WindowContactOn;
+        //TargetControl.OnContactEnd += WindowContactOff;
+        //TargetControl.OnBeatZoneStart += BeatZoneContactOn;
+        //TargetControl.OnBeatZoneEnd += BeatZoneContactOff;
+        //BeatTicker.OnBeatContact += BeatContact;
+
+        //var gameplayActions = inputActions.FindActionMap("Rhythm");
+        //triggerAction = gameplayActions.FindAction("Click");
+
+        //triggerAction.performed += OnClick;
+        //triggerAction.Enable();
+
+    }
+
+    void ActivateInputs()
+    {
         //Debug.Log("Trigger triggered!");
         TargetControl.OnContactStart += WindowContactOn;
         TargetControl.OnContactEnd += WindowContactOff;
@@ -338,7 +409,24 @@ public class GameController : MonoBehaviour
 
         triggerAction.performed += OnClick;
         triggerAction.Enable();
+    }
 
+    void DeactivateInputs()
+    {
+        //Debug.Log("Trigger off");
+        TargetControl.OnContactStart -= WindowContactOn;
+        TargetControl.OnContactEnd -= WindowContactOff;
+        TargetControl.OnBeatZoneStart -= BeatZoneContactOn;
+        TargetControl.OnBeatZoneEnd -= BeatZoneContactOff;
+        BeatTicker.OnBeatContact -= BeatContact;
+
+        triggerAction.performed -= OnClick;
+        triggerAction.Disable();
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     private void OnDisable()

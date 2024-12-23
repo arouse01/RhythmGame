@@ -6,6 +6,8 @@ using SimpleFileBrowser; // implementation seems unnecessarily confusing
 
 public class ParameterLoader : MonoBehaviour
 {
+    // Last modified: 12/20/24 (AR) Adjusted the session parameter file to be in the Session Parameter folder of the data directory
+    
     [System.Serializable]
     public class TrialParameters
     {
@@ -40,13 +42,15 @@ public class ParameterLoader : MonoBehaviour
     {
 
         string filePath;
-        #if UNITY_EDITOR
-            // In the Editor, look for the file in the project root
-            filePath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-        #else
-            // In a built game, look for the file in the build directory
-            filePath = Path.Combine(Application.dataPath, "..", fileName);  // The ".." makes us go one folder above the data folder, which is where the application exe is
-        #endif
+        filePath = Path.Combine(Application.dataPath, "PhaseParams", fileName);
+        //#if UNITY_EDITOR
+        //    // In the Editor, look for the file in the project root
+
+        //filePath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+        //#else
+        //    // In a built game, look for the file in the build directory
+        //    filePath = Path.Combine(Application.dataPath, "..", fileName);  // The ".." makes us go one folder above the data folder, which is where the application exe is
+        //#endif
 
         if (!File.Exists(filePath))
         {
@@ -74,10 +78,8 @@ public class ParameterLoader : MonoBehaviour
                 {
                     ProcessLine(i, lines[i]);
                 }
-
             }
         }
-        
     }
 
     private void ParseHeaders(string headerLine)
@@ -121,7 +123,6 @@ public class ParameterLoader : MonoBehaviour
                 float colliderSizeOut = float.Parse(splitLine[colliderSizeCol]);
                 float beatZoneSizeOut = float.Parse(splitLine[beatZoneSizeCol]);
 
-
                 trials[i - 1] = new TrialParameters
                 {
                     level = levelOut,
@@ -142,24 +143,6 @@ public class ParameterLoader : MonoBehaviour
         else
         {
             Debug.LogError("Missing required headers in the parameter file.");
-        }
-        
-    }
-
-    public void GetTrialParameters(int trialIndex)
-    {
-        if (trialIndex >= 0 && trialIndex < trials.Length)
-        {
-            Debug.Log("Trial " + (trialIndex + 1) + " Parameters: " +
-                      trials[trialIndex].wheelSpeed + ", " +
-                      string.Join(", ", trials[trialIndex].eventList) + ", " +
-                      trials[trialIndex].beatMax + ", " +
-                      trials[trialIndex].targetScore);
-            //return trials[trialIndex];
-        }
-        else
-        {
-            Debug.LogError("Invalid trial index");
         }
     }
 
