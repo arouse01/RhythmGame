@@ -16,11 +16,11 @@ public class PostProcess : IPostprocessBuildWithReport
 
         // Define your source files
         string parameterFile = Path.Combine(Directory.GetCurrentDirectory(), "parameters.txt");  // The ".." makes us go one folder above the data folder, which is where the application exe is
-        string trialFile = Path.Combine(Directory.GetCurrentDirectory(), "trials.txt");
+        string trialFolder = Path.Combine(Directory.GetCurrentDirectory(), "Assets", "PhaseParams");
         //Path.Combine(Application.dataPath, "Parameters", "file1.txt");
         // Define the target destination (build folder)
         string paramFileDest = Path.Combine(buildFolder, "parameters.txt");
-        string trialFileDest = Path.Combine(buildFolder, "trials.txt");
+        string trialFolderDest = Path.Combine(buildFolder, "PhaseParams");
 
         // Copy files if they exist
         try
@@ -30,10 +30,13 @@ public class PostProcess : IPostprocessBuildWithReport
             else
                 Debug.LogWarning($"Source file not found: {parameterFile}");
 
-            if (File.Exists(trialFile))
-                File.Copy(trialFile, trialFileDest, overwrite: true);
+            if (Directory.Exists(trialFolder))
+            {
+                CopyDirectory(trialFolder, trialFolderDest);
+                Debug.Log("Folder copied successfully.");
+            }
             else
-                Debug.LogWarning($"Source file not found: {trialFile}");
+                Debug.LogWarning($"Source file not found: {trialFolder}");
 
             Debug.Log("Parameter files copied successfully to the build folder.");
         }
@@ -41,5 +44,27 @@ public class PostProcess : IPostprocessBuildWithReport
         {
             Debug.LogError($"Error copying parameter files: {ex.Message}");
         }
+    }
+
+    private void CopyDirectory(string sourceDir, string destinationDir)
+    {
+        // Create the destination directory if it doesn't exist
+        Directory.CreateDirectory(destinationDir);
+
+        // Copy all files
+        foreach (string file in Directory.GetFiles(sourceDir, "*.txt"))
+        {
+            string fileName = Path.GetFileName(file);
+            string destFile = Path.Combine(destinationDir, fileName);
+            File.Copy(file, destFile, overwrite: true);
+        }
+
+        //// Copy all subdirectories
+        //foreach (string subDir in Directory.GetDirectories(sourceDir))
+        //{
+        //    string dirName = Path.GetFileName(subDir);
+        //    string destSubDir = Path.Combine(destinationDir, dirName);
+        //    CopyDirectory(subDir, destSubDir); // Recursive call
+        //}
     }
 }

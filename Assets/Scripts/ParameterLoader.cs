@@ -42,15 +42,15 @@ public class ParameterLoader : MonoBehaviour
     {
 
         string filePath;
+        //filePath = Path.Combine(Application.dataPath, "..", "PhaseParams", fileName);
+#if UNITY_EDITOR
+        // In the Editor, look for the file in the project root
         filePath = Path.Combine(Application.dataPath, "PhaseParams", fileName);
-        //#if UNITY_EDITOR
-        //    // In the Editor, look for the file in the project root
-
         //filePath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-        //#else
-        //    // In a built game, look for the file in the build directory
-        //    filePath = Path.Combine(Application.dataPath, "..", fileName);  // The ".." makes us go one folder above the data folder, which is where the application exe is
-        //#endif
+#else
+            // In a built game, look for the file in the build directory
+            filePath = Path.Combine(Application.dataPath, "..", "PhaseParams", fileName); // The ".." makes us go one folder above the data folder, which is where the application exe is
+#endif
 
         if (!File.Exists(filePath))
         {
