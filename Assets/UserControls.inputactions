@@ -30,7 +30,7 @@
                 {
                     "name": "",
                     "id": "98c6698e-8f9a-425d-b8b6-37a06a051ad3",
-                    "path": "<Gamepad>/buttonEast",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -42,6 +42,28 @@
                     "name": "",
                     "id": "63b41e68-4e8d-4319-aa68-6eeacf6339d0",
                     "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9859f098-f111-4e4c-bc73-96bb5aab883f",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1fa035fd-0af1-43b9-b12f-7fa42b2d8e03",
+                    "path": "<Gamepad>/select",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
