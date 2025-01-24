@@ -69,6 +69,7 @@ public class WheelControl : MonoBehaviour
             {
                 box.SelfDestruct();
             }
+            boxes = null;
         }
     }
     

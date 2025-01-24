@@ -1,0 +1,3 @@
+2025-01-24 12:15:54.085	UserInput	Animal: 
+2025-01-24 12:15:54.086	UserInput	General Notes: 
+2025-01-24 12:15:54.086	Session Start	Session Start

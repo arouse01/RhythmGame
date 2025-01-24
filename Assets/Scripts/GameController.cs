@@ -21,6 +21,8 @@ public class GameController : MonoBehaviour
     public GameObject preGamePanel;
     public GameObject AnimalField;
     public GameObject preNotesField;
+    public GameObject LRSDurationField;
+    public GameObject TargetWidthField;
 
     public TextMeshProUGUI scoreText;
     public ParameterLoader parameters;
@@ -61,6 +63,7 @@ public class GameController : MonoBehaviour
 
     public InputActionAsset inputActions;
     private InputAction triggerAction;
+    private InputAction cancelAction;
 
     void Start()
     {
@@ -76,7 +79,7 @@ public class GameController : MonoBehaviour
         //pause = false;
         audioSource = GetComponent<AudioSource>();
         parameters.LoadSessionParameters("parameters.txt");
-
+        LRSDurationField.GetComponent<TMPro.TMP_InputField>().text = parameters.LRSDuration.ToString();
         Wheel.gameObject.SetActive(false);
         Target.gameObject.SetActive(false);
 
@@ -129,7 +132,8 @@ public class GameController : MonoBehaviour
 
         currTrial = 0;
 
-        LRSDuration = parameters.LRSDuration;
+        // LRSDuration = parameters.LRSDuration;
+        LRSDuration = float.Parse(LRSDurationField.GetComponent<TMPro.TMP_InputField>().text);
         LRSThresh = parameters.LRSThresh;
         targetZoneWidth = parameters.targetZoneWidth;
 
@@ -164,7 +168,8 @@ public class GameController : MonoBehaviour
         pause = false;
 
         scoreText.enabled = true;
-        scoreText.text = "Click to start";
+        string sessionNumber = System.Text.RegularExpressions.Regex.Replace(sessionFile, "[^0-9]", "");
+        scoreText.SetText("Click to start<br>Phase " + sessionNumber);
         Wheel.StopSpin();
 
         ActivateInputs();
@@ -213,11 +218,11 @@ public class GameController : MonoBehaviour
         if (currTrial < (numTrials - 1))
         {
             currTrial++;
-            scoreText.text = "Click to start";
+            scoreText.SetText("Click to start<br>Trial " + (currTrial+1).ToString());
         }
         else
         {
-            scoreText.text = "Game Over";
+            scoreText.SetText("Game Over");
             gameOver = true;
         }
 
@@ -228,7 +233,10 @@ public class GameController : MonoBehaviour
         DeactivateInputs();
         scoreText.enabled = false;
         gameOverStarted = true;
+        UserInput.SetActive(true);
         gameOverPanel.SetActive(true);
+        Wheel.gameObject.SetActive(false);
+        Target.gameObject.SetActive(false);
     }
 
     public void GameOverFinish()
@@ -284,8 +292,8 @@ public class GameController : MonoBehaviour
                     {
                         score++;
                     }
-                    scoreText.text = score.ToString();
-                    audioSource.PlayOneShot(goodHitSound);
+                    scoreText.SetText(score.ToString());
+                    audioSource.PlayOneShot(goodHitSound, 0.75f);
                     //other.GetComponent<Renderer>().material.color = Color.yellow;
                     if (score >= targetScore)
                     {
@@ -333,7 +341,7 @@ public class GameController : MonoBehaviour
                     {
                         score--;
                     }
-                    scoreText.text = score.ToString();
+                    scoreText.SetText(score.ToString());
                     //audioSource.PlayOneShot(badHitSound, 0.5f);
                 }
 
@@ -342,7 +350,7 @@ public class GameController : MonoBehaviour
 
                     TriggerLRS(LRSDuration);
                     score = 0;
-                    scoreText.text = score.ToString();
+                    scoreText.SetText(score.ToString());
                 }
 
 
@@ -351,6 +359,13 @@ public class GameController : MonoBehaviour
         }
 
     }
+
+    private void OnEscape(InputAction.CallbackContext context)
+    {
+        EndTrial();
+        GameOver();
+    }
+
 
     public void TriggerLRS(float duration)
     {
@@ -406,9 +421,13 @@ public class GameController : MonoBehaviour
 
         var gameplayActions = inputActions.FindActionMap("Rhythm");
         triggerAction = gameplayActions.FindAction("Click");
+        cancelAction = gameplayActions.FindAction("Cancel");
 
         triggerAction.performed += OnClick;
         triggerAction.Enable();
+
+        cancelAction.performed += OnEscape;
+        cancelAction.Enable();
     }
 
     void DeactivateInputs()
@@ -422,6 +441,9 @@ public class GameController : MonoBehaviour
 
         triggerAction.performed -= OnClick;
         triggerAction.Disable();
+
+        cancelAction.performed -= OnEscape;
+        cancelAction.Disable();
     }
 
     public void QuitGame()
@@ -440,6 +462,9 @@ public class GameController : MonoBehaviour
 
         triggerAction.performed -= OnClick;
         triggerAction.Disable();
+
+        cancelAction.performed -= OnEscape;
+        cancelAction.Disable();
     }
     
     private void WindowContactOn()
@@ -461,7 +486,7 @@ public class GameController : MonoBehaviour
             if (score > 0)
             {
                 score = 0;
-                scoreText.text = score.ToString();
+                scoreText.SetText(score.ToString());
             }
         }
     }

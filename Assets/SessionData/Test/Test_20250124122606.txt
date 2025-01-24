@@ -1,0 +1,17 @@
+2025-01-24 12:26:06.073	UserInput	Animal: 
+2025-01-24 12:26:06.074	UserInput	General Notes: 
+2025-01-24 12:26:06.075	Session Start	Session Start
+2025-01-24 12:26:06.812	Trial	Trial 1 started
+2025-01-24 12:26:06.837	Beat	Beat safe window start
+2025-01-24 12:26:06.838	Beat	Beat zone start
+2025-01-24 12:26:06.839	Beat	Beat tick
+2025-01-24 12:26:07.468	Response	Hit
+2025-01-24 12:26:07.471	Trial	Trial 1 ended
+2025-01-24 12:26:08.384	Trial	Trial 2 started
+2025-01-24 12:26:08.418	Beat	Beat safe window start
+2025-01-24 12:26:08.419	Beat	Beat zone start
+2025-01-24 12:26:08.419	Beat	Beat tick
+2025-01-24 12:26:15.120	Trial	Trial 2 ended
+2025-01-24 12:26:34.932	UserInput	Player Information: 
+2025-01-24 12:26:34.933	UserInput	Attention: 
+2025-01-24 12:26:35.010	UserInput	General Notes: 
