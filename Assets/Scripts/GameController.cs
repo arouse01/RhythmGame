@@ -80,6 +80,7 @@ public class GameController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         parameters.LoadSessionParameters("parameters.txt");
         LRSDurationField.GetComponent<TMPro.TMP_InputField>().text = parameters.LRSDuration.ToString();
+        TargetWidthField.GetComponent<TMPro.TMP_InputField>().text = parameters.targetZoneWidth.ToString();
         Wheel.gameObject.SetActive(false);
         Target.gameObject.SetActive(false);
 
@@ -135,6 +136,7 @@ public class GameController : MonoBehaviour
         // LRSDuration = parameters.LRSDuration;
         LRSDuration = float.Parse(LRSDurationField.GetComponent<TMPro.TMP_InputField>().text);
         LRSThresh = parameters.LRSThresh;
+        //targetZoneWidth = float.Parse(TargetWidthField.GetComponent<TMPro.TMP_InputField>().text);
         targetZoneWidth = parameters.targetZoneWidth;
 
         Target.targetZoneWidth = targetZoneWidth;
