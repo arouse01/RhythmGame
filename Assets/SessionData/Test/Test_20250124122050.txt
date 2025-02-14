@@ -1,0 +1,5 @@
+2025-01-24 12:20:50.730	UserInput	Animal: 
+2025-01-24 12:20:50.731	UserInput	General Notes: 
+2025-01-24 12:20:50.732	Session Start	Session Start
+2025-01-24 12:20:51.958	Trial	Trial 1 started
+2025-01-24 12:20:52.990	Trial	Trial 1 ended

@@ -6,23 +6,48 @@ using TMPro;
 using System.IO;
 using UnityEngine.InputSystem;
 
+/*
+Sounds:
+    goodHitSound - ding.wav, Audacity
+        Track 1: Generate>Risset Drum, 1760.0 Hz Frequency, Decay 0.2s, Center freq 100 Hz, Width 100 Hz, Noise mix 0, Amplitude 0.8
+        Track 2: Generate>Tone, 880 Hz, amplitude 0.2, duration 0.2s
+        Select all, Effect>Fade Out
+        Effect>Amplify, New Peak Amplitude of -15 dB
+    tickSound - tick.wav, Audacity
+        Track 1: Generate>Tone, 2000 Hz sine wave, amplitude 1.0, duration 0.025s
+        Track 2: Generate>Tone, 3200 Hz sine wave, amplitude 0.1, duration 0.025s long
+        Track 3: Generate>Tone, 4400 Hz sine wave, amplitude 0.1, duration 0.025s long
+        Track 4: Generate>Tone, 4600 Hz sine wave, amplitude 0.1, duration 0.025s long
+        Mix tracks 2-4 and Effect>Amplify, New Peak Amplitude of -15 dB
+        Select all tracks from 0.007s to end and Effect>Fade Out
+    bridgeSound - Xilo_1_a.wav, received from Kelley Winship as preexisting bridge sound
+
+*/
+
 public class GameController : MonoBehaviour
 {
     public WheelControl Wheel;
     public TargetControl Target;
     public Image LRSImage;
+    public LevelScore LevelScore;
 
-    public GameObject UserInput;
+    public GameObject UserInputObject;
     public GameObject gameOverPanel;
     public GameObject playerInfoField;
     public GameObject attentionField;
-    public GameObject generalNotesField;
+    public GameObject postNotesField;
 
     public GameObject preGamePanel;
     public GameObject AnimalField;
     public GameObject preNotesField;
+    public GameObject LRSDurationField;
+    public GameObject TargetWidthField;
 
-    public TextMeshProUGUI scoreText;
+    public GameObject InGameText;
+    private TextMeshProUGUI scoreText;
+    private TextMeshProUGUI messageText;
+    private GameObject levelScoreObject;
+    private GameObject lifeMarkers;
     public ParameterLoader parameters;
 
     public AudioClip bridgeSound;
@@ -34,11 +59,15 @@ public class GameController : MonoBehaviour
     public Color safeZoneColorDefault;
     public Color beatZoneColorDefault;
     public Color beatZoneColorFlash;
-
+    private Color beatZoneColorFade; // fade beat zone on boop
 
     private bool safeZoneContact; // whether target is touching an eventBox
     private bool beatZoneContact; // whether target is touching center of eventBox
+    private string sessionNumber;
     private int score;  // current score
+    private int mistakeCount; // number of errors
+    private int currLives; // number of lives left
+    private int defaultLives; // number of errors allowed
     private int level;  // current level
     private bool booped;  // whether the current eventBox has been hit
     private int eventCount;  // total number of contact events (beats)
@@ -54,18 +83,25 @@ public class GameController : MonoBehaviour
     private float colliderSize;  // width of the eventBox collider
     private float beatZoneSize; // width of the beatZone collider
     private Collider beatZoneObject;
+    private Collider safeZoneObject;
     private bool gameOver;  // game is over, move to user input
     private bool gameOverStarted;  // gameover process started
+
+    private TextMeshProUGUI Life1Marker;
+    private TextMeshProUGUI Life2Marker;
+    private TextMeshProUGUI Life3Marker;
 
     private static string logFilePath = Application.dataPath + "/Data/EventLog.txt";
 
     public InputActionAsset inputActions;
     private InputAction triggerAction;
+    private InputAction cancelAction;
 
     void Start()
     {
         Application.targetFrameRate = 60;
         LRSImage.enabled = false; // Disable the LRS image to start
+        
         //gameOver = false;
         //gameOverStarted = false;
         //gameOverPanel.SetActive(false);
@@ -74,13 +110,24 @@ public class GameController : MonoBehaviour
         //eventCount = 0;
         //booped = false;
         //pause = false;
+        scoreText = InGameText.transform.Find("Score Text").GetComponent<TextMeshProUGUI>();
+        messageText = InGameText.transform.Find("Message Text").GetComponent<TextMeshProUGUI>();
+        lifeMarkers = InGameText.transform.Find("Life Markers").gameObject;
+        Life1Marker = lifeMarkers.transform.Find("Life 1").GetComponent<TextMeshProUGUI>();
+        Life2Marker = lifeMarkers.transform.Find("Life 2").GetComponent<TextMeshProUGUI>();
+        Life3Marker = lifeMarkers.transform.Find("Life 3").GetComponent<TextMeshProUGUI>();
+        levelScoreObject = InGameText.transform.Find("Level Score").gameObject;
         audioSource = GetComponent<AudioSource>();
         parameters.LoadSessionParameters("parameters.txt");
-
+        LRSDurationField.GetComponent<TMPro.TMP_InputField>().text = parameters.LRSDuration.ToString();
+        TargetWidthField.GetComponent<TMPro.TMP_InputField>().text = parameters.targetZoneWidth.ToString();
         Wheel.gameObject.SetActive(false);
         Target.gameObject.SetActive(false);
 
-        
+        beatZoneColorFade = beatZoneColorDefault;
+        beatZoneColorFade.a = .5f;
+
+
         GameStart();
 
         
@@ -101,10 +148,9 @@ public class GameController : MonoBehaviour
         gameOver = false;
         gameOverStarted = false;
         gameOverPanel.SetActive(false);
-        UserInput.SetActive(true);
+        UserInputObject.SetActive(true);
         preGamePanel.SetActive(true);
-        scoreText.enabled = false;
-        
+        InGameText.SetActive(false);
     }
 
     public void StartSession(string sessionFile)
@@ -116,7 +162,8 @@ public class GameController : MonoBehaviour
         //string AnimalName = parameters.AnimalName;
 
         preGamePanel.SetActive(false);
-        UserInput.SetActive(false);
+        UserInputObject.SetActive(false);
+        InGameText.SetActive(true);
 
         Wheel.gameObject.SetActive(true);
         Target.gameObject.SetActive(true);
@@ -129,11 +176,15 @@ public class GameController : MonoBehaviour
 
         currTrial = 0;
 
-        LRSDuration = parameters.LRSDuration;
+        // LRSDuration = parameters.LRSDuration;
+        LRSDuration = float.Parse(LRSDurationField.GetComponent<TMPro.TMP_InputField>().text);
         LRSThresh = parameters.LRSThresh;
+        //targetZoneWidth = float.Parse(TargetWidthField.GetComponent<TMPro.TMP_InputField>().text);
         targetZoneWidth = parameters.targetZoneWidth;
 
         Target.targetZoneWidth = targetZoneWidth;
+
+        sessionNumber = System.Text.RegularExpressions.Regex.Replace(sessionFile, "[^0-9]", "");
         //Target.InitializeTarget();
 
         //// create log file
@@ -151,11 +202,14 @@ public class GameController : MonoBehaviour
             Directory.CreateDirectory(logFileFolder);
         }
         EventLogger.SetLogFilePath(logFilePath);
-        EventLogger.LogEvent("UserInput", "Animal: " + AnimalName);
-        //EventLogger.LogEvent("UserInput", "Attention: " + attentionText);
-        EventLogger.LogEvent("UserInput", "General Notes: " + preNotesText);
+        EventLogger.LogEvent("UserInputObject", "Animal: " + AnimalName);
+        //EventLogger.LogEvent("UserInputObject", "Attention: " + attentionText);
+        EventLogger.LogEvent("UserInputObject", "Presession Notes: " + preNotesText);
+        EventLogger.LogEvent("Session", "LRS Duration: " + LRSDuration.ToString());
+        EventLogger.LogEvent("Session", "Target Width: " + targetZoneWidth.ToString());
 
-        EventLogger.LogEvent("Session Start", "Session Start");
+        EventLogger.LogEvent("Session", "Phase: " + sessionNumber);
+        EventLogger.LogEvent("Session", "Session Start");
 
         score = 0;
         trialIsRunning = false;
@@ -163,8 +217,12 @@ public class GameController : MonoBehaviour
         booped = false;
         pause = false;
 
-        scoreText.enabled = true;
-        scoreText.text = "Click to start";
+        defaultLives = 3;
+
+        levelScoreObject.SetActive(false);
+        lifeMarkers.SetActive(false);
+
+        messageText.SetText("Click to start<br>Phase " + sessionNumber);
         Wheel.StopSpin();
 
         ActivateInputs();
@@ -183,6 +241,13 @@ public class GameController : MonoBehaviour
         level = parameters.trials[currTrial].level;
         eventCount = 0;
         score = 0;
+        mistakeCount = 0;
+        currLives = defaultLives;
+        lifeMarkers.SetActive(true);
+        UpdateLives();
+        messageText.SetText("");
+        UpdateScore();
+        levelScoreObject.SetActive(false);
         trialIsRunning = true;
         EventLogger.LogEvent("Trial", "Trial " + (currTrial+1) + " started");
         Wheel.colliderSize = colliderSize;
@@ -209,15 +274,24 @@ public class GameController : MonoBehaviour
         safeZoneContact = false;
         booped = false;
 
+        lifeMarkers.SetActive(false);
+        scoreText.SetText("Mistakes: " + (mistakeCount).ToString());
+
+        // TODO: calculate level score
+        if (int.Parse(sessionNumber) > 0)
+        {
+            UpdateLevelScore();
+        }
+
         // if not max trial, start next trial
         if (currTrial < (numTrials - 1))
         {
             currTrial++;
-            scoreText.text = "Click to start";
+            messageText.SetText("Click to start<br>Trial " + (currTrial+1).ToString());
         }
         else
         {
-            scoreText.text = "Game Over";
+            messageText.SetText("Game Over");
             gameOver = true;
         }
 
@@ -226,23 +300,26 @@ public class GameController : MonoBehaviour
     void GameOver()
     {
         DeactivateInputs();
-        scoreText.enabled = false;
+        InGameText.SetActive(false);
         gameOverStarted = true;
+        UserInputObject.SetActive(true);
         gameOverPanel.SetActive(true);
+        Wheel.gameObject.SetActive(false);
+        Target.gameObject.SetActive(false);
     }
 
     public void GameOverFinish()
     {
         //GameObject playerInfoField = gameOverPanel.transform.Find("PlayerInfoField").gameObject;
         //GameObject attentionField = gameOverPanel.transform.Find("AttentionField").gameObject;
-        //GameObject generalNotesField = gameOverPanel.transform.Find("PostNotesField").gameObject;
+        //GameObject postNotesField = gameOverPanel.transform.Find("postNotesField").gameObject;
 
         string playerInfoText = playerInfoField.GetComponent<TMP_InputField>().text;
         string attentionText = attentionField.GetComponent<TMP_InputField>().text;
-        string generalNotesText = generalNotesField.GetComponent<TMP_InputField>().text;
-        EventLogger.LogEvent("UserInput", "Player Information: " + playerInfoText);
-        EventLogger.LogEvent("UserInput", "Attention: " + attentionText);
-        EventLogger.LogEvent("UserInput", "General Notes: " + generalNotesText);
+        string generalNotesText = postNotesField.GetComponent<TMP_InputField>().text;
+        EventLogger.LogEvent("UserInputObject", "Player Information: " + playerInfoText);
+        EventLogger.LogEvent("UserInputObject", "Attention: " + attentionText);
+        EventLogger.LogEvent("UserInputObject", "General Notes: " + generalNotesText);
 
         gameOverPanel.SetActive(false);
         GameStart();
@@ -270,21 +347,21 @@ public class GameController : MonoBehaviour
                 Target.Bounce();
                 if (beatZoneContact && !booped)
                 {
+                    // hit in beat zone, score point
                     EventLogger.LogEvent("Response", "Hit");
                     booped = true;
                     if (beatZoneObject != null)
                     {
                         beatZoneObject.GetComponent<Renderer>().material.color = beatZoneColorFlash;
                     }
-                    if (score < 0)
-                    {
-                        score = 1;
-                    }
-                    else
-                    {
-                        score++;
-                    }
-                    scoreText.text = score.ToString();
+                    
+                    score++;
+                    currLives = defaultLives;
+                    UpdateLives();
+
+                    // TODO: placeholder for calculating accuracy
+
+                    UpdateScore();
                     audioSource.PlayOneShot(goodHitSound);
                     //other.GetComponent<Renderer>().material.color = Color.yellow;
                     if (score >= targetScore)
@@ -296,22 +373,17 @@ public class GameController : MonoBehaviour
                 }
                 else if(safeZoneContact && !booped)
                 {
+                    // hit in safe zone, no score change
                     EventLogger.LogEvent("Response", "Safe");
                     booped = true;
-                    //if (score < 0)
-                    //{
-                    //    score = 1;
-                    //}
-                    //else
-                    //{
-                    //    score++;
-                    //}
-                    //scoreText.text = score.ToString();
-                    audioSource.PlayOneShot(goodHitSound);
-                    //if (score >= targetScore)
-                    //{
-                    //    audioSource.PlayOneShot(bridgeSound);
-                    //}
+                    currLives = defaultLives;
+                    UpdateLives();  // reset lives to max
+                    safeZoneObject.transform.Find("BeatZone").GetComponent<Renderer>().material.color = beatZoneColorFade;
+
+
+
+                    //audioSource.PlayOneShot(goodHitSound);
+
                 }
                 else 
                 {
@@ -327,23 +399,27 @@ public class GameController : MonoBehaviour
                     
                     if (score > 0)
                     {
-                        score = -1;
+                        score = 0;
                     }
-                    else
-                    {
-                        score--;
-                    }
-                    scoreText.text = score.ToString();
+                    
+                    mistakeCount++;
+                    UpdateScore();
+
+                    currLives--;
+                    UpdateLives();
+                    
+                    // TODO: placeholder for accuracy update
+
                     //audioSource.PlayOneShot(badHitSound, 0.5f);
                 }
 
-                if (score < LRSThresh)
-                {
+                //if (currLives <= 0)
+                //{
 
-                    TriggerLRS(LRSDuration);
-                    score = 0;
-                    scoreText.text = score.ToString();
-                }
+                //    TriggerLRS(LRSDuration);
+                //    score = 0;
+                //    scoreText.SetText(score.ToString());
+                //}
 
 
 
@@ -351,6 +427,13 @@ public class GameController : MonoBehaviour
         }
 
     }
+
+    private void OnEscape(InputAction.CallbackContext context)
+    {
+        EndTrial();
+        GameOver();
+    }
+
 
     public void TriggerLRS(float duration)
     {
@@ -360,7 +443,8 @@ public class GameController : MonoBehaviour
             pause = true;
             LRSImage.enabled = true; // Enable the blackout image
             Wheel.StopSpin();
-            scoreText.enabled = false;
+            InGameText.SetActive(false);
+            //scoreText.enabled = false;
             Invoke("DisableLRS", duration); // Disable after the duration
         }
     }
@@ -372,11 +456,52 @@ public class GameController : MonoBehaviour
             EventLogger.LogEvent("Feedback", "LRS ended");
             pause = false;
             LRSImage.enabled = false; // Disable the blackout image
-            scoreText.enabled = true;
+
+            InGameText.SetActive(true);
+            //scoreText.enabled = true;
             Wheel.StartSpin();
         }
     }
 
+    void UpdateLives()
+    {
+        switch (currLives)
+        {
+            case 0:
+                TriggerLRS(LRSDuration);
+                currLives = defaultLives;
+                UpdateLives();
+                break;
+            case 1:
+                Life3Marker.color = new Color(0, 0, 0, 255);
+                Life2Marker.color = new Color(0, 0, 0, 255);
+                Life1Marker.color = new Color(255, 255, 255, 255);
+                break;
+            case 2:
+                Life3Marker.color = new Color(0, 0, 0, 255);
+                Life2Marker.color = new Color(255, 255, 255, 255);
+                Life1Marker.color = new Color(255, 255, 255, 255);
+                break;
+            case 3:
+                Life3Marker.color = new Color(255, 255, 255, 255); 
+                Life2Marker.color = new Color(255, 255, 255, 255);
+                Life1Marker.color = new Color(255, 255, 255, 255);
+                break;
+            default:
+                break;
+        }
+    }
+
+    void UpdateScore()
+    {
+        scoreText.SetText(score.ToString());
+    }
+    
+    void UpdateLevelScore()
+    {
+        levelScoreObject.SetActive(true);
+        LevelScore.ShowStars(3);
+    }
 
     private void OnEnable()
     {
@@ -406,9 +531,13 @@ public class GameController : MonoBehaviour
 
         var gameplayActions = inputActions.FindActionMap("Rhythm");
         triggerAction = gameplayActions.FindAction("Click");
+        cancelAction = gameplayActions.FindAction("Cancel");
 
         triggerAction.performed += OnClick;
         triggerAction.Enable();
+
+        cancelAction.performed += OnEscape;
+        cancelAction.Enable();
     }
 
     void DeactivateInputs()
@@ -420,8 +549,17 @@ public class GameController : MonoBehaviour
         TargetControl.OnBeatZoneEnd -= BeatZoneContactOff;
         BeatTicker.OnBeatContact -= BeatContact;
 
-        triggerAction.performed -= OnClick;
-        triggerAction.Disable();
+        if (triggerAction != null)
+        {
+            triggerAction.performed -= OnClick;
+            triggerAction.Disable();
+        }
+        
+        if (cancelAction != null)
+        {
+            cancelAction.performed -= OnEscape;
+            cancelAction.Disable();
+        }
     }
 
     public void QuitGame()
@@ -438,15 +576,26 @@ public class GameController : MonoBehaviour
         TargetControl.OnBeatZoneEnd -= BeatZoneContactOff;
         BeatTicker.OnBeatContact -= BeatContact;
 
-        triggerAction.performed -= OnClick;
-        triggerAction.Disable();
+        if (triggerAction != null)
+        {
+            triggerAction.performed -= OnClick;
+            triggerAction.Disable();
+        }
+        
+        if (cancelAction != null)
+        {
+            cancelAction.performed -= OnEscape;
+            cancelAction.Disable();
+        }
+        
     }
     
     private void WindowContactOn()
     {
         EventLogger.LogEvent("Beat", "Beat safe window start");
         eventCount++;
-        
+
+        safeZoneObject = Target.safeZone;
         safeZoneContact = true;
         booped = false;
         
@@ -461,7 +610,7 @@ public class GameController : MonoBehaviour
             if (score > 0)
             {
                 score = 0;
-                scoreText.text = score.ToString();
+                UpdateScore();
             }
         }
     }
@@ -469,7 +618,11 @@ public class GameController : MonoBehaviour
     private void BeatContact()
     {
         EventLogger.LogEvent("Beat", "Beat tick");
-        audioSource.PlayOneShot(tickSound);
+        if (int.Parse(sessionNumber) > 0)
+        {
+            audioSource.PlayOneShot(tickSound);
+        }
+            
     }
 
     private void BeatZoneContactOn()

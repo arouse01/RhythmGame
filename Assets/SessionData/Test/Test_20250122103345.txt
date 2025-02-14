@@ -1,0 +1,39 @@
+2025-01-22 10:33:45.128	UserInput	Animal: 
+2025-01-22 10:33:45.129	UserInput	General Notes: 
+2025-01-22 10:33:45.129	Session Start	Session Start
+2025-01-22 10:33:45.825	Trial	Trial 1 started
+2025-01-22 10:33:45.837	Beat	Beat safe window start
+2025-01-22 10:33:45.838	Beat	Beat zone start
+2025-01-22 10:33:45.838	Beat	Beat tick
+2025-01-22 10:33:46.414	Response	Hit
+2025-01-22 10:33:46.974	Trial	Trial 1 ended
+2025-01-22 10:33:46.981	Trial	Trial 2 started
+2025-01-22 10:33:46.995	Beat	Beat safe window start
+2025-01-22 10:33:46.995	Beat	Beat zone start
+2025-01-22 10:33:46.996	Beat	Beat tick
+2025-01-22 10:33:48.460	Response	Hit
+2025-01-22 10:33:48.461	Trial	Trial 2 ended
+2025-01-22 10:33:49.811	Trial	Trial 3 started
+2025-01-22 10:33:50.234	Beat	Beat safe window start
+2025-01-22 10:33:50.234	Beat	Beat zone start
+2025-01-22 10:33:50.234	Beat	Beat tick
+2025-01-22 10:33:50.235	Response	Hit
+2025-01-22 10:33:50.235	Trial	Trial 3 ended
+2025-01-22 10:33:52.598	Trial	Trial 4 started
+2025-01-22 10:33:52.616	Beat	Beat safe window start
+2025-01-22 10:33:52.616	Beat	Beat zone start
+2025-01-22 10:33:52.616	Beat	Beat tick
+2025-01-22 10:33:53.382	Response	Hit
+2025-01-22 10:33:53.382	Trial	Trial 4 ended
+2025-01-22 10:33:54.131	Trial	Trial 5 started
+2025-01-22 10:33:54.149	Beat	Beat safe window start
+2025-01-22 10:33:54.149	Beat	Beat zone start
+2025-01-22 10:33:54.150	Beat	Beat tick
+2025-01-22 10:33:54.566	Response	Hit
+2025-01-22 10:33:54.567	Trial	Trial 5 ended
+2025-01-22 10:33:55.432	Trial	Trial 6 started
+2025-01-22 10:33:55.448	Beat	Beat safe window start
+2025-01-22 10:33:55.448	Beat	Beat zone start
+2025-01-22 10:33:55.448	Beat	Beat tick
+2025-01-22 10:33:56.000	Response	Hit
+2025-01-22 10:33:56.000	Trial	Trial 6 ended

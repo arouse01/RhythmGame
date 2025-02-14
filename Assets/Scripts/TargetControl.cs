@@ -9,6 +9,7 @@ public class TargetControl : MonoBehaviour
 {
 
     public Collider beatZone;
+    public Collider safeZone;
 
     Animation anim;
 
@@ -136,6 +137,7 @@ public class TargetControl : MonoBehaviour
     {
         if (other.CompareTag("EventBox"))
         {
+            safeZone = other;
             OnContactStart?.Invoke();
             //GetComponent<Renderer>().material.color = Color.blue;
             //triangle.GetComponent<Renderer>().material.color = Color.white;
