@@ -31,6 +31,8 @@ public class GameController : MonoBehaviour
     public Image LRSImage;
     public LevelScore LevelScore;
 
+    public TextMeshProUGUI versionText;
+
     public GameObject UserInputObject;
     public GameObject gameOverPanel;
     public GameObject playerInfoField;
@@ -101,7 +103,7 @@ public class GameController : MonoBehaviour
     {
         Application.targetFrameRate = 60;
         LRSImage.enabled = false; // Disable the LRS image to start
-        
+        versionText.text = "Version " + Application.version;  // Update the version number on the home screen
         //gameOver = false;
         //gameOverStarted = false;
         //gameOverPanel.SetActive(false);
@@ -170,7 +172,7 @@ public class GameController : MonoBehaviour
 
         // read parameter file
         parameters.LoadTrialParameters(sessionFile);
-        
+        parameters.AnimalName = AnimalName;
         // Get number of trials
         numTrials = parameters.trials.Length;
 
@@ -202,9 +204,9 @@ public class GameController : MonoBehaviour
             Directory.CreateDirectory(logFileFolder);
         }
         EventLogger.SetLogFilePath(logFilePath);
-        EventLogger.LogEvent("UserInputObject", "Animal: " + AnimalName);
-        //EventLogger.LogEvent("UserInputObject", "Attention: " + attentionText);
-        EventLogger.LogEvent("UserInputObject", "Presession Notes: " + preNotesText);
+        EventLogger.LogEvent("Session", "Animal: " + AnimalName);
+        //EventLogger.LogEvent("Session", "Attention: " + attentionText);
+        EventLogger.LogEvent("Session", "Presession Notes: " + preNotesText);
         EventLogger.LogEvent("Session", "LRS Duration: " + LRSDuration.ToString());
         EventLogger.LogEvent("Session", "Target Width: " + targetZoneWidth.ToString());
 
@@ -317,9 +319,9 @@ public class GameController : MonoBehaviour
         string playerInfoText = playerInfoField.GetComponent<TMP_InputField>().text;
         string attentionText = attentionField.GetComponent<TMP_InputField>().text;
         string generalNotesText = postNotesField.GetComponent<TMP_InputField>().text;
-        EventLogger.LogEvent("UserInputObject", "Player Information: " + playerInfoText);
-        EventLogger.LogEvent("UserInputObject", "Attention: " + attentionText);
-        EventLogger.LogEvent("UserInputObject", "General Notes: " + generalNotesText);
+        EventLogger.LogEvent("Session", "Player Information: " + playerInfoText);
+        EventLogger.LogEvent("Session", "Attention: " + attentionText);
+        EventLogger.LogEvent("Session", "Postsession Notes: " + generalNotesText);
 
         gameOverPanel.SetActive(false);
         GameStart();
