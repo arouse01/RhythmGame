@@ -232,7 +232,16 @@ public class GameController : MonoBehaviour
 
     void StartTrial()
     {
-        // read next line in parameter file
+        // store trial info in data file
+        EventLogger.LogEvent("Trial Param", "Level: " + parameters.trials[currTrial].level.ToString());
+        EventLogger.LogEvent("Trial Param", "Wheel Tempo: " + parameters.trials[currTrial].wheelSpeed.ToString());
+        string eventList = string.Join(", ", parameters.trials[currTrial].eventList);
+        EventLogger.LogEvent("Trial Param", "Event List: " + eventList);
+        EventLogger.LogEvent("Trial Param", "Max Beats: " + parameters.trials[currTrial].beatMax.ToString());
+        EventLogger.LogEvent("Trial Param", "Target Score: " + parameters.trials[currTrial].targetScore.ToString());
+        EventLogger.LogEvent("Trial Param", "Safe Zone Size: " + parameters.trials[currTrial].colliderSize.ToString());
+        EventLogger.LogEvent("Trial Param", "Beat Zone Size: " + parameters.trials[currTrial].beatZoneSize.ToString());
+        
         // initiate wheel and eventBoxes
         Wheel.wheelTempo = parameters.trials[currTrial].wheelSpeed;
         Wheel.eventList = parameters.trials[currTrial].eventList;
@@ -365,7 +374,7 @@ public class GameController : MonoBehaviour
 
                     UpdateScore();
                     audioSource.PlayOneShot(goodHitSound);
-                    //other.GetComponent<Renderer>().material.color = Color.yellow;
+                    
                     if (score >= targetScore)
                     {
                         audioSource.PlayOneShot(bridgeSound);
@@ -502,7 +511,20 @@ public class GameController : MonoBehaviour
     void UpdateLevelScore()
     {
         levelScoreObject.SetActive(true);
-        LevelScore.ShowStars(3);
+        if (mistakeCount <= 1)
+        {
+            LevelScore.ShowStars(3);
+        }
+        else if (mistakeCount <= 4)
+        {
+            LevelScore.ShowStars(2);
+        }
+        else
+        {
+            LevelScore.ShowStars(1);
+        }
+
+
     }
 
     private void OnEnable()

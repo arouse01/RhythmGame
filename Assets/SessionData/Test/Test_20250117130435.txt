@@ -1,9 +1,0 @@
-2025-01-17 13:04:35.464	UserInput	Animal: 
-2025-01-17 13:04:35.466	UserInput	General Notes: 
-2025-01-17 13:04:35.466	Session Start	Session Start
-2025-01-17 13:04:36.804	Trial	Trial 1 started
-2025-01-17 13:04:36.881	Beat	Beat safe window start
-2025-01-17 13:04:36.882	Beat	Beat zone start
-2025-01-17 13:04:36.882	Beat	Beat tick
-2025-01-17 13:04:37.564	Response	Hit
-2025-01-17 13:04:37.566	Trial	Trial 1 ended
