@@ -204,14 +204,15 @@ public class GameController : MonoBehaviour
             Directory.CreateDirectory(logFileFolder);
         }
         EventLogger.SetLogFilePath(logFilePath);
-        EventLogger.LogEvent("Session", "Animal: " + AnimalName);
-        //EventLogger.LogEvent("Session", "Attention: " + attentionText);
-        EventLogger.LogEvent("Session", "Presession Notes: " + preNotesText);
-        EventLogger.LogEvent("Session", "LRS Duration: " + LRSDuration.ToString());
-        EventLogger.LogEvent("Session", "Target Width: " + targetZoneWidth.ToString());
+        EventLogger.LogEvent("Session", "Animal", AnimalName);
+        //EventLogger.LogEvent("Session", "Attention", attentionText);
+        EventLogger.LogEvent("Session", "Presession Notes", preNotesText);
+        EventLogger.LogEvent("Session", "LRS Duration", LRSDuration.ToString());
+        EventLogger.LogEvent("Session", "Target Width", targetZoneWidth.ToString());
 
-        EventLogger.LogEvent("Session", "Phase: " + sessionNumber);
-        EventLogger.LogEvent("Session", "Session Start");
+        EventLogger.LogEvent("Session", "Phase", sessionNumber);
+        string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+        EventLogger.LogEvent("Session", "Session Start", timestamp);
 
         score = 0;
         trialIsRunning = false;
@@ -233,14 +234,14 @@ public class GameController : MonoBehaviour
     void StartTrial()
     {
         // store trial info in data file
-        EventLogger.LogEvent("Trial Param", "Level: " + parameters.trials[currTrial].level.ToString());
-        EventLogger.LogEvent("Trial Param", "Wheel Tempo: " + parameters.trials[currTrial].wheelSpeed.ToString());
+        EventLogger.LogEvent("Trial Param", "Level", parameters.trials[currTrial].level.ToString());
+        EventLogger.LogEvent("Trial Param", "Wheel Tempo", parameters.trials[currTrial].wheelSpeed.ToString());
         string eventList = string.Join(", ", parameters.trials[currTrial].eventList);
-        EventLogger.LogEvent("Trial Param", "Event List: " + eventList);
-        EventLogger.LogEvent("Trial Param", "Max Beats: " + parameters.trials[currTrial].beatMax.ToString());
-        EventLogger.LogEvent("Trial Param", "Target Score: " + parameters.trials[currTrial].targetScore.ToString());
-        EventLogger.LogEvent("Trial Param", "Safe Zone Size: " + parameters.trials[currTrial].colliderSize.ToString());
-        EventLogger.LogEvent("Trial Param", "Beat Zone Size: " + parameters.trials[currTrial].beatZoneSize.ToString());
+        EventLogger.LogEvent("Trial Param", "Event List", eventList);
+        EventLogger.LogEvent("Trial Param", "Max Beats", parameters.trials[currTrial].beatMax.ToString());
+        EventLogger.LogEvent("Trial Param", "Target Score", parameters.trials[currTrial].targetScore.ToString());
+        EventLogger.LogEvent("Trial Param", "Safe Zone Size", parameters.trials[currTrial].colliderSize.ToString());
+        EventLogger.LogEvent("Trial Param", "Beat Zone Size", parameters.trials[currTrial].beatZoneSize.ToString());
         
         // initiate wheel and eventBoxes
         Wheel.wheelTempo = parameters.trials[currTrial].wheelSpeed;
@@ -260,7 +261,8 @@ public class GameController : MonoBehaviour
         UpdateScore();
         levelScoreObject.SetActive(false);
         trialIsRunning = true;
-        EventLogger.LogEvent("Trial", "Trial " + (currTrial+1) + " started");
+        string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+        EventLogger.LogEvent("Trial", "Trial " + (currTrial+1) + " started", timestamp);
         Wheel.colliderSize = colliderSize;
         Wheel.beatZoneSize = beatZoneSize;
         Wheel.safeZoneColorDefault = safeZoneColorDefault;
@@ -328,9 +330,9 @@ public class GameController : MonoBehaviour
         string playerInfoText = playerInfoField.GetComponent<TMP_InputField>().text;
         string attentionText = attentionField.GetComponent<TMP_InputField>().text;
         string generalNotesText = postNotesField.GetComponent<TMP_InputField>().text;
-        EventLogger.LogEvent("Session", "Player Information: " + playerInfoText);
-        EventLogger.LogEvent("Session", "Attention: " + attentionText);
-        EventLogger.LogEvent("Session", "Postsession Notes: " + generalNotesText);
+        EventLogger.LogEvent("Session", "Player Information", playerInfoText);
+        EventLogger.LogEvent("Session", "Attention", attentionText);
+        EventLogger.LogEvent("Session", "Postsession Notes", generalNotesText);
 
         gameOverPanel.SetActive(false);
         GameStart();

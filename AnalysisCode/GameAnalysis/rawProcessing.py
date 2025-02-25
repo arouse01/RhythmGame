@@ -116,7 +116,7 @@ for subject in subjectList:
         # break into trials
 
         # get session-level data
-        
+
         # what session-level data to store? Or keep session-level data in separate file for lookup?
         # session level data to get/calc: session number, phase number
         #

@@ -16,7 +16,7 @@ public class EventLogger
         logFilePath = path;
     }
 
-    public static void LogEvent(string eventType, string eventMessage)
+    public static void LogEvent(string eventType, string eventMessage, string eventValue=null)
     {
         //string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
         double time = TimeUtil.timeAsDouble;
@@ -26,7 +26,7 @@ public class EventLogger
         //var hrs = Math.Floor(t) / 3600f % 24f;
         using (StreamWriter writer = new StreamWriter(logFilePath, true))
         {
-            writer.WriteLine($"{time}\t{eventType}\t{eventMessage}");
+            writer.WriteLine($"{time}\t{eventType}\t{eventMessage}\t{eventValue}");
         }
     }
 
