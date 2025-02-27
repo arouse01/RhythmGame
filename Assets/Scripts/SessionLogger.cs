@@ -4,12 +4,17 @@ using UnityEngine;
 using System.IO;
 using System;
 using TimeUtil = UnityEngine.Time;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Collections.Concurrent;
 
 public class EventLogger
 {
     
 
     private static string logFilePath = Application.dataPath + "/EventLog.txt";
+    private static ConcurrentQueue<string> logQueue = new ConcurrentQueue<string>();
+    private static bool isLogging = false;
 
     public static void SetLogFilePath(string path)
     {
@@ -24,12 +29,31 @@ public class EventLogger
         //var sec = t % 60f;
         //var min = Math.Floor(t) / 60f % 60f;
         //var hrs = Math.Floor(t) / 3600f % 24f;
-        using (StreamWriter writer = new StreamWriter(logFilePath, true))
+        
+        //using (StreamWriter writer = new StreamWriter(logFilePath, true))
+        //{
+        //    writer.WriteLine($"{time}\t{eventType}\t{eventMessage}\t{eventValue}");
+        //}
+
+        logQueue.Enqueue($"{time}\t{eventType}\t{eventMessage}\t{eventValue}");
+        if (!isLogging)
         {
-            writer.WriteLine($"{time}\t{eventType}\t{eventMessage}\t{eventValue}");
+            Task.Run(ProcessQueue);
         }
     }
 
+    private static async Task ProcessQueue()
+    {
+        isLogging = true;
+
+        while (logQueue.TryDequeue(out string logEntry))
+        {
+            await File.AppendAllTextAsync(logFilePath, logEntry + "\n");
+            await Task.Delay(5); // Prevents overwhelming file I/O
+        }
+
+        isLogging = false;
+    }
     
 }
 

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.IO;
 using UnityEngine.InputSystem;
+using TimeUtil = UnityEngine.Time;
 
 /*
 Sounds:
@@ -140,7 +141,7 @@ public class GameController : MonoBehaviour
     {
         if (trialIsRunning && eventCount >= eventMax)
         {
-            EndTrial();
+            EndTrial(false);
         }
         
     }
@@ -276,7 +277,7 @@ public class GameController : MonoBehaviour
 
     }
 
-    void EndTrial()
+    void EndTrial(bool success=true)
     {
         Wheel.StopSpin();
         trialIsRunning = false;
@@ -286,15 +287,29 @@ public class GameController : MonoBehaviour
         beatZoneContact = false;
         safeZoneContact = false;
         booped = false;
-
-        lifeMarkers.SetActive(false);
         scoreText.SetText("Mistakes: " + (mistakeCount).ToString());
-
-        // TODO: calculate level score
-        if (int.Parse(sessionNumber) > 0)
+        // pause so the score screen doesn't get skipped
+        pause = true;
+        
+        lifeMarkers.SetActive(false);
+        
+        if (success)
         {
-            UpdateLevelScore();
+            
+            // TODO: calculate level score
+            if (int.Parse(sessionNumber) > 0)
+            {
+                UpdateLevelScore();
+            }
         }
+        else
+        {
+            messageText.SetText("Maximum beats exceeded");
+        }
+        
+
+        // wait 1.5s before allowing to go on
+        StartCoroutine(TrialEndPause(2f));
 
         // if not max trial, start next trial
         if (currTrial < (numTrials - 1))
@@ -338,6 +353,13 @@ public class GameController : MonoBehaviour
         GameStart();
     }
 
+    private IEnumerator TrialEndPause(float duration)
+    {
+        pause = true;
+        yield return new WaitForSeconds(duration); // Wait for the specified time
+        pause = false; // Turn off the blackout
+    }
+
     private void OnClick(InputAction.CallbackContext context)
     {
         //Debug.Log("Clicked!");
@@ -351,7 +373,11 @@ public class GameController : MonoBehaviour
         }
         else if (!trialIsRunning & !gameOver)
         {
-            StartTrial();
+            if (!pause)
+            {
+                StartTrial();
+            }
+                
         }
         else
         { 
