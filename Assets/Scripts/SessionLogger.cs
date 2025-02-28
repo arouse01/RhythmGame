@@ -14,7 +14,9 @@ public class EventLogger
 
     private static string logFilePath = Application.dataPath + "/EventLog.txt";
     private static ConcurrentQueue<string> logQueue = new ConcurrentQueue<string>();
-    private static bool isLogging = false;
+    //private static bool isLogging = false;
+    private static readonly CancellationTokenSource cts = new CancellationTokenSource();
+    private static Task logTask;
 
     public static void SetLogFilePath(string path)
     {
@@ -36,25 +38,39 @@ public class EventLogger
         //}
 
         logQueue.Enqueue($"{time}\t{eventType}\t{eventMessage}\t{eventValue}");
-        if (!isLogging)
-        {
-            Task.Run(ProcessQueue);
-        }
+        //if (!isLogging)
+        //{
+        //    Task.Run(ProcessQueue);
+        //}
+    }
+
+    public static void StartLog()
+    {
+        logTask = Task.Run(ProcessQueue, cts.Token);
+    }
+
+    public static void StopLog()
+    {
+        cts.Cancel();  // Signal the background task to stop
+        logTask.Wait();  // Ensure it finishes before exiting
     }
 
     private static async Task ProcessQueue()
     {
-        isLogging = true;
+        //isLogging = true;
 
-        while (logQueue.TryDequeue(out string logEntry))
+        while (!cts.Token.IsCancellationRequested)
         {
-            await File.AppendAllTextAsync(logFilePath, logEntry + "\n");
-            await Task.Delay(5); // Prevents overwhelming file I/O
+            while (logQueue.TryDequeue(out string logEntry))
+            {
+                await File.AppendAllTextAsync(logFilePath, logEntry + "\n");
+                //await Task.Delay(5); // Prevents overwhelming file I/O
+            }
         }
-
-        isLogging = false;
+        //isLogging = false;
+        await Task.Delay(10);
     }
-    
+
 }
 
 //// https://discussions.unity.com/t/building-an-accurate-clock-that-will-stay-accurate-over-time/917706/22

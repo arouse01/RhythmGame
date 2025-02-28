@@ -205,6 +205,7 @@ public class GameController : MonoBehaviour
             Directory.CreateDirectory(logFileFolder);
         }
         EventLogger.SetLogFilePath(logFilePath);
+        EventLogger.StartLog();
         EventLogger.LogEvent("Session", "Animal", AnimalName);
         //EventLogger.LogEvent("Session", "Attention", attentionText);
         EventLogger.LogEvent("Session", "Presession Notes", preNotesText);
@@ -352,6 +353,7 @@ public class GameController : MonoBehaviour
         EventLogger.LogEvent("Session", "Postsession Notes", generalNotesText);
 
         gameOverPanel.SetActive(false);
+        EventLogger.StopLog();
         GameStart();
     }
 
@@ -706,6 +708,11 @@ public class GameController : MonoBehaviour
     {
         EventLogger.LogEvent("Beat", "Beat zone end");
         beatZoneContact = false;
+    }
+
+    void OnApplicationQuit()
+    {
+        EventLogger.StopLog();
     }
 
 }
