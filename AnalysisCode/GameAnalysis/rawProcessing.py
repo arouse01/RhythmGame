@@ -51,20 +51,22 @@ for subject in subjectList:
         currPath = os.path.join(subjectFolder, currFile)
         currData = pd.read_table(currPath,
                                  header=None,
-                                 names=['Timestamp', 'Type', 'Message'],
-                                 parse_dates=[1],  # Which columns to parse as dates/datetimes
-                                 date_format='%Y-%m-%d %H:%M:%S.%f',  # automatically infer datetime formatting
+                                 names=['Time', 'Type', 'Message', 'Value'],
+                                 # parse_dates=[1],  # Which columns to parse as dates/datetimes
+                                 # date_format='%Y-%m-%d %H:%M:%S.%f',  # automatically infer datetime formatting
                                  dtype={
-                                     'Timestamp': str,  # groupby
-                                     'Type': str,  # groupby
-                                     'Message': str  # groupby
+                                     'Time': float,
+                                     'Type': str,
+                                     'Message': str,
+                                     'Value': str
 
                                  }  # manually assign dtypes to each column
                                  )
-        currData['Timestamp'] = pd.to_datetime(currData['Timestamp'])
+        currDate = dt.datetime.strptime(currFile[-18:-4], "%Y%m%d%H%M%S")
+        # currData['Timestamp'] = pd.to_datetime(currData['Timestamp'])
         currData.insert(0, column='File', value=currFile)
         currData.insert(1, column='Subject', value=subject)
-        currData.insert(3, column='Date', value=currData['Timestamp'].dt.date)
+        currData.insert(3, column='Date', value=currDate)
         # currData.insert(4, column='Time', value=currData['Timestamp'].dt.time)
 
         # add trial number
@@ -78,12 +80,11 @@ for subject in subjectList:
         currData['Trial'] = trialNumbers
 
         # # calculate event times based on trial start
-        trialStartTimes = currData.groupby(['Trial'])['Timestamp'].min()
+        trialStartTimes = currData.groupby(['Trial'])['Time'].min()
         currData['TrialStart'] = currData['Trial'].map(trialStartTimes)
-        currData['TrialTime'] = (currData['Timestamp'] - currData['TrialStart']).dt.total_seconds()
+        currData['TrialTime'] = (currData['Time'] - currData['TrialStart'])
 
-        currSessionData = currData[currData['Type'].str.match('UserInputObject') |
-                                   currData['Type'].str.match('Session')]
+        currSessionData = currData[currData['Type'].str.match('Trial Param')]
         currTickTimes = currData[currData['Message'].str.match('Beat tick')]
 
         # double check that all ticks are present - number of ticks should equal number of Beat Zone Starts

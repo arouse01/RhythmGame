@@ -306,22 +306,24 @@ public class GameController : MonoBehaviour
         {
             messageText.SetText("Maximum beats exceeded");
         }
-        
+
 
         // wait 1.5s before allowing to go on
         StartCoroutine(TrialEndPause(2f));
+        //TrialEndPause(2f);
 
-        // if not max trial, start next trial
-        if (currTrial < (numTrials - 1))
-        {
-            currTrial++;
-            messageText.SetText("Click to start<br>Trial " + (currTrial+1).ToString());
-        }
-        else
-        {
-            messageText.SetText("Game Over");
-            gameOver = true;
-        }
+        //// if not max trial, start next trial
+        //if (currTrial < (numTrials - 1))
+        //{
+        //    currTrial++;
+        //    messageText.SetText("Click to start<br>Trial " + (currTrial + 1).ToString());
+        //}
+        //else
+        //{
+        //    messageText.SetText("Game Over");
+        //    gameOver = true;
+        //}
+
 
     }
     
@@ -357,7 +359,23 @@ public class GameController : MonoBehaviour
     {
         pause = true;
         yield return new WaitForSeconds(duration); // Wait for the specified time
+        //float counter = 0;
+        //while (counter < duration) 
+        //{
+        //    counter += Time.deltaTime;
+        //}
         pause = false; // Turn off the blackout
+        // if not max trial, start next trial
+        if (currTrial < (numTrials - 1))
+        {
+            currTrial++;
+            messageText.SetText("Click to start<br>Trial " + (currTrial + 1).ToString());
+        }
+        else
+        {
+            messageText.SetText("Game Over");
+            gameOver = true;
+        }
     }
 
     private void OnClick(InputAction.CallbackContext context)
