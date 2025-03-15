@@ -206,6 +206,9 @@ public class GameController : MonoBehaviour
         }
         EventLogger.SetLogFilePath(logFilePath);
         EventLogger.StartLog();
+        EventLogger.LogEvent("Game", "Version", Application.version);
+        float fixedTimestep = Time.fixedDeltaTime;
+        EventLogger.LogEvent("Game", "Fixed Timestamp", fixedTimestep.ToString());
         EventLogger.LogEvent("Session", "Animal", AnimalName);
         //EventLogger.LogEvent("Session", "Attention", attentionText);
         EventLogger.LogEvent("Session", "Presession Notes", preNotesText);
@@ -236,6 +239,9 @@ public class GameController : MonoBehaviour
     void StartTrial()
     {
         // store trial info in data file
+        string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+        EventLogger.LogEvent("Trial", "Trial " + (currTrial + 1) + " started", timestamp);
+
         EventLogger.LogEvent("Trial Param", "Level", parameters.trials[currTrial].level.ToString());
         EventLogger.LogEvent("Trial Param", "Wheel Tempo", parameters.trials[currTrial].wheelSpeed.ToString());
         string eventList = string.Join(", ", parameters.trials[currTrial].eventList);
@@ -263,8 +269,6 @@ public class GameController : MonoBehaviour
         UpdateScore();
         levelScoreObject.SetActive(false);
         trialIsRunning = true;
-        string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
-        EventLogger.LogEvent("Trial", "Trial " + (currTrial+1) + " started", timestamp);
         Wheel.colliderSize = colliderSize;
         Wheel.beatZoneSize = beatZoneSize;
         Wheel.safeZoneColorDefault = safeZoneColorDefault;

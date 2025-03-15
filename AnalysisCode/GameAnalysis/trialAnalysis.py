@@ -36,24 +36,29 @@ allData = pd.read_table(outputFile,
                         #     'Angle': float
                         # }  # manually assign dtypes to each column
                         )
+
+# clean the data
 allData['Closest Ticks'] = allData['Closest Ticks'].str.replace(r'[][]', '', regex=True)
 allData['Closest Ticks'] = allData['Closest Ticks'].replace('nan', np.nan)
 allData['Closest Ticks'] = allData['Closest Ticks'].replace('0.', np.nan).astype(float)
 # allData['Closest Ticks'] = allData['Closest Ticks'].replace('[1.4998791]', np.nan)
 allData['Angle'] = allData['Angle'].replace('[nan]', np.nan).astype(float)
 
-subjectList = allData['Subject'].unique()
 
-for subject in subjectList:
-    currSubData = allData[allData['Subject'].str.match(subject)]
-    sessionList = currSubData['SessionNum'].unique()
-    for currSession in sessionList:
-        currSessionData = currSubData[currSubData['SessionNum'] == currSession]
-        trialList = currSubData['Trial'].unique()
-        for currTrial in trialList:
-            currTrialData = currSessionData[currSessionData['Trial'] == currTrial]
-            # get angle and vector of trial
 
+# # this is the looped way to get the totals per trial
+# subjectList = allData['Subject'].unique()
+# for subject in subjectList:
+#     currSubData = allData[allData['Subject'].str.match(subject)]
+#     sessionList = currSubData['SessionNum'].unique()
+#     for currSession in sessionList:
+#         currSessionData = currSubData[currSubData['SessionNum'] == currSession]
+#         trialList = currSubData['Trial'].unique()
+#         for currTrial in trialList:
+#             currTrialData = currSessionData[currSessionData['Trial'] == currTrial]
+#             # get angle and vector of trial
+
+# this is the groupby approach to do the same thing!
 outputData = allData.groupby(["Subject", "PhaseNum"])['Angle'].apply(circ_mean)
 
 outputData.to_csv(os.path.join(outputFolder, 'trialSummaryData.csv'))
