@@ -26,7 +26,7 @@ public class EventLogger
     public static void LogEvent(string eventType, string eventMessage, string eventValue=null)
     {
         //string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
-        double time = TimeUtil.timeAsDouble;
+        double time = TimeUtil.fixedTimeAsDouble;  // fixedTimeAsDouble uses the physics timing rather than the frame timing
         //var t = ReliableTime.Time;
         //var sec = t % 60f;
         //var min = Math.Floor(t) / 60f % 60f;

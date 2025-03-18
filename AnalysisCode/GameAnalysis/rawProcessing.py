@@ -269,11 +269,10 @@ for subject in subjectList:
                         # # Now that we have ticks and taps, tet tap angles
                         # get_angles() assumes that interval before the first beat is the same as the first interval
                         if len(tempTickTimes) == 1:
-                            # # skipping because in theory one tick is not enough time to get a good sense of beat, so
-                            # returning NA
-                            # skipping the following:
-                            # # 1 tick means there's not enough information to get actual intervals, but we can
-                            # # calculate onset of next beat
+                            # # skipping the following because in theory one tick is not enough time to get a good
+                            # sense of beat, so returning NA.
+                            # 1 tick means there's not enough information to get actual intervals, but we can
+                            # calculate onset of next beat
                             #
                             # # Make get_angles_single() that accepts tap time(s), single tick time, and tempo,
                             # # just returns angles

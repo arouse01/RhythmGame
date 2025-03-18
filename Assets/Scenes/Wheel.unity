@@ -3274,6 +3274,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41b849a334a27b9478401844db1b255f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeStepPrecise: 0.004
+  timeStepSlow: 0.02
   Wheel: {fileID: 1659979322}
   Target: {fileID: 809969022}
   LRSImage: {fileID: 1237838806}

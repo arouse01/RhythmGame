@@ -27,6 +27,9 @@ Sounds:
 
 public class GameController : MonoBehaviour
 {
+    public float timeStepPrecise;
+    public float timeStepSlow = 0.02f;
+    
     public WheelControl Wheel;
     public TargetControl Target;
     public Image LRSImage;
@@ -102,6 +105,8 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
+        TimeUtil.fixedDeltaTime = timeStepSlow;
+        TimeUtil.maximumDeltaTime = timeStepSlow * 3;
         Application.targetFrameRate = 60;
         LRSImage.enabled = false; // Disable the LRS image to start
         versionText.text = "Version " + Application.version;  // Update the version number on the home screen
@@ -207,8 +212,9 @@ public class GameController : MonoBehaviour
         EventLogger.SetLogFilePath(logFilePath);
         EventLogger.StartLog();
         EventLogger.LogEvent("Game", "Version", Application.version);
-        float fixedTimestep = Time.fixedDeltaTime;
-        EventLogger.LogEvent("Game", "Fixed Timestamp", fixedTimestep.ToString());
+        EventLogger.LogEvent("Game", "Fixed Timestep Precise", timeStepPrecise.ToString());
+        float fixedTimestep = TimeUtil.fixedDeltaTime;
+        EventLogger.LogEvent("Game", "Fixed Timestep Slow", fixedTimestep.ToString());
         EventLogger.LogEvent("Session", "Animal", AnimalName);
         //EventLogger.LogEvent("Session", "Attention", attentionText);
         EventLogger.LogEvent("Session", "Presession Notes", preNotesText);
@@ -277,6 +283,8 @@ public class GameController : MonoBehaviour
         Wheel.gameLevel = level;
         Wheel.Reset();
         //Debug.Break();
+        TimeUtil.fixedDeltaTime = timeStepPrecise;
+        TimeUtil.maximumDeltaTime = timeStepPrecise * 3;
         Wheel.StartSpin();
 
 
@@ -285,6 +293,8 @@ public class GameController : MonoBehaviour
     void EndTrial(bool success=true)
     {
         Wheel.StopSpin();
+        TimeUtil.fixedDeltaTime = timeStepSlow;
+        TimeUtil.maximumDeltaTime = timeStepSlow * 3;
         trialIsRunning = false;
         EventLogger.LogEvent("Trial", "Trial " + (currTrial + 1) + " ended");
         Wheel.Clear();
