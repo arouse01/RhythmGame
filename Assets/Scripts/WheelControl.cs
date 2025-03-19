@@ -211,6 +211,11 @@ public class WheelControl : MonoBehaviour
     //    }
     //}
 
+    public double GetRotation()
+    {
+        return transform.eulerAngles.z;
+    }
+    
     public float SumArray(float[] toBeSummed)
     {
         float sum = 0;

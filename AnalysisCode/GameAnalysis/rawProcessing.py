@@ -105,7 +105,7 @@ def version_atleast(currVersion, targetVersion):
 
 # analyze all
 # get all session data files
-rawFolder = 'D:\\Rouse\\My Documents\\GitHub\\RhythmGame\\Builds\\Build_2_5_2_Win\\Rhythm Game_Data\\SessionData'
+rawFolder = 'D:\\Rouse\\My Documents\\GitHub\\RhythmGame\\AnalysisCode\\GameAnalysis\\Input'
 outputFolder = 'D:\\Rouse\\My Documents\\GitHub\\RhythmGame\\AnalysisCode\\GameAnalysis\\Output'
 
 allData = pd.DataFrame()
@@ -258,7 +258,10 @@ for subject in subjectList:
 
                             # note this is not perfectly accurate because the physics engine updates at a fixed rate
                             # so the time between beatZone start and tick onset gets rounded
-                            nextBeatTime = lastBZtime + ((tempBZsize-0.01)/(2*tempWheelSpeed)) # 0.01 is approx width of the beatMarker
+                            # We don't know width of beatMarker because it's scaled to screen, 0.01 is approx
+                            # might be easier to figure out the actual beatZone to beat offsets and just use the
+                            # average of those
+                            nextBeatTime = lastBZtime + ((tempBZsize-0.01)/(2*tempWheelSpeed))
                             tempTickTimes.loc[tempTickTimes.index.max()+1] = nextBeatTime
 
                         # double check that all ticks are present - should equal number of Beat Zone Starts

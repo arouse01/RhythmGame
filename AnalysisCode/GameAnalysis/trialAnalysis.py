@@ -38,9 +38,9 @@ allData = pd.read_table(outputFile,
                         )
 
 # clean the data
-allData['Closest Ticks'] = allData['Closest Ticks'].str.replace(r'[][]', '', regex=True)
-allData['Closest Ticks'] = allData['Closest Ticks'].replace('nan', np.nan)
-allData['Closest Ticks'] = allData['Closest Ticks'].replace('0.', np.nan).astype(float)
+# allData['Closest Ticks'] = allData['Closest Ticks'].str.replace(r'[][]', '', regex=True)
+# allData['Closest Ticks'] = allData['Closest Ticks'].replace('nan', np.nan)
+# allData['Closest Ticks'] = allData['Closest Ticks'].replace('0.', np.nan).astype(float)
 # allData['Closest Ticks'] = allData['Closest Ticks'].replace('[1.4998791]', np.nan)
 allData['Angle'] = allData['Angle'].replace('[nan]', np.nan).astype(float)
 
@@ -59,7 +59,7 @@ allData['Angle'] = allData['Angle'].replace('[nan]', np.nan).astype(float)
 #             # get angle and vector of trial
 
 # this is the groupby approach to do the same thing!
-outputData = allData.groupby(["Subject", "PhaseNum"])['Angle'].apply(circ_mean)
+outputData = allData.groupby(["Subject", "Trial", "PhaseNum"])['Angle'].apply(circ_mean)
 
 outputData.to_csv(os.path.join(outputFolder, 'trialSummaryData.csv'))
 

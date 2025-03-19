@@ -93,6 +93,11 @@ public class GameController : MonoBehaviour
     private bool gameOver;  // game is over, move to user input
     private bool gameOverStarted;  // gameover process started
 
+    private List<double> tickTimes = new List<double>();
+    private List<double> tapTimes = new List<double>();
+    private List<double> tapAngles = new List<double>();
+    private int lastEventNum = 0;
+
     private TextMeshProUGUI Life1Marker;
     private TextMeshProUGUI Life2Marker;
     private TextMeshProUGUI Life3Marker;
@@ -285,6 +290,11 @@ public class GameController : MonoBehaviour
         //Debug.Break();
         TimeUtil.fixedDeltaTime = timeStepPrecise;
         TimeUtil.maximumDeltaTime = timeStepPrecise * 3;
+
+        tickTimes.Clear();
+        tapTimes.Clear();
+        tapAngles.Clear();
+        
         Wheel.StartSpin();
 
 
@@ -418,6 +428,27 @@ public class GameController : MonoBehaviour
             if (!pause)
             {
                 Target.Bounce();
+                double tapTime = TimeUtil.fixedTimeAsDouble;
+                tapTimes.Add(tapTime);
+                double tapPhase;
+
+                // calculate phase angle of tap
+                // Problematic if tapping before first tick - no known time point to determine beat onset
+                // But we could get current wheel angle and calculate angle of next beat...
+                // On the other hand, can you really argue for the angle of taps before the first tick being meaningful in relation to the beat construct in any way?
+                // Maybe if they're ahead of the first tick but close? Then it's a question of accuracy, but still likely before any construct of beat is created 
+                if (lastEventNum > 0)
+                {
+                    tapPhase = GetAngle(tapTime, tickTimes[^1]);
+                }
+                else
+                {
+                    tapPhase = GetAngle(tapTime, -1d);
+                    //tapPhase = null;
+                }
+                tapAngles.Add(tapPhase);
+
+                // Classify the tap
                 if (beatZoneContact && !booped)
                 {
                     // hit in beat zone, score point
@@ -589,6 +620,130 @@ public class GameController : MonoBehaviour
 
     }
 
+    private List<double> GetAngles(List<double> tapTimes, List<double> tickTimes)
+    {
+        List<double> nearestTicks = new List<double>(tapTimes.Count);
+        List<double> angles = new List<double>(tapTimes.Count);
+
+        tickTimes.Sort();
+
+        // Add another tick to the end in case the last tap is after the last tick
+        // assuming isochrony here - will need to be rewritten if nonisochronous stimlulus used
+        double lastTick = tickTimes[^1];
+        // we can tell which eventBox was the most recent since it's stored in lastEventNum
+        // but that changes with the onset of 
+        double bonusTick = lastTick + Wheel.eventList[lastEventNum] / (Wheel.wheelTempo * Wheel.SumArray(Wheel.eventList));
+        List<double> tempTicks = new List<double>(tickTimes);
+        tempTicks.Add(bonusTick);
+
+        foreach (double tap in tapTimes)
+        {
+            int index = tempTicks.BinarySearch(tap);
+
+            if (index >= 0)
+            {
+                // BinarySearch returns a value >=0 if an exact match is found
+                nearestTicks.Add(tempTicks[index]);
+                angles.Add(0f);
+            }
+            else
+            {
+                index = ~index;  // something about "bitwise complement"
+                double closest;
+                double interval;
+                if (index == 0)
+                {
+                    closest = tempTicks[0]; // First element is closest
+                    interval = tempTicks[1] - tempTicks[0];
+                }
+                else if (index == tempTicks.Count)
+                {
+                    closest = tempTicks[^1]; // Last element is closest
+                    interval = tempTicks[^1] - tempTicks[^2];
+                }
+                else
+                {
+                    // Compare the two nearest values
+                    double prev = tempTicks[index - 1];
+                    double next = tempTicks[index];
+                    closest = (System.Math.Abs(prev - tap) <= System.Math.Abs(next - tap)) ? prev : next;
+                    interval = next - prev;
+                }
+                double currAngle = 2 * System.Math.PI * (tap - closest) / interval;
+                angles.Add(currAngle);
+            }
+        }
+        return angles;
+    }
+
+    private double GetAngle(double tapTime, double prevTick)
+    {
+        // Important to note this is approximate - we're guessing when the next beat will happen based on math, but can't be 100% certain due to many points of variability
+        double nextTick;
+        if (prevTick < 0)
+        {
+            // Special case when the tap occurs before any tick, so we have to estimate both the previous tick time and the next tick time
+            // Calculate next tick time using wheel angle and speed (first tick is always at 0 degrees)
+            double wheelAngle = Wheel.GetRotation();
+            // To start the wheel is usually rotated a bit before the first tick, so rotation just below 360. Convert to 
+            if (wheelAngle > 270.0)
+            {
+                wheelAngle = 360.0 - wheelAngle;
+            }
+            nextTick = tapTime + wheelAngle / (Wheel.wheelTempo * 360.0);
+            prevTick = nextTick - Wheel.eventList[lastEventNum] / (Wheel.wheelTempo * Wheel.SumArray(Wheel.eventList));
+        }
+        else
+        {
+            // Get which interval we're on - we can tell which eventBox was the most recent since it's stored in lastEventNum
+            nextTick = prevTick + Wheel.eventList[lastEventNum-1] / (Wheel.wheelTempo * Wheel.SumArray(Wheel.eventList));
+        }
+        double closest = (System.Math.Abs(prevTick - tapTime) <= System.Math.Abs(nextTick - tapTime)) ? prevTick : nextTick;
+        double interval = nextTick - prevTick;
+
+        double currAngle = 2 * System.Math.PI * (tapTime - closest) / interval;
+        
+        return currAngle;
+    }
+
+    private double CircMean(List<double> angleList)
+    {
+        double sinSum = 0.0;
+        double cosSum = 0.0;
+
+        foreach (double angle in angleList)
+        {
+            sinSum += System.Math.Sin(angle);
+            cosSum += System.Math.Cos(angle);
+        }
+
+        return System.Math.Atan2(sinSum, cosSum);
+    }
+
+    private double CircVectorLength(List<double> angleList)
+    {
+        double sinSum = 0.0;
+        double cosSum = 0.0;
+
+        foreach (double angle in angleList)
+        {
+            sinSum += System.Math.Sin(angle);
+            cosSum += System.Math.Cos(angle);
+        }
+
+        return System.Math.Sqrt(sinSum * sinSum+ cosSum * cosSum) / angleList.Count;
+    }
+
+    //public double SumArray(double[] toBeSummed)
+    //{
+    //    double sum = 0;
+    //    foreach (float i in toBeSummed)
+    //    {
+    //        sum += i;
+    //    }
+    //    return sum;
+    //}
+
     private void OnEnable()
     {
         ////Debug.Log("Trigger triggered!");
@@ -708,7 +863,14 @@ public class GameController : MonoBehaviour
         {
             audioSource.PlayOneShot(tickSound);
         }
-            
+        double time = TimeUtil.fixedTimeAsDouble;
+        tickTimes.Add(time);
+        string lastEventStr = safeZoneObject.name[^2..];
+        lastEventStr = char.IsDigit(lastEventStr[^2]) ? lastEventStr[^2..] : lastEventStr[^1..];  // If only one character is number, just grab that one character
+        lastEventNum = int.Parse(lastEventStr);
+        
+
+
     }
 
     private void BeatZoneContactOn()
