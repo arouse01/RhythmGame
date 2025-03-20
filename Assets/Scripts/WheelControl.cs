@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+//using System.Collections;
+//using System.Collections.Generic;
 using UnityEngine;
 
 public class WheelControl : MonoBehaviour
@@ -105,7 +105,7 @@ public class WheelControl : MonoBehaviour
 
     void CreateCircleMesh()
     {
-        Mesh mesh = new Mesh();
+        Mesh mesh = new();
         Vector3[] vertices = new Vector3[segments + 1];
         int[] triangles = new int[segments * 3];
 
@@ -178,7 +178,7 @@ public class WheelControl : MonoBehaviour
 
         float currAngle = 90;  
         int j = 0;
-        foreach (int i in eventList)
+        foreach (float i in eventList)
         {
             j++;
 
@@ -211,6 +211,15 @@ public class WheelControl : MonoBehaviour
     //    }
     //}
 
+    public void ResetBoxColors()
+    {
+        foreach (EventBox box in boxes)
+        {
+            box.ResetColors(safeZoneColorDefault, beatZoneColorDefault);
+        }
+    }
+    
+    
     public double GetRotation()
     {
         return transform.eulerAngles.z;

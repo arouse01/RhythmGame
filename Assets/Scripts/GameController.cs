@@ -52,6 +52,7 @@ public class GameController : MonoBehaviour
     public GameObject InGameText;
     private TextMeshProUGUI scoreText;
     private TextMeshProUGUI messageText;
+    private TextMeshProUGUI statsText;
     private GameObject levelScoreObject;
     private GameObject lifeMarkers;
     public ParameterLoader parameters;
@@ -83,8 +84,8 @@ public class GameController : MonoBehaviour
     private int eventMax; // max beats to present
     private int targetScore;  // target score to pass
     private bool trialIsRunning; // whether trial is running or not
-    private float LRSDuration = -3; // how long the LRS should be visible
-    private int LRSThresh = 1; // how long the LRS should be visible
+    private float LRSDuration = 3; // how long the LRS should be visible
+    //private int LRSThresh = 3; // how long the LRS should be visible
     private float targetZoneWidth = 0.25f; // width of the target zone around the avatar
     private float colliderSize;  // width of the eventBox collider
     private float beatZoneSize; // width of the beatZone collider
@@ -93,9 +94,9 @@ public class GameController : MonoBehaviour
     private bool gameOver;  // game is over, move to user input
     private bool gameOverStarted;  // gameover process started
 
-    private List<double> tickTimes = new List<double>();
-    private List<double> tapTimes = new List<double>();
-    private List<double> tapAngles = new List<double>();
+    private List<double> tickTimes = new();
+    private List<double> tapTimes = new();
+    private List<double> tapAngles = new();
     private int lastEventNum = 0;
 
     private TextMeshProUGUI Life1Marker;
@@ -125,6 +126,7 @@ public class GameController : MonoBehaviour
         //pause = false;
         scoreText = InGameText.transform.Find("Score Text").GetComponent<TextMeshProUGUI>();
         messageText = InGameText.transform.Find("Message Text").GetComponent<TextMeshProUGUI>();
+        statsText = InGameText.transform.Find("LevelStats Text").GetComponent<TextMeshProUGUI>();
         lifeMarkers = InGameText.transform.Find("Life Markers").gameObject;
         Life1Marker = lifeMarkers.transform.Find("Life 1").GetComponent<TextMeshProUGUI>();
         Life2Marker = lifeMarkers.transform.Find("Life 2").GetComponent<TextMeshProUGUI>();
@@ -191,7 +193,7 @@ public class GameController : MonoBehaviour
 
         // LRSDuration = parameters.LRSDuration;
         LRSDuration = float.Parse(LRSDurationField.GetComponent<TMPro.TMP_InputField>().text);
-        LRSThresh = parameters.LRSThresh;
+        //LRSThresh = parameters.LRSThresh;
         //targetZoneWidth = float.Parse(TargetWidthField.GetComponent<TMPro.TMP_InputField>().text);
         targetZoneWidth = parameters.targetZoneWidth;
 
@@ -277,6 +279,7 @@ public class GameController : MonoBehaviour
         lifeMarkers.SetActive(true);
         UpdateLives();
         messageText.SetText("");
+        statsText.SetText("");
         UpdateScore();
         levelScoreObject.SetActive(false);
         trialIsRunning = true;
@@ -331,24 +334,16 @@ public class GameController : MonoBehaviour
         {
             messageText.SetText("Maximum beats exceeded");
         }
+        if (tapAngles.Count > 0)
+        {
+            double meanAngle = CircMean(tapAngles) * (180.0 / System.Math.PI); // Converted to degrees
+            double vecLength = CircVectorLength(tapAngles);
+            statsText.SetText($"Mean Angle = {meanAngle:0.00}<br>Vector Length = {vecLength:0.00}");
+        }
+        
 
-
-        // wait 1.5s before allowing to go on
+        // wait before allowing to go on
         StartCoroutine(TrialEndPause(2f));
-        //TrialEndPause(2f);
-
-        //// if not max trial, start next trial
-        //if (currTrial < (numTrials - 1))
-        //{
-        //    currTrial++;
-        //    messageText.SetText("Click to start<br>Trial " + (currTrial + 1).ToString());
-        //}
-        //else
-        //{
-        //    messageText.SetText("Game Over");
-        //    gameOver = true;
-        //}
-
 
     }
     
@@ -430,13 +425,13 @@ public class GameController : MonoBehaviour
                 Target.Bounce();
                 double tapTime = TimeUtil.fixedTimeAsDouble;
                 tapTimes.Add(tapTime);
-                double tapPhase;
-
+                
                 // calculate phase angle of tap
                 // Problematic if tapping before first tick - no known time point to determine beat onset
                 // But we could get current wheel angle and calculate angle of next beat...
                 // On the other hand, can you really argue for the angle of taps before the first tick being meaningful in relation to the beat construct in any way?
                 // Maybe if they're ahead of the first tick but close? Then it's a question of accuracy, but still likely before any construct of beat is created 
+                double tapPhase;
                 if (lastEventNum > 0)
                 {
                     tapPhase = GetAngle(tapTime, tickTimes[^1]);
@@ -549,7 +544,7 @@ public class GameController : MonoBehaviour
             Wheel.StopSpin();
             InGameText.SetActive(false);
             //scoreText.enabled = false;
-            Invoke("DisableLRS", duration); // Disable after the duration
+            Invoke(nameof(DisableLRS), duration); // Disable after the duration
         }
     }
 
@@ -622,44 +617,46 @@ public class GameController : MonoBehaviour
 
     private List<double> GetAngles(List<double> tapTimes, List<double> tickTimes)
     {
-        List<double> nearestTicks = new List<double>(tapTimes.Count);
-        List<double> angles = new List<double>(tapTimes.Count);
+        List<double> nearestTicks = new(tapTimes.Count);
+        List<double> angles = new(tapTimes.Count);
 
         tickTimes.Sort();
 
-        // Add another tick to the end in case the last tap is after the last tick
-        // assuming isochrony here - will need to be rewritten if nonisochronous stimlulus used
+        //// Add another tick to the end in case the last tap is after the last tick
         double lastTick = tickTimes[^1];
-        // we can tell which eventBox was the most recent since it's stored in lastEventNum
-        // but that changes with the onset of 
+        // We can tell which eventBox was the most recent since it's stored in lastEventNum
         double bonusTick = lastTick + Wheel.eventList[lastEventNum] / (Wheel.wheelTempo * Wheel.SumArray(Wheel.eventList));
-        List<double> tempTicks = new List<double>(tickTimes);
+        // Add the bonus tick to a copy of tickTimes so we don't mess with the actual data
+        List<double> tempTicks = new(tickTimes);
         tempTicks.Add(bonusTick);
 
+        // Now we get the closest tick times for each tap
         foreach (double tap in tapTimes)
         {
+            // BinarySearch returns either exact index or bitwise complement of index of the closest larger element
             int index = tempTicks.BinarySearch(tap);
 
             if (index >= 0)
             {
                 // BinarySearch returns a value >=0 if an exact match is found
                 nearestTicks.Add(tempTicks[index]);
-                angles.Add(0f);
+                angles.Add(0.0);  // if the tap exactly coincides with the tick, phase is 0
             }
             else
             {
-                index = ~index;  // something about "bitwise complement"
+                index = ~index;  // ~ undoes the "bitwise complement" to give us index of closest larger element
                 double closest;
                 double interval;
-                if (index == 0)
+                if (index == 0)  // First element is closest
                 {
-                    closest = tempTicks[0]; // First element is closest
-                    interval = tempTicks[1] - tempTicks[0];
+                    closest = tempTicks[0]; 
+                    interval = tempTicks[1] - tempTicks[0];  // assume interval before first tick is the same as the first actual IOI
                 }
-                else if (index == tempTicks.Count)
+                else if (index == tempTicks.Count)  // Last element is closest
                 {
-                    closest = tempTicks[^1]; // Last element is closest
-                    interval = tempTicks[^1] - tempTicks[^2];
+                    // NOTE: This may be incorrect if somehow the last tap is way after the last tick. Shouldn't happen in the context of the game because taps can only happen during a trial when ticks are occurring...
+                    closest = tempTicks[^1]; 
+                    interval = tempTicks[^1] - tempTicks[^2];  // assume interval after last tick is the same as the last actual IOI
                 }
                 else
                 {
@@ -734,32 +731,23 @@ public class GameController : MonoBehaviour
         return System.Math.Sqrt(sinSum * sinSum+ cosSum * cosSum) / angleList.Count;
     }
 
-    //public double SumArray(double[] toBeSummed)
+
+    //private void OnEnable()
     //{
-    //    double sum = 0;
-    //    foreach (float i in toBeSummed)
-    //    {
-    //        sum += i;
-    //    }
-    //    return sum;
+    //    ////Debug.Log("Trigger triggered!");
+    //    //TargetControl.OnContactStart += WindowContactOn;
+    //    //TargetControl.OnContactEnd += WindowContactOff;
+    //    //TargetControl.OnBeatZoneStart += BeatZoneContactOn;
+    //    //TargetControl.OnBeatZoneEnd += BeatZoneContactOff;
+    //    //BeatTicker.OnBeatContact += BeatContact;
+
+    //    //var gameplayActions = inputActions.FindActionMap("Rhythm");
+    //    //triggerAction = gameplayActions.FindAction("Click");
+
+    //    //triggerAction.performed += OnClick;
+    //    //triggerAction.Enable();
+
     //}
-
-    private void OnEnable()
-    {
-        ////Debug.Log("Trigger triggered!");
-        //TargetControl.OnContactStart += WindowContactOn;
-        //TargetControl.OnContactEnd += WindowContactOff;
-        //TargetControl.OnBeatZoneStart += BeatZoneContactOn;
-        //TargetControl.OnBeatZoneEnd += BeatZoneContactOff;
-        //BeatTicker.OnBeatContact += BeatContact;
-
-        //var gameplayActions = inputActions.FindActionMap("Rhythm");
-        //triggerAction = gameplayActions.FindAction("Click");
-
-        //triggerAction.performed += OnClick;
-        //triggerAction.Enable();
-
-    }
 
     void ActivateInputs()
     {
@@ -846,7 +834,7 @@ public class GameController : MonoBehaviour
     {
         EventLogger.LogEvent("Beat", "Beat safe window end");
         safeZoneContact = false;
-        if (!booped)
+        if (!booped)  // If beat passes without a tap, reset score
         {
             if (score > 0)
             {
@@ -854,6 +842,7 @@ public class GameController : MonoBehaviour
                 UpdateScore();
             }
         }
+        Wheel.ResetBoxColors();  // Reset all EventBox pieces to their default colors, just in case one got colored weird for some reason
     }
 
     private void BeatContact()

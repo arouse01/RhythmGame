@@ -1,8 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
+//using System.Collections;
+//using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using System;
+//using System;
 using TimeUtil = UnityEngine.Time;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,9 +13,9 @@ public class EventLogger
     
 
     private static string logFilePath = Application.dataPath + "/EventLog.txt";
-    private static ConcurrentQueue<string> logQueue = new ConcurrentQueue<string>();
+    private static ConcurrentQueue<string> logQueue = new();
     //private static bool isLogging = false;
-    private static readonly CancellationTokenSource cts = new CancellationTokenSource();
+    private static readonly CancellationTokenSource cts = new();
     private static Task logTask;
 
     public static void SetLogFilePath(string path)

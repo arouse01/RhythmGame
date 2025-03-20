@@ -12,9 +12,11 @@ def circ_mean(angles):
     return circular_mean_radians
 
 
+inputFile = 'D:\\Rouse\\My Documents\\GitHub\\RhythmGame\\AnalysisCode\\GameAnalysis\\Output\\allTapData.csv'
+
 outputFolder = 'D:\\Rouse\\My Documents\\GitHub\\RhythmGame\\AnalysisCode\\GameAnalysis\\Output'
-outputFile = 'D:\\Rouse\\My Documents\\GitHub\\RhythmGame\\AnalysisCode\\GameAnalysis\\Output\\allTapData.csv'
-allData = pd.read_table(outputFile,
+
+allData = pd.read_table(inputFile,
                         header=0,
                         sep=','
                         # parse_dates=[1],  # Which columns to parse as dates/datetimes
@@ -58,8 +60,9 @@ allData['Angle'] = allData['Angle'].replace('[nan]', np.nan).astype(float)
 #             currTrialData = currSessionData[currSessionData['Trial'] == currTrial]
 #             # get angle and vector of trial
 
-# this is the groupby approach to do the same thing!
+# # this is the groupby approach to do the same thing!
 outputData = allData.groupby(["Subject", "Trial", "PhaseNum"])['Angle'].apply(circ_mean)
 
+# and save our results
 outputData.to_csv(os.path.join(outputFolder, 'trialSummaryData.csv'))
 

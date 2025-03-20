@@ -1,7 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+//using System.Collections;
+//using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+//using TMPro;
 using System;
 
 
@@ -26,7 +26,7 @@ public class TargetControl : MonoBehaviour
     public float triangleY;
     private Transform triangle;
     
-    private GameObject[] boxes;  // to change box color as needed
+    // private GameObject[] boxes;  // to change box color as needed
 
     public float targetZoneWidth = .25f;
     public float targetZoneHeight = 3f;
@@ -41,12 +41,6 @@ public class TargetControl : MonoBehaviour
         InitializeTarget();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void InitializeTarget()
     {
         BuildTargetZone();
@@ -59,15 +53,15 @@ public class TargetControl : MonoBehaviour
         
 
         // Create the mesh
-        Mesh mesh = new Mesh();
+        Mesh mesh = new();
 
         // Define the vertices (corners of the rectangle)
         Vector3[] vertices = new Vector3[]
         {
-            new Vector3(-targetZoneWidth / 2, targetZoneY-targetZoneHeight / 2, 0), // Bottom-left
-            new Vector3(targetZoneWidth / 2, targetZoneY-targetZoneHeight / 2, 0),  // Bottom-right
-            new Vector3(-targetZoneWidth / 2, targetZoneY+targetZoneHeight / 2, 0),  // Top-left
-            new Vector3(targetZoneWidth / 2, targetZoneY+targetZoneHeight / 2, 0)    // Top-right
+            new(-targetZoneWidth / 2, targetZoneY-targetZoneHeight / 2, 0), // Bottom-left
+            new(targetZoneWidth / 2, targetZoneY-targetZoneHeight / 2, 0),  // Bottom-right
+            new(-targetZoneWidth / 2, targetZoneY+targetZoneHeight / 2, 0),  // Top-left
+            new(targetZoneWidth / 2, targetZoneY+targetZoneHeight / 2, 0)    // Top-right
         };
 
         // Define the triangles (two triangles make the rectangle)
@@ -99,16 +93,16 @@ public class TargetControl : MonoBehaviour
 
 
         // Create the mesh
-        Mesh mesh = new Mesh();
+        Mesh mesh = new();
 
         // Define the vertices (corners of the rectangle)
         Vector3[] vertices = new Vector3[]
         {
-            new Vector3(-triangleWidth / 2, triangleY-triangleHeight / 6, 0), // Bottom-left
-            new Vector3(0, triangleY-triangleHeight / 2, 0), // Bottom-center
-            new Vector3(triangleWidth / 2, triangleY-triangleHeight / 6, 0),  // Bottom-right
-            new Vector3(-triangleWidth / 2, triangleY+triangleHeight / 2, 0),  // Top-left
-            new Vector3(triangleWidth / 2, triangleY+triangleHeight / 2, 0)    // Top-right
+            new(-triangleWidth / 2, triangleY-triangleHeight / 6, 0), // Bottom-left
+            new(0, triangleY-triangleHeight / 2, 0), // Bottom-center
+            new(triangleWidth / 2, triangleY-triangleHeight / 6, 0),  // Bottom-right
+            new(-triangleWidth / 2, triangleY+triangleHeight / 2, 0),  // Top-left
+            new(triangleWidth / 2, triangleY+triangleHeight / 2, 0)    // Top-right
         };
 
         // Define the triangles (two triangles make the rectangle)

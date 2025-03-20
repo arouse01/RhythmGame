@@ -17,10 +17,10 @@ public class LevelScore : MonoBehaviour
     public string scoreString2;
     public string scoreString3;
 
-    void Start()
-    {
-        //ShowStars(5);
-    }
+    //void Start()
+    //{
+    //    //ShowStars(5);
+    //}
 
     public void HideStars()
     {
@@ -73,7 +73,7 @@ public class LevelScore : MonoBehaviour
     private IEnumerator ChangeStarScale(Star star, float targetScale, float duration)
     {
         Vector3 initialScale = star.LevelStar.transform.localScale;
-        Vector3 finalScale = new Vector3(targetScale, targetScale, targetScale);
+        Vector3 finalScale = new(targetScale, targetScale, targetScale);
 
         float elapsedTime = 0;
 
@@ -96,7 +96,7 @@ public class LevelScore : MonoBehaviour
     private IEnumerator ChangeTextScale(float targetScale, float duration)
     {
         Vector3 initialScale = ScoreText.transform.localScale;
-        Vector3 finalScale = new Vector3(targetScale, targetScale, targetScale);
+        Vector3 finalScale = new(targetScale, targetScale, targetScale);
 
         float elapsedTime = 0;
 
