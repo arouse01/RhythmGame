@@ -244,6 +244,7 @@ public class GameController : MonoBehaviour
         lifeMarkers.SetActive(false);
 
         messageText.SetText("Click to start<br>Phase " + sessionNumber);
+        statsText.SetText(""); // clear statsText because no trials have been run yet
         Wheel.StopSpin();
 
         ActivateInputs();
@@ -275,6 +276,7 @@ public class GameController : MonoBehaviour
         eventCount = 0;
         score = 0;
         mistakeCount = 0;
+        lastEventNum = 0;
         currLives = defaultLives;
         lifeMarkers.SetActive(true);
         UpdateLives();
@@ -334,6 +336,7 @@ public class GameController : MonoBehaviour
         {
             messageText.SetText("Maximum beats exceeded");
         }
+        
         if (tapAngles.Count > 0)
         {
             double meanAngle = CircMean(tapAngles) * (180.0 / System.Math.PI); // Converted to degrees
@@ -442,6 +445,7 @@ public class GameController : MonoBehaviour
                     //tapPhase = null;
                 }
                 tapAngles.Add(tapPhase);
+                //EventLogger.LogEvent("Debug", "Tap Phase", tapPhase.ToString());
 
                 // Classify the tap
                 if (beatZoneContact && !booped)
@@ -676,6 +680,7 @@ public class GameController : MonoBehaviour
     private double GetAngle(double tapTime, double prevTick)
     {
         // Important to note this is approximate - we're guessing when the next beat will happen based on math, but can't be 100% certain due to many points of variability
+        
         double nextTick;
         if (prevTick < 0)
         {
@@ -688,11 +693,14 @@ public class GameController : MonoBehaviour
                 wheelAngle = 360.0 - wheelAngle;
             }
             nextTick = tapTime + wheelAngle / (Wheel.wheelTempo * 360.0);
+            //EventLogger.LogEvent("Debug", "Next Tick", nextTick.ToString());
             prevTick = nextTick - Wheel.eventList[lastEventNum] / (Wheel.wheelTempo * Wheel.SumArray(Wheel.eventList));
         }
         else
         {
             // Get which interval we're on - we can tell which eventBox was the most recent since it's stored in lastEventNum
+            // For taps after the first tick, tested with following parameters: timestep = 0.004, tempo = 0.25, pattern 1,1,1,1, beat zone size = 2
+            // All predicted phases were smaller than 1x10E-6
             nextTick = prevTick + Wheel.eventList[lastEventNum-1] / (Wheel.wheelTempo * Wheel.SumArray(Wheel.eventList));
         }
         double closest = (System.Math.Abs(prevTick - tapTime) <= System.Math.Abs(nextTick - tapTime)) ? prevTick : nextTick;

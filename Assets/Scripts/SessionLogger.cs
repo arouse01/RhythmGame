@@ -52,7 +52,7 @@ public class EventLogger
     public static void StopLog()
     {
         cts.Cancel();  // Signal the background task to stop
-        logTask.Wait();  // Ensure it finishes before exiting
+        logTask?.Wait();  // Ensure it finishes before exiting
     }
 
     private static async Task ProcessQueue()
