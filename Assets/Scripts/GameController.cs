@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -317,7 +317,7 @@ public class GameController : MonoBehaviour
         beatZoneContact = false;
         safeZoneContact = false;
         booped = false;
-        scoreText.SetText("Mistakes: " + (mistakeCount).ToString());
+        
         // pause so the score screen doesn't get skipped
         pause = true;
         
@@ -334,16 +334,9 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            messageText.SetText("Maximum beats exceeded");
+            
         }
-        
-        if (tapAngles.Count > 0)
-        {
-            double meanAngle = CircMean(tapAngles) * (180.0 / System.Math.PI); // Converted to degrees
-            double vecLength = CircVectorLength(tapAngles);
-            statsText.SetText($"Mean Angle = {meanAngle:0.00}<br>Vector Length = {vecLength:0.00}");
-        }
-        
+
 
         // wait before allowing to go on
         StartCoroutine(TrialEndPause(2f));
@@ -437,14 +430,17 @@ public class GameController : MonoBehaviour
                 double tapPhase;
                 if (lastEventNum > 0)
                 {
+                    // if tap is after first tick
                     tapPhase = GetAngle(tapTime, tickTimes[^1]);
+                    tapAngles.Add(tapPhase);
                 }
                 else
                 {
-                    tapPhase = GetAngle(tapTime, -1d);
-                    //tapPhase = null;
+                    // Tap is before first tick, so count as error
+                    //tapPhase = GetAngle(tapTime, -1d);
+
                 }
-                tapAngles.Add(tapPhase);
+                //tapAngles.Add(tapPhase);
                 //EventLogger.LogEvent("Debug", "Tap Phase", tapPhase.ToString());
 
                 // Classify the tap
@@ -600,22 +596,73 @@ public class GameController : MonoBehaviour
         scoreText.SetText(score.ToString());
     }
     
-    void UpdateLevelScore()
+    void UpdateLevelScore(bool success=true)
     {
-        levelScoreObject.SetActive(true);
-        if (mistakeCount <= 1)
+        double? meanAngle;  //? makes the double nullable
+        double vecLength;
+        if (tapAngles.Count > 0)
         {
-            LevelScore.ShowStars(3);
+            meanAngle = CircMean(tapAngles, returnRad: false); 
+            vecLength = CircVectorLength(tapAngles);
+        } 
+        else
+        {
+            // No angles means we can't calculate any of this
+            meanAngle = null;
+            vecLength = 0;
         }
-        else if (mistakeCount <= 4)
+
+        int numStars;
+        if (success)
         {
-            LevelScore.ShowStars(2);
+            // success means the user met criteria, which means at least one tap
+
+            
+            // Formula for numStars: 
+            if (meanAngle != null)
+            {
+                if (mistakeCount <= 1)
+                {
+                    numStars = 3;
+                }
+                else if (mistakeCount <= 4)
+                {
+                    numStars = 2;
+                }
+                else
+                {
+                    numStars = 1;
+                }
+            }
+            else
+            {
+                if (mistakeCount <= 1)
+                {
+                    numStars = 3;
+                }
+                else if (mistakeCount <= 4)
+                {
+                    numStars = 2;
+                }
+                else
+                {
+                    numStars = 1;
+                }
+            }
+
         }
         else
         {
-            LevelScore.ShowStars(1);
+            // Trial timed out
+            numStars = 1;
+            messageText.SetText("Maximum beats exceeded");
         }
 
+        //statsText.SetText($"θ = {meanAngle:0.00}<br>r = {vecLength:0.00}");
+
+        scoreText.SetText("Mistakes: " + (mistakeCount).ToString());
+        levelScoreObject.SetActive(true);
+        LevelScore.ShowStars(numStars);
 
     }
 
@@ -711,7 +758,7 @@ public class GameController : MonoBehaviour
         return currAngle;
     }
 
-    private double CircMean(List<double> angleList)
+    private double CircMean(List<double> angleList, bool returnRad=true)
     {
         double sinSum = 0.0;
         double cosSum = 0.0;
@@ -722,7 +769,15 @@ public class GameController : MonoBehaviour
             cosSum += System.Math.Cos(angle);
         }
 
-        return System.Math.Atan2(sinSum, cosSum);
+        if (returnRad)
+        {
+            return System.Math.Atan2(sinSum, cosSum);
+        }
+        else
+        {
+            return System.Math.Atan2(sinSum, cosSum) * (180.0 / System.Math.PI); // Converted to degrees
+        }
+        
     }
 
     private double CircVectorLength(List<double> angleList)

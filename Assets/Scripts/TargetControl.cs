@@ -110,7 +110,7 @@ public class TargetControl : MonoBehaviour
         {
             0, 2, 3, // First triangle (Bottom-left, Bottom-right, Top-left)
             2, 3, 4,  // Second triangle (Bottom-right, Top-left, Top-right)
-            0, 1, 2  // Second triangle (Bottom-right, Bottom, Bottom-left)
+            0, 1, 2  // Third triangle (Bottom-right, Bottom, Bottom-left)
         };
 
         // Assign to the mesh
