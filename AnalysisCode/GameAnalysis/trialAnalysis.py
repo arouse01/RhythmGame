@@ -61,7 +61,11 @@ allData['Angle'] = allData['Angle'].replace('[nan]', np.nan).astype(float)
 #             # get angle and vector of trial
 
 # # this is the groupby approach to do the same thing!
-outputData = allData.groupby(["Subject", "Trial", "PhaseNum"])['Angle'].apply(circ_mean)
+outputGB = allData.groupby(["Subject", "PhaseNum", "Trial"])
+outputData = pd.DataFrame()
+outputData['meanAngle'] = outputGB['Angle'].apply(circ_mean)
+outputData['firstAngle'] = outputGB['Angle'].first()
+# additional analyses
 
 # and save our results
 outputData.to_csv(os.path.join(outputFolder, 'trialSummaryData.csv'))

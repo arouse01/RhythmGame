@@ -165,6 +165,8 @@ for subject in subjectList:
         if len(gameVersion) == 0:
             # default to version number of 2.5.2 - version numbering was introduced in 2.5.3
             gameVersion = '2.5.2'
+        else:
+            gameVersion = gameVersion[0]
         # # add trial number
         # vectorized function, faster than iterrows()
         currData['Trial'] = currData['Type'].str.contains('Trial') & currData['Message'].str.contains('started')
