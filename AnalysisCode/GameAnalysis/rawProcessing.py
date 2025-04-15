@@ -90,6 +90,19 @@ def get_angles(tickTimes, tapTimes):
 #         nearestTicks, phaseAngles = get_angles(tickTimes, tapTimes)
 #     return nearestTicks, phaseAngles
 
+def beat_time_from_beatzone(beatZoneOnset, wheelSpeed, beatZoneSize):
+
+    # if the last beatZone time is after the last tick time, we can assume the trial ended
+    # before the final tick was recorded
+
+    # note this is not perfectly accurate because the physics engine updates at a fixed rate
+    # so the time between beatZone start and tick onset gets rounded
+    # We don't know width of beatMarker because it's scaled to screen, 0.01 is approx
+    # might be easier to figure out the actual beatZone to beat offsets and just use the
+    # average of those
+    beatTime = beatZoneOnset + ((beatZoneSize - 0.01) / (2 * wheelSpeed))
+    return beatTime #tempTickTimes.loc[tempTickTimes.index.max() + 1] = nextBeatTime
+
 def version_atleast(currVersion, targetVersion):
     # quick function to check if currVersion is targetVersion or later
     currVerArray = currVersion.split(".")
@@ -158,6 +171,7 @@ for subject in subjectList:
         currData['SessionNum'] = sessionNumber
         # get phase number
         currPhase = currData[currData['Type'].str.match('Session') & currData['Message'].str.match('Phase')]['Value'].min()
+        currPhase = int(currPhase)
         currData['PhaseNum'] = currPhase
 
         # get current version (some things change between versions)
@@ -182,7 +196,7 @@ for subject in subjectList:
         currData['RawTrialTime'] = currData['TrialTime']  # copy of trial time because TrialTime will be modified by LRS
 
         # # remove LRS times - create column for running total of LRS time, subtract from trial time
-        # mark events for LRS start and LRS end
+        # mark events for LRS start and LRS end with 0 and 1
         currData['LRS_start'] = currData['Type'].str.contains('Feedback') & currData['Message'].str.contains(
             'initiated')
         currData['LRS_end'] = currData['Type'].str.contains('Feedback') & currData['Message'].str.contains(
@@ -246,62 +260,152 @@ for subject in subjectList:
                             closeTicks = np.nan
                     else:
                         # at least one beatZone occurred so we can calculate onset of beat, if needed
-                        lastTickTime = 0 if len(tempTickTimes) == 0 else tempTickTimes.iloc[-1]  # if there are no ticks
                         lastBZtime = tempBeatZoneTimes.iloc[-1]
+                        tempTrialParam = currTrial[currTrial['Type'].str.match('Trial Param')]
+                        tickPattern = tempTrialParam[tempTrialParam['Message'].str.match('Event List')]['Value']
+                        tickPattern = [float(x) for x in tickPattern.item().split(", ")]
+                        tempWheelSpeed = tempTrialParam[tempTrialParam['Message'].str.match('Wheel Tempo')]['Value']
+                        tempWheelSpeed = float(tempWheelSpeed.item())
+                        tempWheelSpeed = 360 * tempWheelSpeed  # convert revolutions/sec to degrees/sec
+                        tempBZsize = tempTrialParam[tempTrialParam['Message'].str.match('Beat Zone Size')]['Value']
+                        tempBZsize = float(tempBZsize.item())  # bzSize is in degrees
+
+                        if len(tempTickTimes) == 0:
+                            # rare case where criteria is 1 and the tap came before the first tick actually happened
+                            # add that tick's theoretical time
+
+                            # nextBeatTime = lastBZtime + ((tempBZsize - 0.01) / (2 * wheelSpeed))
+                            nextBeatTime = beat_time_from_beatzone(lastBZtime, tempWheelSpeed, tempBZsize)
+                            tempTickTimes.loc[tempTickTimes.index.max() + 1] = nextBeatTime
+                            tempTickTimes.reset_index(drop=True, inplace=True)
+
+                        # now tempTickTimes should always have at least 1 value
+                        lastTickTime = tempTickTimes.iloc[-1]
+
                         if lastBZtime > lastTickTime:
                             # if the last beatZone time is after the last tick time, we can assume the trial ended
                             # before the final tick was recorded
-                            tempTrialParam = currTrial[currTrial['Type'].str.match('Trial Param')]
-                            tempWheelSpeed = tempTrialParam[tempTrialParam['Message'].str.match('Wheel Tempo')]['Value']
-                            tempWheelSpeed = float(tempWheelSpeed.item())
-                            tempWheelSpeed = 360*tempWheelSpeed  # convert revolutions/sec to degrees/sec
-                            tempBZsize = tempTrialParam[tempTrialParam['Message'].str.match('Beat Zone Size')]['Value']
-                            tempBZsize = float(tempBZsize.item())  # bzSize is in degrees
-
-                            # note this is not perfectly accurate because the physics engine updates at a fixed rate
-                            # so the time between beatZone start and tick onset gets rounded
-                            # We don't know width of beatMarker because it's scaled to screen, 0.01 is approx
-                            # might be easier to figure out the actual beatZone to beat offsets and just use the
-                            # average of those
-                            nextBeatTime = lastBZtime + ((tempBZsize-0.01)/(2*tempWheelSpeed))
+                            nextBeatTime = beat_time_from_beatzone(lastBZtime, tempWheelSpeed, tempBZsize)
                             tempTickTimes.loc[tempTickTimes.index.max()+1] = nextBeatTime
-
-                        # double check that all ticks are present - should equal number of Beat Zone Starts
-                        if len(tempTickTimes) < len(tempBeatZoneTimes):
-                            print("        Warning, possible ticks missing: {} ticks vs {} beat zones".format(
-                                len(tempTickTimes), len(tempBeatZoneTimes)))
-
-                        # # Now that we have ticks and taps, tet tap angles
-                        # get_angles() assumes that interval before the first beat is the same as the first interval
-                        if len(tempTickTimes) == 1:
-                            # # skipping the following because in theory one tick is not enough time to get a good
-                            # sense of beat, so returning NA.
-                            # 1 tick means there's not enough information to get actual intervals, but we can
-                            # calculate onset of next beat
-                            #
-                            # # Make get_angles_single() that accepts tap time(s), single tick time, and tempo,
-                            # # just returns angles
-                            # #
-                            # # Technically we could get it from the wheel tempo and beat pattern, but we have to
-                            # assume the current beat time is for the first beat in the sequence
-                            # tempTrialParam = currTrial[currTrial['Type'].str.match('Trial Param')]
-                            # tempTempo = tempTrialParam[tempTrialParam['Message'].str.match('Wheel Tempo')]['Value']
-                            # tempTempo = float(tempTempo.item())
-                            # tempPattern = tempTrialParam[tempTrialParam['Message'].str.match('Event List')]['Value']
-                            # tempPattern = [int(x) for x in tempPattern.item().split(", ")]
-                            # # parse event list to angles, then convert angles to IOIs
-                            if len(tempTapTimes) > 1:
-                                # multiple taps need an empty array for angles
-                                angles = np.array([np.nan]*len(tempTapTimes))
-                                # angles[:] = np.nan
-                                closeTicks = np.array([np.nan]*len(tempTapTimes))
-                            else:
-                                # but a single tap only needs one value
-                                angles = np.nan
-                                closeTicks = np.nan
-
+                            tempTickTimes.reset_index(drop=True, inplace=True)
                         else:
-                            [closeTicks, angles] = get_angles(tempTickTimes, tempTapTimes)
+                            # Last tap was closer to the most recent tick, so we still need to calculate next tick
+                            # onset to get the current interval
+                            # calculate if pattern is isochronous or not
+
+                            isochronous = len(set(tickPattern)) == 1
+
+                            if isochronous:
+                                intervalSize = 360/sum(tickPattern)
+                            else:
+                                # much more complicated because we have to determine which interval we're on
+                                nTicks = len(tempTickTimes)
+                                tickPatternSize = len(tickPattern)
+
+                                # Do we have all the ticks? Because we're in the section where lastTick happened after
+                                # last beatZone, there should be a tick event for every actual tick
+                                if nTicks == len(tempBeatZoneTimes):
+                                    currInterval = (nTicks-1) % tickPatternSize
+
+                                else:
+                                    # We're missing one or more ticks so we need to compare the actual times to the
+                                    # theoretical ticks and see if any gaps are too large
+                                    print("        Warning, possible ticks missing: {} ticks vs {} beat zones".format(
+                                        len(tempTickTimes), len(tempBeatZoneTimes)))
+                                    # # MORE ACCURATE METHOD BELOW
+                                    # # generate list of theoretical tick times, longer than the actual number of ticks
+                                    # tickListTheor = np.asarray(tickPattern * (int(nTicks/tickPatternSize)+2))
+                                    # # convert tickListTheor to onset times
+                                    # tickListTheor = tickListTheor/sum(tickPattern)/tempWheelSpeed
+                                    # tickListTheor = np.insert(tickListTheor, 0, 0)
+                                    # tickListTheor = tickListTheor + tempTickTimes[0]
+
+                                    # ** more accurate that minimizes possible drift: add each successive interval to
+                                    # the actual tick time to see if it approximately equals the next tick
+
+                                    # now loop through actual and theoretical ticks and look for mismatches
+                                    tickTimesCorr = []
+                                    tickIndex = 0
+                                    # currTick =  tempTickTimes[0]
+                                    nextExp = tempTickTimes[0]
+                                    tickPatternTime = np.asarray(tickPattern) * 360 / sum(tickPattern) / tempWheelSpeed
+                                    patternIndex = 0
+                                    tolerance = 0.05
+                                    while tickIndex < nTicks:
+                                        nextObs = tempTickTimes[tickIndex]
+
+                                        if abs(nextObs - nextExp) <= tolerance:
+                                            tickTimesCorr.append(nextObs)
+                                            tickIndex += 1
+
+                                        elif nextObs > nextExp:
+                                            tickTimesCorr.append(nextExp)
+                                            # patternIndex -= 1
+                                        else:
+                                            tickIndex += 1
+                                        nextExp = tickTimesCorr[-1] + tickPatternTime[patternIndex % tickPatternSize]
+                                        patternIndex += 1
+
+                                    # for j in range(1,nTicks):
+                                    #
+                                    #     currInterval = tickPattern[(j-1) % tickPatternSize]
+                                    #     nextObs = tempTickTimes[j]
+                                    #     nextExp = currTick + currInterval
+                                    #
+                                    #     currTick = nextTickAct[j]
+                                    #     tickListTheor = np.insert(tickListTheor, 0, 0)
+
+                                    currInterval = patternIndex % tickPatternSize
+                                    tempTickTimes = tickTimesCorr
+                                intervalSize = tickPattern[currInterval] * 360 / sum(tickPattern)
+
+                            tempInterval = intervalSize / tempWheelSpeed
+                            nextBeatTime = lastTickTime + tempInterval
+                            tempTickTimes.loc[tempTickTimes.index.max()+1] = nextBeatTime
+                            tempTickTimes.reset_index(drop=True, inplace=True)
+
+                        if len(tempTickTimes) == 1:
+                            # where we needed to add the first (and only) tick, we need to add a second one so
+                            # get_angles() can have proper interval data to calculate angle
+                            intervalSize = tickPattern[0] * 360 / sum(tickPattern)
+                            tempInterval = intervalSize / tempWheelSpeed
+                            nextBeatTime = lastTickTime + tempInterval
+                            tempTickTimes.loc[tempTickTimes.index.max() + 1] = nextBeatTime
+                            tempTickTimes.reset_index(drop=True, inplace=True)
+
+                        # # Now that we have ticks and taps, get tap angles
+                        # get_angles() assumes that interval before the first beat is the same as the first interval
+                        # if len(tempTickTimes) == 1:
+                        #     # tempTickTimes only has 1 value if there
+                        #     # # skipping the following because in theory one tick is not enough time to get a good
+                        #     # sense of beat, so returning NA.
+                        #     # 1 tick means there's not enough information to get actual intervals, but we can
+                        #     # calculate onset of next beat
+                        #     #
+                        #     # # Make get_angles_single() that accepts tap time(s), single tick time, and tempo,
+                        #     # # just returns angles
+                        #     # #
+                        #     # # Technically we could get it from the wheel tempo and beat pattern, but we have to
+                        #     # assume the current beat time is for the first beat in the sequence
+                        #     # tempTrialParam = currTrial[currTrial['Type'].str.match('Trial Param')]
+                        #     # tempTempo = tempTrialParam[tempTrialParam['Message'].str.match('Wheel Tempo')]['Value']
+                        #     # tempTempo = float(tempTempo.item())
+                        #     # tempPattern = tempTrialParam[tempTrialParam['Message'].str.match('Event List')]['Value']
+                        #     # tempPattern = [int(x) for x in tempPattern.item().split(", ")]
+                        #     # # parse event list to angles, then convert angles to IOIs
+                        #     if len(tempTapTimes) > 1:
+                        #         # multiple taps need an empty array for angles
+                        #         angles = np.array([np.nan]*len(tempTapTimes))
+                        #         # angles[:] = np.nan
+                        #         closeTicks = np.array([np.nan]*len(tempTapTimes))
+                        #     else:
+                        #         # but a single tap only needs one value
+                        #         angles = np.nan
+                        #         closeTicks = np.nan
+                        #
+                        # else:
+                        #     [closeTicks, angles] = get_angles(tempTickTimes, tempTapTimes)
+                        [closeTicks, angles] = get_angles(tempTickTimes, tempTapTimes)
 
                     # np.ravel is required because sometimes closeTicks is ndarray and sometimes a single float
                     # extend() only works on iterables, and append() adds as a single item

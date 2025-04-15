@@ -61,12 +61,24 @@ allData['Angle'] = allData['Angle'].replace('[nan]', np.nan).astype(float)
 #             # get angle and vector of trial
 
 # # this is the groupby approach to do the same thing!
-outputGB = allData.groupby(["Subject", "PhaseNum", "Trial"])
-outputData = pd.DataFrame()
-outputData['meanAngle'] = outputGB['Angle'].apply(circ_mean)
-outputData['firstAngle'] = outputGB['Angle'].first()
+outputGB = allData.groupby(["Subject", "SessionNum","PhaseNum", "Trial"])
+outputDataTrial = pd.DataFrame()
+outputDataTrial['meanAngle'] = outputGB['Angle'].apply(circ_mean)
+outputDataTrial['firstAngle'] = outputGB['Angle'].first()
+# number of taps
+# vector length
+# proportion of miss vs safe/hit taps
 # additional analyses
 
+# save results
+outputDataTrial.to_csv(os.path.join(outputFolder, 'trialSummaryData.csv'))
+
+# analyze within session (could either analyze raw taps into trials then into session, or analyze outputDataTrial,
+# depending on analysis
+outputSessionGB = allData.groupby(["Subject", "PhaseNum", "SessionNum"])
+outputDataSession = pd.DataFrame()
+outputDataSession['meanAngle'] = outputSessionGB['Angle'].apply(circ_mean)
+
 # and save our results
-outputData.to_csv(os.path.join(outputFolder, 'trialSummaryData.csv'))
+outputDataSession.to_csv(os.path.join(outputFolder, 'sessionSummaryData.csv'))
 
