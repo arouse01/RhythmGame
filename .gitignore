@@ -72,3 +72,7 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 /[Aa]ssets/[Dd]ata/*
+/[Aa]ssets/[Ss]essionData/*
+
+/[Aa]nalysisCode/[Gg]ame[Aa]nalysis/[Oo]utput/*
+/[Aa]nalysisCode/[Gg]ame[Aa]nalysis/[Ii]nput/*
