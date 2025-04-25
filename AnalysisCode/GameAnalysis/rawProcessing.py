@@ -1,25 +1,8 @@
 import numpy as np
 import pandas as pd
 import os
-import datetime as dt
-import math
-
-
-# def find_nearest_in_array(array, values):
-#
-#     indices = np.searchsorted(array, values, side="left")
-#
-#     # Correct indices where necessary
-#
-#     if len(indices) > 0:  # if only one value in array
-#         mask = (indices > 0) &
-#         indices[mask] = np.where(
-#             math.fabs(values[mask] - array[indices[mask] - 1]) < math.fabs(array[indices[mask]] - values[mask]),
-#             indices[mask] - 1, indices[mask])
-#
-#         return array[indices]
-#     else:
-#         return array.iat[0]
+# import datetime as dt
+# import math
 
 
 def find_nearest_iso(tickTimes, tapTimes):
@@ -62,46 +45,18 @@ def get_angles(tickTimes, tapTimes):
     return nearestTicks, phaseAngles
 
 
-# def get_angles_single(tickTime, tapTimes, wheelTempo, eventList):
-#     # For non-isochronous stimuli, just return idx and mask, and those will tell you which element is the closest and
-#     # whether the second closest is before or after
-#     tickTimes = np.asarray(tickTimes)
-#     tapTimes = np.asarray(tapTimes)
-#
-#     # np.searchsorted effectively returns the index of the next tick, so idx-1 is the tick before
-#     idx = np.searchsorted(tickTimes, tapTimes, side="left").clip(max=tickTimes.size - 1)
-#
-#     # If tap is closer to previous tick then shift index by -1
-#     mask = (idx > 0) & \
-#            ((idx == len(tickTimes)) | (np.fabs(tapTimes - tickTimes[idx - 1]) < np.fabs(tapTimes - tickTimes[idx])))
-#     nearestTicks = tickTimes[idx - mask]
-#
-#     IOIlist = np.diff(tickTimes)
-#     # assume interval before first tick is the same as the first actual interval
-#     IOIlist = np.insert(IOIlist, 0, IOIlist[0])
-#     phaseAngles = 2 * np.pi * (tapTimes - nearestTicks) / IOIlist[idx]
-#
-#     # are there any taps after the last tick that would technically be closer to the following tick?
-#     anglesAfter = np.abs(phaseAngles[-1]) > np.pi
-#     if anglesAfter:
-#         # add a phantom tick with the same interval as the last one
-#         tickTimes = np.append(tickTimes, tickTimes[-1]+IOIlist[-1])
-#         # and rerun the analysis
-#         nearestTicks, phaseAngles = get_angles(tickTimes, tapTimes)
-#     return nearestTicks, phaseAngles
-
 def beat_time_from_beatzone(beatZoneOnset, wheelSpeed, beatZoneSize):
+    # If the last beatZone time is after the last tick time, we can assume the trial ended before the final
+    # tick was recorded
 
-    # if the last beatZone time is after the last tick time, we can assume the trial ended
-    # before the final tick was recorded
-
-    # note this is not perfectly accurate because the physics engine updates at a fixed rate
-    # so the time between beatZone start and tick onset gets rounded
-    # We don't know width of beatMarker because it's scaled to screen, 0.01 is approx
+    # Note this is not perfectly accurate because the physics engine updates at a fixed rate
+    # so event timing is rounded
+    # We don't know width of beatMarker because it's scaled to screen, 0.01 is approx.
     # might be easier to figure out the actual beatZone to beat offsets and just use the
     # average of those
     beatTime = beatZoneOnset + ((beatZoneSize - 0.01) / (2 * wheelSpeed))
-    return beatTime #tempTickTimes.loc[tempTickTimes.index.max() + 1] = nextBeatTime
+    return beatTime  # tempTickTimes.loc[tempTickTimes.index.max() + 1] = nextBeatTime
+
 
 def version_atleast(currVersion, targetVersion):
     # quick function to check if currVersion is targetVersion or later
@@ -152,8 +107,6 @@ for subject in subjectList:
         currData = pd.read_table(currPath,
                                  header=None,
                                  names=['Time', 'Type', 'Message', 'Value'],
-                                 # parse_dates=[1],  # Which columns to parse as dates/datetimes
-                                 # date_format='%Y-%m-%d %H:%M:%S.%f',  # automatically infer datetime formatting
                                  dtype={
                                      'Time': float,
                                      'Type': str,
@@ -170,7 +123,8 @@ for subject in subjectList:
         # currData['Date'] = currData['Date'].dt.date
         currData['SessionNum'] = sessionNumber
         # get phase number
-        currPhase = currData[currData['Type'].str.match('Session') & currData['Message'].str.match('Phase')]['Value'].min()
+        currPhase = currData[currData['Type'].str.match('Session') &
+                             currData['Message'].str.match('Phase')]['Value'].min()
         currPhase = int(currPhase)
         currData['PhaseNum'] = currPhase
 
@@ -188,7 +142,8 @@ for subject in subjectList:
         # replace trial number for Trial Data events if game version is below 2.5.3
         if not version_atleast(gameVersion, '2.5.3'):
             # prior to 2.5.3, trial params were recorded before the trial start message
-            currData['Trial'] = np.where(currData['Type'].str.contains('Trial Param'), currData['Trial']+1, currData['Trial'])
+            currData['Trial'] = np.where(currData['Type'].str.contains('Trial Param'), currData['Trial']+1,
+                                         currData['Trial'])
         # # calculate event times based on trial start
         trialStartTimes = currData.groupby(['Trial'])['Time'].min()
         currData['TrialStart'] = currData['Trial'].map(trialStartTimes)
@@ -240,15 +195,14 @@ for subject in subjectList:
                     # To be a criterion tap, tap has to fall within the beatZone, which means beatZone start would
                     # be logged. If we have that, beatZone width, and the wheel tempo we can calculate where the
                     # beat would have been
-                    # Unless we have the beatZone timing, we can't be 100% confident in the onset of the next beat
-                    # because we can't be 100% sure we can match up the recorded beat times with the pattern for
-                    # nonisochronous patterns - if a beat event isn't recorded we might assume the wrong IOI
 
-                    tempTickTimes = currTrial[currTrial['Message'].str.match('Beat tick')]['TrialTime'].reset_index(drop=True)
-                    tempBeatZoneTimes = currTrial[currTrial['Message'].str.match('Beat zone start')]['TrialTime'].reset_index(drop=True)
+                    tempTickTimes = currTrial[currTrial['Message'].str.match('Beat tick')]['TrialTime']
+                    # .reset_index() on separate line so IDE doesn't complain about line being too long
+                    tempTickTimes = tempTickTimes.reset_index(drop=True)
+                    tempBeatZoneTimes = currTrial[currTrial['Message'].str.match('Beat zone start')]['TrialTime']
+                    tempBeatZoneTimes = tempBeatZoneTimes.reset_index(drop=True)
                     if len(tempBeatZoneTimes) == 0:
-                        # fringe case where trial was cancelled before any beats were registered but subject still
-                        # tapped
+                        # fringe case: trial cancelled before any beats were registered but subject still tapped
                         if len(tempTapTimes) > 1:
                             # multiple taps need an empty array for angles
                             angles = np.array([np.nan] * len(tempTapTimes))
@@ -274,10 +228,9 @@ for subject in subjectList:
                             # rare case where criteria is 1 and the tap came before the first tick actually happened
                             # add that tick's theoretical time
 
-                            # nextBeatTime = lastBZtime + ((tempBZsize - 0.01) / (2 * wheelSpeed))
                             nextBeatTime = beat_time_from_beatzone(lastBZtime, tempWheelSpeed, tempBZsize)
-                            tempTickTimes.loc[tempTickTimes.index.max() + 1] = nextBeatTime
-                            tempTickTimes.reset_index(drop=True, inplace=True)
+                            tempTickTimes = pd.concat([tempTickTimes, pd.Series([nextBeatTime])],
+                                                      ignore_index=True)  # df.append was removed as of Pandas 2.0
 
                         # now tempTickTimes should always have at least 1 value
                         lastTickTime = tempTickTimes.iloc[-1]
@@ -286,8 +239,8 @@ for subject in subjectList:
                             # if the last beatZone time is after the last tick time, we can assume the trial ended
                             # before the final tick was recorded
                             nextBeatTime = beat_time_from_beatzone(lastBZtime, tempWheelSpeed, tempBZsize)
-                            tempTickTimes.loc[tempTickTimes.index.max()+1] = nextBeatTime
-                            tempTickTimes.reset_index(drop=True, inplace=True)
+                            tempTickTimes = pd.concat([tempTickTimes, pd.Series([nextBeatTime])],
+                                                      ignore_index=True)
                         else:
                             # Last tap was closer to the most recent tick, so we still need to calculate next tick
                             # onset to get the current interval
@@ -323,10 +276,9 @@ for subject in subjectList:
                                     # ** more accurate that minimizes possible drift: add each successive interval to
                                     # the actual tick time to see if it approximately equals the next tick
 
-                                    # now loop through actual and theoretical ticks and look for mismatches
+                                    # loop through actual and theoretical ticks and look for mismatches
                                     tickTimesCorr = []
                                     tickIndex = 0
-                                    # currTick =  tempTickTimes[0]
                                     nextExp = tempTickTimes[0]
                                     tickPatternTime = np.asarray(tickPattern) * 360 / sum(tickPattern) / tempWheelSpeed
                                     patternIndex = 0
@@ -346,23 +298,14 @@ for subject in subjectList:
                                         nextExp = tickTimesCorr[-1] + tickPatternTime[patternIndex % tickPatternSize]
                                         patternIndex += 1
 
-                                    # for j in range(1,nTicks):
-                                    #
-                                    #     currInterval = tickPattern[(j-1) % tickPatternSize]
-                                    #     nextObs = tempTickTimes[j]
-                                    #     nextExp = currTick + currInterval
-                                    #
-                                    #     currTick = nextTickAct[j]
-                                    #     tickListTheor = np.insert(tickListTheor, 0, 0)
-
                                     currInterval = patternIndex % tickPatternSize
                                     tempTickTimes = tickTimesCorr
                                 intervalSize = tickPattern[currInterval] * 360 / sum(tickPattern)
 
                             tempInterval = intervalSize / tempWheelSpeed
                             nextBeatTime = lastTickTime + tempInterval
-                            tempTickTimes.loc[tempTickTimes.index.max()+1] = nextBeatTime
-                            tempTickTimes.reset_index(drop=True, inplace=True)
+                            tempTickTimes = pd.concat([tempTickTimes, pd.Series([nextBeatTime])],
+                                                      ignore_index=True)
 
                         if len(tempTickTimes) == 1:
                             # where we needed to add the first (and only) tick, we need to add a second one so
@@ -370,41 +313,11 @@ for subject in subjectList:
                             intervalSize = tickPattern[0] * 360 / sum(tickPattern)
                             tempInterval = intervalSize / tempWheelSpeed
                             nextBeatTime = lastTickTime + tempInterval
-                            tempTickTimes.loc[tempTickTimes.index.max() + 1] = nextBeatTime
-                            tempTickTimes.reset_index(drop=True, inplace=True)
+                            tempTickTimes = pd.concat([tempTickTimes, pd.Series([nextBeatTime])],
+                                                      ignore_index=True)
 
                         # # Now that we have ticks and taps, get tap angles
                         # get_angles() assumes that interval before the first beat is the same as the first interval
-                        # if len(tempTickTimes) == 1:
-                        #     # tempTickTimes only has 1 value if there
-                        #     # # skipping the following because in theory one tick is not enough time to get a good
-                        #     # sense of beat, so returning NA.
-                        #     # 1 tick means there's not enough information to get actual intervals, but we can
-                        #     # calculate onset of next beat
-                        #     #
-                        #     # # Make get_angles_single() that accepts tap time(s), single tick time, and tempo,
-                        #     # # just returns angles
-                        #     # #
-                        #     # # Technically we could get it from the wheel tempo and beat pattern, but we have to
-                        #     # assume the current beat time is for the first beat in the sequence
-                        #     # tempTrialParam = currTrial[currTrial['Type'].str.match('Trial Param')]
-                        #     # tempTempo = tempTrialParam[tempTrialParam['Message'].str.match('Wheel Tempo')]['Value']
-                        #     # tempTempo = float(tempTempo.item())
-                        #     # tempPattern = tempTrialParam[tempTrialParam['Message'].str.match('Event List')]['Value']
-                        #     # tempPattern = [int(x) for x in tempPattern.item().split(", ")]
-                        #     # # parse event list to angles, then convert angles to IOIs
-                        #     if len(tempTapTimes) > 1:
-                        #         # multiple taps need an empty array for angles
-                        #         angles = np.array([np.nan]*len(tempTapTimes))
-                        #         # angles[:] = np.nan
-                        #         closeTicks = np.array([np.nan]*len(tempTapTimes))
-                        #     else:
-                        #         # but a single tap only needs one value
-                        #         angles = np.nan
-                        #         closeTicks = np.nan
-                        #
-                        # else:
-                        #     [closeTicks, angles] = get_angles(tempTickTimes, tempTapTimes)
                         [closeTicks, angles] = get_angles(tempTickTimes, tempTapTimes)
 
                     # np.ravel is required because sometimes closeTicks is ndarray and sometimes a single float
@@ -430,4 +343,3 @@ for subject in subjectList:
 allData.to_csv(os.path.join(outputFolder, 'allData.csv'))
 allTaps.to_csv(os.path.join(outputFolder, 'allTapData.csv'))
 print("Finished!")
-
