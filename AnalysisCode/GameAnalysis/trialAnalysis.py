@@ -37,7 +37,7 @@ def average_cos(angles, r=None):
 
 
 def circ_r(angles, r=None):
-    # r is optional variable for averaging mean angles - list of equal length of angles with the radius for each mean
+    # r is optional variable for averaging lengths - list of equal length of angles with the radius for each mean
     # angle. Default is 1 (unweighted)
     if r is None:
         r = np.ones_like(angles)
@@ -86,6 +86,7 @@ outputGB = allData.groupby(["Subject", "SessionNum", "PhaseNum", "Trial"])
 outputDataTrial = pd.DataFrame()
 
 # = Calculated columns =
+outputDataTrial['Date'] = outputGB['Date'].first()
 outputDataTrial['meanAngle'] = outputGB['Angle'].apply(circ_mean)
 outputDataTrial['firstAngle'] = outputGB['Angle'].first()
 outputDataTrial['sin_mean'] = outputGB['Angle'].apply(average_sin)
@@ -106,9 +107,10 @@ outputSessionGB = outputDataTrial.reset_index().groupby(["Subject", "SessionNum"
 outputDataSession = pd.DataFrame()
 
 # = Calculated columns =
+outputDataSession['Date'] = outputSessionGB['Date'].first()
 outputDataSession['meanSessionAngle'] = outputSessionGB.apply(lambda x: circ_mean(x['meanAngle'], x['vectorLength']),
                                                               include_groups=False)
 outputDataSession['nTrials'] = outputSessionGB['Trial'].nunique()  # n trials
-
+outputDataSession['meanVectorLength'] = outputSessionGB['vectorLength'].mean()  # vector length
 # = save results =
 outputDataSession.to_csv(os.path.join(outputFolder, 'sessionSummaryData.csv'))
